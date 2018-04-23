@@ -1,7 +1,7 @@
 import { Meal, MealPropType } from './Meal.js'
 import { MealTag, MealTagPropType } from './MealTag.js'
 import { Price, PricePropType } from './Price.js'
-import { UserInfo, UserInfoPropType } from './UserInfo.js'
+import { UserInfo, UserInfoPropType, UserInfoInit, UserInfoLoaded, UserData, UserDataPropType } from './UserInfo.js'
 
 export {
   Meal,
@@ -11,5 +11,9 @@ export {
   Price,
   PricePropType,
   UserInfo,
-  UserInfoPropType
+  UserInfoPropType,
+  UserInfoInit,
+  UserInfoLoaded,
+  UserData,
+  UserDataPropType
 }

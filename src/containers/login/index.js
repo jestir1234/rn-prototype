@@ -113,14 +113,14 @@ const mapStateToProp = (state) => {
     loading: state.isLoading,
     isLoggedIn: state.isLoggedIn,
     userInfo: state.userInfo,
-    error: state.error
+    error: state.authErrorType
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onLoginRequested: (username, password) => {
-      dispatch(UserAction.newActionLogIn(username, password))
+      dispatch(UserAction.requestLogIn(username, password))
     }
   }
 };

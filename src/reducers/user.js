@@ -1,23 +1,43 @@
-import { UserInfo } from '../entities'
 import { UserAction } from '../actions'
 
 let initState = {
   isLoggedIn: false,
-  isLoading: false
+  isLoading: false,
+  userInfo: null,
+  authErrorType: null
 };
 
-const dataReducer = (state = initState, action) => {
+const userReducer = (state = initState, action) => {
+  console.log('user action reduced');
+  console.log('state: ' + JSON.stringify(state));
+  console.log('action: ' + JSON.stringify(action));
+  let newState;
   switch(action.type) {
-    case UserAction.LOG_IN:
-      let newState = Object.assign({}, state, { isLoggedIn: true, userInfo: fakeUser(action.username) });
-      return newState;
+    case UserAction.REQUEST_AUTHENTICATION:
+      newState = Object.assign({}, state, { isLoading: true });
+      break;
+    case UserAction.RECEIVE_AUTHENTICATION:
+      newState = Object.assign({}, state, {
+        isLoggedIn: true,
+        isLoading: false,
+        userInfo: action.userInfo,
+        authErrorType: null
+      });
+      break;
+    case UserAction.RECEIVE_AUTHENTICATION_ERROR:
+      newState = Object.assign({}, state, {
+        isLoggedIn: false,
+        isLoading: false,
+        userInfo: null,
+        authErrorType: action.authenticationErrorType
+      });
+      break;
     default:
+      console.log('returning default')
       return state;
   }
+  console.log('new state: ' + JSON.stringify(newState));
+  return newState;
 };
 
-let fakeUser = (username) => {
-  return new UserInfo(username, "ACEESS_TOKEN_WILL_BE_HERE", "REFRESH_TOKEN_WILL_BE_HERE");
-};
-
-export default dataReducer;
+export default userReducer;

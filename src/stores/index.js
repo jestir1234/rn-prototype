@@ -1,7 +1,7 @@
-import mealStore from './meals.js'
-import userStore from './user.js'
+import { createStore, applyMiddleware } from 'redux'
+import thunkMiddleware from 'redux-thunk'
+import { userReducer } from '../reducers'
 
-export {
-  mealStore,
-  userStore
-}
+const store = createStore(userReducer, applyMiddleware(thunkMiddleware))
+
+export default store;

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Provider } from 'react-redux'
 import LoginScreen from './src/containers/login'
-import { userStore } from './src/stores'
+import store from './src/stores'
 
 if (__DEV__) {
   require('react-devtools');
@@ -12,7 +12,7 @@ export default class App extends Component {
 
   render() {
     return (
-      <Provider store={userStore}>
+      <Provider store={store}>
         <LoginScreen />
       </Provider>
     );

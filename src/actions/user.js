@@ -19,20 +19,20 @@ function requestAuthentication() {
   }
 }
 
-export const RECEIVE_AUTHENTICATION = 'RECEIVE_AUTHENTICATION'
-function receiveAuthentication(userInfo) {
+export const RECEIVED_AUTHENTICATION = 'RECEIVED_AUTHENTICATION'
+function receivedAuthentication(userInfo) {
   console.log('dispatching received authentication')
   return {
-    type: RECEIVE_AUTHENTICATION,
+    type: RECEIVED_AUTHENTICATION,
     userInfo: userInfo
   }
 }
 
-export const RECEIVE_AUTHENTICATION_ERROR = 'RECEIVE_AUTHENTICATION_ERROR'
-function receiveAuthenticationError(authenticationErrorType) {
+export const RECEIVED_AUTHENTICATION_ERROR = 'RECEIVED_AUTHENTICATION_ERROR'
+function receivedAuthenticationError(authenticationErrorType) {
   console.log('dispatching authentication error')
   return {
-    type: RECEIVE_AUTHENTICATION_ERROR,
+    type: RECEIVED_AUTHENTICATION_ERROR,
     authenticationErrorType: authenticationErrorType
   }
 }
@@ -42,13 +42,13 @@ export function requestLogIn(username, password) {
     dispatch(requestAuthentication())
     if (!username || username.length === 0) {
       if (!password || password.length === 0) {
-        return dispatch(receiveAuthenticationError(AUTHENTICATION_ERROR_USER_PASSWORD_EMPTY))
+        return dispatch(receivedAuthenticationError(AUTHENTICATION_ERROR_USER_PASSWORD_EMPTY))
       } else {
-        return dispatch(receiveAuthenticationError(AUTHENTICATION_ERROR_USER_EMPTY))
+        return dispatch(receivedAuthenticationError(AUTHENTICATION_ERROR_USER_EMPTY))
       }
     } else {
       if (!password || password.length === 0) {
-        return dispatch(receiveAuthenticationError(AUTHENTICATION_ERROR_PASSWORD_EMPTY))
+        return dispatch(receivedAuthenticationError(AUTHENTICATION_ERROR_PASSWORD_EMPTY))
       }
     }
     return fetch('https://gw-staging.hellofresh.com/login?country=ML', {
@@ -64,10 +64,10 @@ export function requestLogIn(username, password) {
       })
       .then(response => response.json())
       .then(json => {
-        let userInfo = new UserInfo(json, Date.now());
+        let userInfo = new UserInfo(json);
         console.log(userInfo);
         //saveAuthCredentialsToStorage(userInfo);
-        dispatch(receiveAuthentication(userInfo));
+        dispatch(receivedAuthentication(userInfo));
       })
   }
 }
@@ -78,14 +78,14 @@ export function loadAuthCredentialsFromStorage() {
     DefaultPreference.get(USER_INFO_STORAGE_KEY)
     .then(userInfoString => {
       if (!userInfoString || userInfoString.length === 0) {
-        dispatch(receiveAuthenticationError(null))
+        dispatch(receivedAuthenticationError(null))
       } else {
-        let userInfo = new UserInfo(userInfoString, userInfoString.receivedAt);
-        let elapsedTime = Date.now().valueOf - userInfo.receivedAt;
+        let userInfo = new UserInfo(userInfoString);
+        let elapsedTime = Date.now().valueOf - userInfo.received_at;
         if (elapsedTime > userInfo.expiresIn) {
           refreshToken();
         } else {
-          dispatch(receiveAuthentication(userInfo));
+          dispatch(receivedAuthentication(userInfo));
         }
       }
     })
@@ -101,5 +101,5 @@ function saveAuthCredentialsToStorage(userInfo) {
 
 function refreshToken(refreshToken) {
   // TODO (se): make an actual call to refresh the token
-  dispatch(receiveAuthenticationError(''))
+  dispatch(receivedAuthenticationError(''))
 }

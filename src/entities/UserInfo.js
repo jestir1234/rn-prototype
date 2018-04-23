@@ -1,12 +1,16 @@
 import PropTypes from 'prop-types'
 
-export function UserInfo(json, received_at) {
+export function UserInfo(json) {
   this.access_token = json.access_token;
   this.expires_in = json.expires_in;
   this.refresh_token = json.refresh_token;
   this.token_type = json.token_type;
   this.user_data = new UserData(json.user_data);
-  this.received_at = received_at;
+  if (json.received_at && json.received_at.length !== 0) {
+    this.received_at = received_at;
+  } else {
+    this.received_at = Date.now();
+  }
 }
 
 export const UserInfoPropType = PropTypes.shape({

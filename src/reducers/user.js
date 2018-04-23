@@ -16,7 +16,7 @@ const userReducer = (state = initState, action) => {
     case UserAction.REQUEST_AUTHENTICATION:
       newState = Object.assign({}, state, { isLoading: true });
       break;
-    case UserAction.RECEIVE_AUTHENTICATION:
+    case UserAction.RECEIVED_AUTHENTICATION:
       newState = Object.assign({}, state, {
         isLoggedIn: true,
         isLoading: false,
@@ -24,7 +24,7 @@ const userReducer = (state = initState, action) => {
         authErrorType: null
       });
       break;
-    case UserAction.RECEIVE_AUTHENTICATION_ERROR:
+    case UserAction.RECEIVED_AUTHENTICATION_ERROR:
       newState = Object.assign({}, state, {
         isLoggedIn: false,
         isLoading: false,

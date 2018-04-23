@@ -18,6 +18,12 @@ class _loginScreen extends PureComponent {
     this._onLoadAuthCredentialsRequested();
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if(this.props.isLoggedIn) {
+      this._onShowHomeScreen();
+    }
+  }
+
   _onLoadAuthCredentialsRequested() {
     this.props.onLoadAuthCredentialsRequested();
   }
@@ -31,9 +37,6 @@ class _loginScreen extends PureComponent {
   }
 
   render() {
-    if(this.props.isLoggedIn) {
-      this._onShowHomeScreen();
-    }
     return (
       <View style={styles.rootContainer}>
         <View style={styles.fieldsContainer}>
@@ -124,10 +127,10 @@ const styles = StyleSheet.create({
 
 const mapStateToProp = (state) => {
   return {
-    loading: state.isLoading,
-    isLoggedIn: state.isLoggedIn,
-    userInfo: state.userInfo,
-    error: state.authErrorType
+    loading: state.user.isLoading,
+    isLoggedIn: state.user.isLoggedIn,
+    userInfo: state.user.userInfo,
+    error: state.user.authErrorType
   }
 };
 

@@ -6,7 +6,7 @@ export function UserInfo(json) {
   this.refresh_token = json.refresh_token;
   this.token_type = json.token_type;
   this.user_data = new UserData(json.user_data);
-  if (json.received_at !== null && json.received_at.length !== 0) {
+  if (json.received_at !== undefined && json.received_at !== null && json.received_at.length !== 0) {
     this.received_at = json.received_at;
   } else {
     this.received_at = Date.now();

@@ -26,7 +26,6 @@ const userReducer = (state = initState, action) => {
         authErrorType: action.authenticationErrorType
       });
     default:
-      console.log('returning default')
       return state;
   }
 };

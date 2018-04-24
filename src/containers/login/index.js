@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react'
-import { StyleSheet, View, Text, TextInput, Button } from 'react-native'
-import { Spinner } from 'native-base'
+import { StyleSheet, View, Text, TextInput, Button, ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
 import { UserAction } from '../../actions'
 
@@ -13,6 +12,14 @@ class _loginScreen extends PureComponent {
       username: '',
       password: ''
     };
+  }
+
+  componentDidMount() {
+    this._onLoadAuthCredentialsRequested();
+  }
+
+  _onLoadAuthCredentialsRequested() {
+    this.props.onLoadAuthCredentialsRequested();
   }
 
   _onLoginRequested() {
@@ -50,7 +57,7 @@ class _loginScreen extends PureComponent {
     if(this.props.loading) {
       return (
         <View style={styles.loadingContainer}>
-          <Spinner color='black' style={styles.loading} />
+          <ActivityIndicator color='black' style={styles.loading} />
         </View>
       );
     }
@@ -121,6 +128,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onLoginRequested: (username, password) => {
       dispatch(UserAction.requestLogIn(username, password))
+    },
+    onLoadAuthCredentialsRequested: () => {
+      dispatch(UserAction.loadAuthCredentialsFromStorage())
     }
   }
 };

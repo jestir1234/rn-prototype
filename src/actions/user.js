@@ -1,5 +1,5 @@
 import fetch from 'cross-fetch'
-import DefaultPreference from 'react-native-default-preference'
+import { AsyncStorage } from 'react-native'
 import { UserInfo, UserInfoInit, UserInfoLoaded } from '../entities'
 
 const USER_INFO_STORAGE_KEY = 'USER_INFO_STORAGE_KEY'
@@ -13,7 +13,6 @@ export const AuthenticationErrorType = {
 
 export const REQUEST_AUTHENTICATION = 'REQUEST_AUTHENTICATION'
 function requestAuthentication() {
-  console.log('dispatching request authentication')
   return {
     type: REQUEST_AUTHENTICATION
   }
@@ -21,7 +20,6 @@ function requestAuthentication() {
 
 export const RECEIVED_AUTHENTICATION = 'RECEIVED_AUTHENTICATION'
 function receivedAuthentication(userInfo) {
-  console.log('dispatching received authentication')
   return {
     type: RECEIVED_AUTHENTICATION,
     userInfo: userInfo
@@ -30,7 +28,6 @@ function receivedAuthentication(userInfo) {
 
 export const RECEIVED_AUTHENTICATION_ERROR = 'RECEIVED_AUTHENTICATION_ERROR'
 function receivedAuthenticationError(authenticationErrorType) {
-  console.log('dispatching authentication error')
   return {
     type: RECEIVED_AUTHENTICATION_ERROR,
     authenticationErrorType: authenticationErrorType
@@ -39,16 +36,16 @@ function receivedAuthenticationError(authenticationErrorType) {
 
 export function requestLogIn(username, password) {
   return dispatch => {
-    dispatch(requestAuthentication())
+    dispatch(requestAuthentication());
     if (!username || username.length === 0) {
       if (!password || password.length === 0) {
-        return dispatch(receivedAuthenticationError(AUTHENTICATION_ERROR_USER_PASSWORD_EMPTY))
+        return dispatch(receivedAuthenticationError(AUTHENTICATION_ERROR_USER_PASSWORD_EMPTY));
       } else {
-        return dispatch(receivedAuthenticationError(AUTHENTICATION_ERROR_USER_EMPTY))
+        return dispatch(receivedAuthenticationError(AUTHENTICATION_ERROR_USER_EMPTY));
       }
     } else {
       if (!password || password.length === 0) {
-        return dispatch(receivedAuthenticationError(AUTHENTICATION_ERROR_PASSWORD_EMPTY))
+        return dispatch(receivedAuthenticationError(AUTHENTICATION_ERROR_PASSWORD_EMPTY));
       }
     }
     return fetch('https://gw-staging.hellofresh.com/login?country=ML', {
@@ -66,40 +63,52 @@ export function requestLogIn(username, password) {
       .then(json => {
         let userInfo = new UserInfo(json);
         console.log(userInfo);
-        //saveAuthCredentialsToStorage(userInfo);
+        saveAuthCredentialsToStorage(userInfo);
         dispatch(receivedAuthentication(userInfo));
-      })
+      });
   }
 }
 
 export function loadAuthCredentialsFromStorage() {
   return dispatch => {
-    dispatch(requestAuthentication())
-    DefaultPreference.get(USER_INFO_STORAGE_KEY)
-    .then(userInfoString => {
-      if (!userInfoString || userInfoString.length === 0) {
-        dispatch(receivedAuthenticationError(null))
-      } else {
-        let userInfo = new UserInfo(userInfoString);
-        let elapsedTime = Date.now().valueOf - userInfo.received_at;
-        if (elapsedTime > userInfo.expiresIn) {
-          refreshToken();
+    dispatch(requestAuthentication());
+    try {
+      AsyncStorage.getItem(USER_INFO_STORAGE_KEY)
+      .then((userInfoString) => {
+        if (userInfoString !== null){
+          let userInfo = new UserInfo(JSON.parse(userInfoString));
+          let elapsedTime = Date.now().valueOf - userInfo.received_at;
+          if (elapsedTime > userInfo.expiresIn) {
+            console.log('Authentication: need to refresh');
+            refreshToken();
+          } else {
+            console.log('Authentication: all good');
+            dispatch(receivedAuthentication(userInfo));
+          }
         } else {
-          dispatch(receivedAuthentication(userInfo));
+          console.log('Authentication: nothing stored');
+          dispatch(receivedAuthenticationError(null));
         }
-      }
-    })
+      });
+    } catch (error) {
+      console.log('Authentication: error occured');
+      dispatch(receivedAuthenticationError(null));
+    }
   }
 }
 
 function saveAuthCredentialsToStorage(userInfo) {
-  DefaultPreference.set(USER_INFO_STORAGE_KEY, JSON.stringify(userInfo))
-  .then(function() {
-    console.log('Authentication: saved userInfo')
-  })
+  try {
+    AsyncStorage.setItem(USER_INFO_STORAGE_KEY, JSON.stringify(userInfo))
+    .then(() => {
+      console.log('Authentication: saved userInfo');
+    });
+  } catch (error) {
+    console.log('Authentication: saving userInfo failed');
+  }
 }
 
 function refreshToken(refreshToken) {
   // TODO (se): make an actual call to refresh the token
-  dispatch(receivedAuthenticationError(''))
+  dispatch(receivedAuthenticationError(''));
 }

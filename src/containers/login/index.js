@@ -26,7 +26,14 @@ class _loginScreen extends PureComponent {
     this.props.onLoginRequested(this.state.username, this.state.password);
   }
 
+  _onShowHomeScreen() {
+    this.props.navigation.navigate('HomeScreen');
+  }
+
   render() {
+    if(this.props.isLoggedIn) {
+      this._onShowHomeScreen();
+    }
     return (
       <View style={styles.rootContainer}>
         <View style={styles.fieldsContainer}>

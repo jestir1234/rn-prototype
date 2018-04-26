@@ -29,10 +29,11 @@ function receivedAuthentication(userInfo) {
 }
 
 export const RECEIVED_AUTHENTICATION_ERROR = 'RECEIVED_AUTHENTICATION_ERROR'
-function receivedAuthenticationError(authenticationErrorType) {
+function receivedAuthenticationError(errorType, errorMessage) {
   return {
     type: RECEIVED_AUTHENTICATION_ERROR,
-    authenticationErrorType: authenticationErrorType
+    authErrorType: errorType,
+    authErrorMessage: errorMessage
   }
 }
 
@@ -41,13 +42,13 @@ export function requestLogIn(username, password) {
     dispatch(requestAuthentication());
     if (!username || username.length === 0) {
       if (!password || password.length === 0) {
-        return dispatch(receivedAuthenticationError(AuthenticationErrorType.AUTHENTICATION_ERROR_USER_PASSWORD_EMPTY));
+        return dispatch(receivedAuthenticationError(AuthenticationErrorType.AUTHENTICATION_ERROR_USER_PASSWORD_EMPTY, null));
       } else {
-        return dispatch(receivedAuthenticationError(AuthenticationErrorType.AUTHENTICATION_ERROR_USER_EMPTY));
+        return dispatch(receivedAuthenticationError(AuthenticationErrorType.AUTHENTICATION_ERROR_USER_EMPTY, null));
       }
     } else {
       if (!password || password.length === 0) {
-        return dispatch(receivedAuthenticationError(AuthenticationErrorType.AUTHENTICATION_ERROR_PASSWORD_EMPTY));
+        return dispatch(receivedAuthenticationError(AuthenticationErrorType.AUTHENTICATION_ERROR_PASSWORD_EMPTY, null));
       }
     }
 
@@ -63,12 +64,28 @@ export function requestLogIn(username, password) {
           'password': password
         })
       })
-      .then(response => response.json())
+      .then(response => {
+        console.log(response);
+        if (response.status >= 400) {
+          const error = new Error();
+          error.response = response;
+          error.message = response.statusText;
+          console.log(error);
+          throw error;
+        }
+        return response.json();
+      })
       .then(json => {
         let userInfo = new UserInfo(json);
         console.log(userInfo);
         saveAuthCredentialsToStorage(userInfo);
         dispatch(receivedAuthentication(userInfo));
+      }).catch(e => {
+        console.log(e);
+        if (!e.message) {
+          e.message = "Something went wrong! Please check your credentials and try again!";
+        }
+        dispatch(receivedAuthenticationError(AuthenticationErrorType.AUTHENTICATION_ERROR_WRONG_CREDENTIALS, e.message));
       });
   }
 }
@@ -114,5 +131,5 @@ function saveAuthCredentialsToStorage(userInfo) {
 
 function refreshToken(dispatch, refreshToken) {
   // TODO (se): make an actual call to refresh the token
-  dispatch(receivedAuthenticationError(''));
+  dispatch(receivedAuthenticationError(null, null));
 }

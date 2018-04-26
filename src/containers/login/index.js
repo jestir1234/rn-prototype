@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { StyleSheet, View, Text, TextInput, Button, ActivityIndicator } from 'react-native'
+import { StyleSheet, View, Image, Text, TextInput, Button, ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
 import { UserAction } from '../../actions'
 
@@ -40,29 +40,44 @@ class _loginScreen extends PureComponent {
     return (
       <View style={styles.rootContainer}>
         <View style={styles.fieldsContainer}>
-          <Text>Username:</Text>
-          <TextInput
-            id="UsernameId"
-            testID="UsernameTestId"
-            accessibilityLabel="UsernameAccessibilityLabel"
-            onChangeText={(text) => this.setState({username: text})}
-            style={styles.editText} />
+          <Image
+            source={require('../../../wide-logo.png')}
+            style={styles.imageView} />
 
-          <Text>Password:</Text>
-          <TextInput
-            id="PasswordId"
-            testID="PasswordTestId"
-            accessibilityLabel="PasswordAccessibilityLabel"
-            onChangeText={(text) => this.setState({password: text})}
-            style={styles.editText} />
+          <View >
+            <Text>Email:</Text>
+            <TextInput
+              id="UsernameId"
+              testID="UsernameTestId"
+              accessibilityLabel="UsernameAccessibilityLabel"
+              onChangeText={(text) => this.setState({username: text})}
+              keyboardType='email-address'
+              style={styles.editText} />
+            {this._emailErrorMessage()}
+          </View>
 
-          <Button
-            id="LoginId"
-            testID="LoginTestId"
-            accessibilityLabel="LoginAccessibilityLabel"
-            title="Login"
-            onPress={() => this._onLoginRequested()}
-            style={styles.loginButton}/>
+          <View
+            style={{marginBottom: 32}}>
+            <Text>Password:</Text>
+            <TextInput
+              id="PasswordId"
+              testID="PasswordTestId"
+              accessibilityLabel="PasswordAccessibilityLabel"
+              onChangeText={(text) => this.setState({password: text})}
+              secureTextEntry={true}
+              style={styles.editText} />
+            {this._passwordErrorMessage()}
+          </View>
+
+          <View >
+            <Button
+              id="LoginId"
+              testID="LoginTestId"
+              accessibilityLabel="LoginAccessibilityLabel"
+              title="Login"
+              onPress={() => this._onLoginRequested()}
+              color="#53D493" />
+          </View>
 
           {this._message()}
         </View>
@@ -85,11 +100,41 @@ class _loginScreen extends PureComponent {
   _message() {
     if(this.props.isLoggedIn) {
       return (
-        <Text style={styles.message}>Logged in successfully!</Text>
+        <Text style={{ marginTop: 32, color: '#53D493' }}>Logged in successfully!</Text>
       );
-    } else if(this.props.error != null) {
+    } else if(this.props.error !== null
+      && this.props.error === UserAction.AuthenticationErrorType.AUTHENTICATION_ERROR_WRONG_CREDENTIALS
+      && this.props.errorMessage !== null) {
       return (
-        <Text style={styles.message}>{this.props.error}</Text>
+        <Text style={{ marginTop: 32, color: 'red' }}>{this.props.errorMessage}</Text>
+      );
+    }
+  }
+
+  _emailErrorMessage() {
+    if(this.props.error !== null
+      && (this.props.error === UserAction.AuthenticationErrorType.AUTHENTICATION_ERROR_USER_EMPTY
+      || this.props.error === UserAction.AuthenticationErrorType.AUTHENTICATION_ERROR_USER_PASSWORD_EMPTY)) {
+      return (
+        <Text style={styles.errorMessage}>You need to provide an email!</Text>
+      );
+    } else {
+      return (
+        <Text style={styles.errorMessage}> </Text>
+      );
+    }
+  }
+
+  _passwordErrorMessage() {
+    if(this.props.error !== null
+      && (this.props.error === UserAction.AuthenticationErrorType.AUTHENTICATION_ERROR_PASSWORD_EMPTY
+      || this.props.error === UserAction.AuthenticationErrorType.AUTHENTICATION_ERROR_USER_PASSWORD_EMPTY)) {
+      return (
+        <Text style={styles.errorMessage}>You need to provide a password!</Text>
+      );
+    } else {
+      return (
+        <Text style={styles.errorMessage}> </Text>
       );
     }
   }
@@ -97,25 +142,29 @@ class _loginScreen extends PureComponent {
 
 const styles = StyleSheet.create({
   rootContainer: {
-    flex: 1
+    backgroundColor: '#FFFFFF',
+    flex: 1,
   },
   fieldsContainer: {
     display: 'flex',
     flex: -1,
     flexDirection: 'column',
-    justifyContent: 'flex-start',
-    alignContent: 'stretch',
+    justifyContent: 'center',
     alignItems: 'stretch',
     marginTop: 24,
     padding: 16
   },
+  imageView: {
+    width: '100%',
+    marginTop: 24,
+    marginBottom: 48,
+    resizeMode: 'contain'
+  },
   editText: {
     height: 40,
     borderColor: 'gray',
+    padding: 4,
     borderWidth: 1
-  },
-  loginButton: {
-    marginTop: 32
   },
   loadingContainer: {
     backgroundColor: '#00000022',
@@ -129,8 +178,10 @@ const styles = StyleSheet.create({
   loading: {
     flex: 1
   },
-  message: {
-    marginTop: 32
+  errorMessage: {
+    color: 'red',
+    marginTop: 4,
+    marginBottom: 16
   }
 });
 
@@ -139,7 +190,8 @@ const mapStateToProp = (state) => {
     loading: state.user.isLoading,
     isLoggedIn: state.user.isLoggedIn,
     userInfo: state.user.userInfo,
-    error: state.user.authErrorType
+    error: state.user.authErrorType,
+    errorMessage: state.user.authErrorMessage
   }
 };
 

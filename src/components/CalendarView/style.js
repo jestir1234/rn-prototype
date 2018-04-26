@@ -4,8 +4,6 @@ const HEADER_HEIGHT = 30
 const ROW_HEIGHT = 50
 const MONTH_HEIGHT = 6 * ROW_HEIGHT + HEADER_HEIGHT
 const DAY_CIRCLE_SIZE = 32
-const COLOR_GREEN = '#50d691'
-const COLOR_RED = '#f95d62'
 
 export const customFilledCircle = (color, borderWidth = 1) => {
   return {
@@ -41,8 +39,6 @@ export const customOutlineCircle = (color, borderWidth = 1) => {
 };
 
 export const theme = {
-  selectedDayBackgroundColor: COLOR_RED,
-  selectedDayTextColor: '#ffffff',
   'stylesheet.calendar.header': {
     header: {
       flexDirection: 'row',
@@ -92,22 +88,6 @@ export const theme = {
       marginTop: 35,
       borderRadius: 2,
       opacity: 0
-    },
-    selected: {
-      backgroundColor: COLOR_GREEN,
-      borderRadius: 100
-    },
-    selectedText: {
-      color: '#ffffff'
-    }
-  },
-  'stylesheet.day.basic': {
-    selected: {
-      backgroundColor: COLOR_GREEN,
-      borderRadius: 100
-    },
-    selectedText: {
-      color: '#ffffff'
     }
   },
   'stylesheet.calendar-list.main': {

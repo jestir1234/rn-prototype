@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import PropTypes from 'prop-types'
 import CalendarWeekHeaderView from './CalendarWeekHeaderView.js'
+import * as Res from '../../res'
 import { Calendar, CalendarList, Agenda, LocaleConfig } from '../ReactNativeCalendar'
 import * as Styles from './style.js'
 
@@ -30,10 +31,10 @@ export default class CalendarView extends Component {
 
   _initLocale() {
     LocaleConfig.locales['en'] = Object.assign({}, LocaleConfig.locales['en'], {
-      monthNames: ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"],
-      monthNamesShort: ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"],
-      dayNames: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-      dayNamesShort: ["S", "M", "T", "W", "T", "F", "S"]
+      monthNames: Res.Strings.calendar_MonthNames,
+      monthNamesShort: Res.Strings.calendar_MonthNamesShort,
+      dayNames: Res.Strings.calendar_DayNames,
+      dayNamesShort: Res.Strings.calendar_DayNamesShort
     });
     LocaleConfig.defaultLocale = 'en';
   }

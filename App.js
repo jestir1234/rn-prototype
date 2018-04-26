@@ -19,7 +19,7 @@ YellowBox.ignoreWarnings([
 
 const RootStack = SwitchNavigator({
   Login: { screen: LoginScreen },
-  HomeScreen: { screen: HomeScreen },
+  Home: { screen: HomeScreen },
 });
 
 export default class App extends Component {

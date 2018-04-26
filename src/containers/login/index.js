@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import { StyleSheet, View, Image, Text, TextInput, Button, ActivityIndicator } from 'react-native'
+import * as Res from '../../res'
 import { connect } from 'react-redux'
 import { UserAction } from '../../actions'
 
@@ -33,7 +34,7 @@ class _loginScreen extends PureComponent {
   }
 
   _onShowHomeScreen() {
-    this.props.navigation.navigate('HomeScreen');
+    this.props.navigation.navigate('Home');
   }
 
   render() {
@@ -76,7 +77,7 @@ class _loginScreen extends PureComponent {
               accessibilityLabel="LoginAccessibilityLabel"
               title="Login"
               onPress={() => this._onLoginRequested()}
-              color="#53D493" />
+              color={Res.Colors.primary} />
           </View>
 
           {this._message()}
@@ -91,7 +92,7 @@ class _loginScreen extends PureComponent {
     if(this.props.loading) {
       return (
         <View style={styles.loadingContainer}>
-          <ActivityIndicator color='black' style={styles.loading} />
+          <ActivityIndicator size="large" color={Res.Colors.primary} />
         </View>
       );
     }
@@ -100,7 +101,7 @@ class _loginScreen extends PureComponent {
   _message() {
     if(this.props.isLoggedIn) {
       return (
-        <Text style={{ marginTop: 32, color: '#53D493' }}>Logged in successfully!</Text>
+        <Text color={Res.Colors.primary} style={{ marginTop: 32 }}>Logged in successfully!</Text>
       );
     } else if(this.props.error !== null
       && this.props.error === UserAction.AuthenticationErrorType.AUTHENTICATION_ERROR_WRONG_CREDENTIALS
@@ -170,13 +171,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#00000022',
     display: 'flex',
     flex: 1,
-    alignItems: 'stretch',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
     width: '100%',
     height: '100%',
     position: 'absolute'
-  },
-  loading: {
-    flex: 1
   },
   errorMessage: {
     color: 'red',

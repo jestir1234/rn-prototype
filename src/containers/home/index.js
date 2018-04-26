@@ -2,12 +2,13 @@ import React, { PureComponent } from 'react'
 import { StyleSheet, Text, View, Button } from 'react-native'
 import { TabNavigator, TabBarBottom } from 'react-navigation'
 import { Icon } from 'native-base';
+import { connect } from 'react-redux'
 
 import ContactScreen from '../contact'
 import ProfileScreen from '../profile'
 import ScheduleScreen from '../schedule'
 
-const HomeScreen = TabNavigator (
+const HomeTabNavigator = TabNavigator (
   {
     Schedule: { screen: ScheduleScreen },
     Profile: { screen: ProfileScreen },
@@ -43,6 +44,29 @@ const HomeScreen = TabNavigator (
   }
 )
 
+class _homeScreen extends PureComponent {
+
+  constructor(props) {
+    super(props);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if(!this.props.isLoggedIn) {
+      this._onShowLoginScreen();
+    }
+  }
+
+  _onShowLoginScreen() {
+    this.props.navigation.navigate('Login');
+  }
+
+  render() {
+    return (
+      <HomeTabNavigator />
+    );
+  }
+}
+
 const styles = StyleSheet.create({
   tabIcon: {
     fontSize: 20,
@@ -50,5 +74,15 @@ const styles = StyleSheet.create({
     marginLeft: 50,
   }
 });
+
+const mapStateToProp = (state) => {
+  return {
+    isLoggedIn: state.user.isLoggedIn
+  }
+};
+
+const HomeScreen = connect(
+  mapStateToProp,
+)(_homeScreen);
 
 export default HomeScreen

@@ -101,7 +101,7 @@ export function loadAuthCredentialsFromStorage() {
           let elapsedTime = Date.now() - userInfo.received_at;
           if (elapsedTime > userInfo.expires_in) {
             console.log('Authentication: need to refresh');
-            refreshToken(dispatch, '');
+            refreshToken(dispatch, userInfo.refreshToken);
           } else {
             console.log('Authentication: all good');
             dispatch(receivedAuthentication(userInfo));
@@ -130,6 +130,69 @@ function saveAuthCredentialsToStorage(userInfo) {
 }
 
 function refreshToken(dispatch, refreshToken) {
-  // TODO (se): make an actual call to refresh the token
-  dispatch(receivedAuthenticationError(null, null));
+  return fetch(Urls.LOGIN_URL, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        'refreshToken': refreshToken
+      })
+    })
+    .then(response => {
+      console.log(response);
+      if (response.status >= 400) {
+        const error = new Error();
+        error.response = response;
+        error.message = response.statusText;
+        console.log(error);
+        throw error;
+      }
+      return response.json();
+    })
+    .then(json => {
+      let userInfo = new UserInfo(json);
+      console.log(userInfo);
+      saveAuthCredentialsToStorage(userInfo);
+      dispatch(receivedAuthentication(userInfo));
+    }).catch(e => {
+      console.log(e);
+      requestLogOut();
+    });
+}
+
+export const RECEIVED_LOGOUT = 'RECEIVED_LOGOUT'
+function receivedLogOut() {
+  return {
+    type: RECEIVED_LOGOUT
+  }
+}
+
+export const RECEIVED_LOGOUT_ERROR = 'RECEIVED_LOGOUT_ERROR'
+function receivedLogOutError(errorMessage) {
+  return {
+    type: RECEIVED_LOGOUT_ERROR,
+    errorMessage: errorMessage
+  }
+}
+
+export function requestLogOut() {
+  return dispatch => {
+    dispatch(requestAuthentication());
+    return removeAuthCredentialsFromStorage(dispatch);
+  }
+}
+
+function removeAuthCredentialsFromStorage(dispatch) {
+  try {
+    AsyncStorage.removeItem(USER_INFO_STORAGE_KEY)
+    .then(() => {
+      console.log('Authentication: saved userInfo');
+      dispatch(receivedLogOut());
+    });
+  } catch (error) {
+    console.log('Authentication: saving userInfo failed');
+    dispatch(receivedLogOutError(error.message))
+  }
 }

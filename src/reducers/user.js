@@ -28,6 +28,21 @@ const userReducer = (state = initState, action) => {
         authErrorType: action.authErrorType,
         authErrorMessage: action.authErrorMessage
       });
+    case UserAction.RECEIVED_LOGOUT:
+      return Object.assign({}, state, {
+        isLoggedIn: false,
+        isLoading: false,
+        userInfo: null,
+        authErrorType: null,
+        authErrorMessage: null
+      });
+    case UserAction.RECEIVED_LOGOUT_ERROR:
+      return Object.assign({}, state, {
+        isLoggedIn: true,
+        isLoading: false,
+        authErrorType: null,
+        authErrorMessage: action.errorMessage
+      });
     default:
       return state;
   }

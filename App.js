@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Provider } from 'react-redux'
 import { SwitchNavigator } from 'react-navigation';
+import SplashScreen from './src/containers/splash'
 import LoginScreen from './src/containers/login'
 import HomeScreen from './src/containers/home'
 import store from './src/stores'
@@ -18,6 +19,7 @@ YellowBox.ignoreWarnings([
 ]);
 
 const RootStack = SwitchNavigator({
+  Splash: { screen: SplashScreen },
   Login: { screen: LoginScreen },
   Home: { screen: HomeScreen },
 });

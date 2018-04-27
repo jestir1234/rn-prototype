@@ -43,15 +43,60 @@ describe('async actions', () => {
       .postOnce('https://gw-staging.hellofresh.com/login?country=ML',
         { body: userInfo, headers: { 'content-type': 'application/json' } }
       )
-    const expectedActions = [
+    let expectedActions = [
       {"type": "REQUEST_AUTHENTICATION"},
       { type: actions.RECEIVED_AUTHENTICATION, userInfo: userInfo }
     ]
-    const store = mockStore({ userInfo: [] })
+    let store = mockStore({ userInfo: [] })
 
     console.log("BEFORE actions.requestLogIn(")
     return store.dispatch(actions.requestLogIn(username, password)).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
     })
+  })
+  
+  it('creates RECEIVED_AUTHENTICATION_ERROR when login with EMPTY CREDENTIALS', () => {
+    let username = ''
+    let password = ''
+
+    let expectedActions = [
+      {"type": "REQUEST_AUTHENTICATION"},
+      { type: actions.RECEIVED_AUTHENTICATION_ERROR, authenticationErrorType: actions.AuthenticationErrorType.AUTHENTICATION_ERROR_USER_PASSWORD_EMPTY}
+    ]
+    let store = mockStore({ userInfo: [] })
+
+    console.log("BEFORE actions.requestLogIn(")
+	store.dispatch(actions.requestLogIn(username, password))
+	expect(store.getActions()).toEqual(expectedActions)
+  })
+  
+   it('creates RECEIVED_AUTHENTICATION_ERROR when login with EMPTY USERNAME', () => {
+    let username = ''
+    let password = 'correct_password'
+
+    let expectedActions = [
+      {"type": "REQUEST_AUTHENTICATION"},
+      { type: actions.RECEIVED_AUTHENTICATION_ERROR, authenticationErrorType: actions.AuthenticationErrorType.AUTHENTICATION_ERROR_USER_EMPTY}
+    ]
+    let store = mockStore({ userInfo: [] })
+
+    console.log("BEFORE actions.requestLogIn(")
+	store.dispatch(actions.requestLogIn(username, password))
+	expect(store.getActions()).toEqual(expectedActions)
+  })
+  
+  it('creates RECEIVED_AUTHENTICATION_ERROR when login with EMPTY PASSWORD', () => {
+    let username = 'correct_username'
+    let password = ''
+
+    let expectedActions = [
+      {"type": "REQUEST_AUTHENTICATION"},
+      { type: actions.RECEIVED_AUTHENTICATION_ERROR, authenticationErrorType: actions.AuthenticationErrorType.AUTHENTICATION_ERROR_PASSWORD_EMPTY}
+    ]
+    let store = mockStore({ userInfo: [] })
+
+    console.log("BEFORE actions.requestLogIn(")
+	store.dispatch(actions.requestLogIn(username, password))
+	expect(store.getActions()).toEqual(expectedActions)
   })
 })

@@ -41,13 +41,13 @@ export function requestLogIn(username, password) {
     dispatch(requestAuthentication());
     if (!username || username.length === 0) {
       if (!password || password.length === 0) {
-        return dispatch(receivedAuthenticationError(AUTHENTICATION_ERROR_USER_PASSWORD_EMPTY));
+        return dispatch(receivedAuthenticationError(AuthenticationErrorType.AUTHENTICATION_ERROR_USER_PASSWORD_EMPTY));
       } else {
-        return dispatch(receivedAuthenticationError(AUTHENTICATION_ERROR_USER_EMPTY));
+        return dispatch(receivedAuthenticationError(AuthenticationErrorType.AUTHENTICATION_ERROR_USER_EMPTY));
       }
     } else {
       if (!password || password.length === 0) {
-        return dispatch(receivedAuthenticationError(AUTHENTICATION_ERROR_PASSWORD_EMPTY));
+        return dispatch(receivedAuthenticationError(AuthenticationErrorType.AUTHENTICATION_ERROR_PASSWORD_EMPTY));
       }
     }
 

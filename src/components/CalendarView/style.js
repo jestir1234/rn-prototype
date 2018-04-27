@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 
 const HEADER_HEIGHT = 30
 const ROW_HEIGHT = 50
@@ -9,14 +9,26 @@ export const customFilledCircle = (color, borderWidth = 1) => {
   return {
     customStyles: {
       container: {
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        height: ROW_HEIGHT - 1
+      },
+      background: {
+        width: DAY_CIRCLE_SIZE,
+        height: DAY_CIRCLE_SIZE,
+        borderWidth: DAY_CIRCLE_SIZE / 2,
+        borderRadius: DAY_CIRCLE_SIZE / 2,
+        backgroundColor: 'white',
+        borderColor: color
       },
       text: {
         color: 'white',
-        borderWidth: borderWidth,
-        borderRadius: 100,
-        backgroundColor: color,
-        borderColor: 'white'
+        position: 'absolute',
+        height: DAY_CIRCLE_SIZE,
+        ...Platform.select({
+          ios: {
+            paddingTop:  (ROW_HEIGHT - DAY_CIRCLE_SIZE) / 2 - 1
+          }
+        })
       }
     }
   }
@@ -26,13 +38,26 @@ export const customOutlineCircle = (color, borderWidth = 1) => {
   return {
     customStyles: {
       container: {
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        height: ROW_HEIGHT - 1
+      },
+      background: {
+        width: DAY_CIRCLE_SIZE,
+        height: DAY_CIRCLE_SIZE,
+        borderWidth: 1,
+        borderRadius: DAY_CIRCLE_SIZE / 2,
+        backgroundColor: 'white',
+        borderColor: color
       },
       text: {
         color: color,
-        borderWidth: borderWidth,
-        borderRadius: 100,
-        borderColor: color
+        position: 'absolute',
+        height: DAY_CIRCLE_SIZE,
+        ...Platform.select({
+          ios: {
+            paddingTop: (ROW_HEIGHT - DAY_CIRCLE_SIZE) / 2 - 1
+          }
+        })
       }
     }
   }
@@ -79,7 +104,12 @@ export const theme = {
       width: DAY_CIRCLE_SIZE,
       height: DAY_CIRCLE_SIZE,
       textAlign: 'center',
-      textAlignVertical: 'center'
+      textAlignVertical: 'center',
+      ...Platform.select({
+        ios: {
+          paddingTop: (ROW_HEIGHT - DAY_CIRCLE_SIZE) / 2
+        }
+      })
     },
     dot: {
       position: 'absolute',

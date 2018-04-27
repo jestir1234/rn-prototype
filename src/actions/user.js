@@ -2,6 +2,7 @@ import 'cross-fetch/polyfill'
 import { AsyncStorage } from 'react-native'
 import DefaultPreference from 'react-native-default-preference'
 import { UserInfo, UserInfoInit, UserInfoLoaded } from '../entities'
+import { Urls } from '../res'
 
 const USER_INFO_STORAGE_KEY = 'USER_INFO_STORAGE_KEY'
 
@@ -49,7 +50,9 @@ export function requestLogIn(username, password) {
         return dispatch(receivedAuthenticationError(AUTHENTICATION_ERROR_PASSWORD_EMPTY));
       }
     }
-    return fetch('https://gw-staging.hellofresh.com/login?country=ML', {
+
+    let params = '?country=ML'
+    return fetch(Urls.LOGIN_URL + params, {
         method: 'POST',
         headers: {
           Accept: 'application/json',

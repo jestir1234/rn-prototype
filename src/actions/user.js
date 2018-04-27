@@ -1,5 +1,6 @@
-import fetch from 'cross-fetch'
+import 'cross-fetch/polyfill'
 import { AsyncStorage } from 'react-native'
+import DefaultPreference from 'react-native-default-preference'
 import { UserInfo, UserInfoInit, UserInfoLoaded } from '../entities'
 import { Urls } from '../res'
 

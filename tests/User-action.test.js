@@ -49,7 +49,6 @@ describe('async actions', () => {
     ]
     let store = mockStore({ userInfo: [] })
 
-    console.log("BEFORE actions.requestLogIn(")
     return store.dispatch(actions.requestLogIn(username, password)).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
     })
@@ -65,7 +64,6 @@ describe('async actions', () => {
     ]
     let store = mockStore({ userInfo: [] })
 
-    console.log("BEFORE actions.requestLogIn(")
 	store.dispatch(actions.requestLogIn(username, password))
 	expect(store.getActions()).toEqual(expectedActions)
   })
@@ -80,7 +78,6 @@ describe('async actions', () => {
     ]
     let store = mockStore({ userInfo: [] })
 
-    console.log("BEFORE actions.requestLogIn(")
 	store.dispatch(actions.requestLogIn(username, password))
 	expect(store.getActions()).toEqual(expectedActions)
   })
@@ -95,7 +92,6 @@ describe('async actions', () => {
     ]
     let store = mockStore({ userInfo: [] })
 
-    console.log("BEFORE actions.requestLogIn(")
 	store.dispatch(actions.requestLogIn(username, password))
 	expect(store.getActions()).toEqual(expectedActions)
   })

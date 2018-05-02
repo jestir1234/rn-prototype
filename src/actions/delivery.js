@@ -1,4 +1,4 @@
-import fetch from 'cross-fetch'
+import 'cross-fetch/polyfill'
 import { Delivery, DeliveryPropType } from '../entities'
 import { Urls } from '../res'
 
@@ -50,6 +50,7 @@ export function loadDeliveries(firstWeek, lastWeek) {
       }
     })
     .then(response => {
+		console.log("Response code: ", response.status)
       if(response.status >= 200 && response.status < 300) {
         return response
       } else {

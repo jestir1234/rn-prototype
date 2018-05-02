@@ -1,5 +1,14 @@
 {
   "expo": {
-    "sdkVersion": "26.0.0"
+    "sdkVersion": "26.0.0",
+    "name": "Go Ready Made",
+    "version": "1.0.0",
+    "ios": {
+      "bundleIdentifier": "com.hellofresh.goreadymade"
+    },
+    "android": {
+      "package": "com.hellofresh.goreadymade"
+    },
+    "slug": "GoReadyMade"
   }
 }

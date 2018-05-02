@@ -63,66 +63,77 @@ export const customOutlineCircle = (color, borderWidth = 1) => {
   }
 };
 
-export const theme = {
-  'stylesheet.calendar.header': {
-    header: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      paddingLeft: 10,
-      paddingRight: 10,
-      alignItems: 'center',
-      borderBottomColor: '#EEE',
-      borderBottomWidth: 1,
-      height: HEADER_HEIGHT
+export const theme = (dynamicHeight) => {
+  let normStyles = {
+    'stylesheet.calendar.header': {
+      header: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingLeft: 10,
+        paddingRight: 10,
+        alignItems: 'center',
+        borderBottomColor: '#EEE',
+        borderBottomWidth: 1,
+        height: HEADER_HEIGHT
+      },
+      monthText: {
+        fontWeight: 'bold',
+        fontSize: 16,
+        color: '#555'
+      }
     },
-    monthText: {
-      fontWeight: 'bold',
-      fontSize: 16,
-      color: '#555'
-    }
-  },
-  'stylesheet.calendar.main': {
-    week: {
-      flexDirection: 'row',
-      justifyContent: 'space-around',
-      borderBottomColor: '#EEE',
-      borderBottomWidth: 1,
-      height: ROW_HEIGHT
-    }
-  },
-  'stylesheet.day.single': {
-    base: {
-      width: 32,
-      height: ROW_HEIGHT - 2,
-      alignItems: 'center',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      flexDirection: 'column'
+    'stylesheet.calendar.main': {
+      week: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        borderBottomColor: '#EEE',
+        borderBottomWidth: 1,
+        height: ROW_HEIGHT,
+        backgroundColor: 'white'
+      }
     },
-    text: {
-      width: DAY_CIRCLE_SIZE,
-      height: DAY_CIRCLE_SIZE,
-      textAlign: 'center',
-      textAlignVertical: 'center',
-      ...Platform.select({
-        ios: {
-          paddingTop: (ROW_HEIGHT - DAY_CIRCLE_SIZE) / 2
-        }
-      })
-    },
-    dot: {
-      position: 'absolute',
-      width: 4,
-      height: 4,
-      marginTop: 35,
-      borderRadius: 2,
-      opacity: 0
+    'stylesheet.day.single': {
+      base: {
+        width: 32,
+        height: ROW_HEIGHT - 2,
+        alignItems: 'center',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column'
+      },
+      text: {
+        width: DAY_CIRCLE_SIZE,
+        height: DAY_CIRCLE_SIZE,
+        textAlign: 'center',
+        textAlignVertical: 'center',
+        ...Platform.select({
+          ios: {
+            paddingTop: (ROW_HEIGHT - DAY_CIRCLE_SIZE) / 2
+          }
+        })
+      },
+      dot: {
+        position: 'absolute',
+        width: 4,
+        height: 4,
+        marginTop: 35,
+        borderRadius: 2,
+        opacity: 0
+      }
     }
-  },
-  'stylesheet.calendar-list.main': {
-    calendar: {
-      height: MONTH_HEIGHT
+  };
+  let calendarHeightStyle = {
+    'stylesheet.calendar-list.main': {
+      calendar: {
+        height: MONTH_HEIGHT
+      }
     }
+  };
+
+  if(dynamicHeight) {
+    return normStyles;
+  } else {
+    return Object.assign({}, normStyles, calendarHeightStyle);
   }
 };

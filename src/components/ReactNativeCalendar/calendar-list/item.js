@@ -18,10 +18,14 @@ class CalendarListItem extends Component {
   render() {
     const row = this.props.item;
     if (row.getTime) {
+      let sizeLayout = this.props.dynamicHeight
+        ? { width: this.props.calendarWidth }
+        : { height: this.props.calendarHeight, width: this.props.calendarWidth }
+
       return (
         <Calendar
           theme={this.props.theme}
-          style={[{height: this.props.calendarHeight, width: this.props.calendarWidth}, this.style.calendar]}
+          style={[sizeLayout, this.style.calendar]}
           current={row}
           hideArrows
           hideExtraDays={this.props.hideExtraDays === undefined ? true : this.props.hideExtraDays}
@@ -38,6 +42,8 @@ class CalendarListItem extends Component {
           dayComponent={this.props.dayComponent}
           disabledByDefault={this.props.disabledByDefault}
           showWeekNumbers={this.props.showWeekNumbers}
+          externalViews={this.props.externalViews}
+          capitalizeMonthName={this.props.capitalizeMonthName}
         />);
     } else {
       const text = row.toString();

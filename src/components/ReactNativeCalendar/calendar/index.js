@@ -74,7 +74,10 @@ class Calendar extends Component {
     // Handler which gets executed when press arrow icon left. It receive a callback can go back month
     onPressArrowLeft: PropTypes.func,
     // Handler which gets executed when press arrow icon left. It receive a callback can go next month
-    onPressArrowRight: PropTypes.func
+    onPressArrowRight: PropTypes.func,
+
+    externalViews: PropTypes.object,
+    capitalizeMonthName: PropTypes.bool
   };
 
   constructor(props) {
@@ -242,7 +245,17 @@ class Calendar extends Component {
     const days = dateutils.page(this.state.currentMonth, this.props.firstDay);
     const weeks = [];
     while (days.length) {
-      weeks.push(this.renderWeek(days.splice(0, 7), weeks.length));
+      let weekDays = days.splice(0, 7)
+      weeks.push(this.renderWeek(weekDays, weeks.length));
+
+      if(this.props.externalViews) {
+        weekDays
+          .filter(item => dateutils.sameMonth(item, this.state.currentMonth))
+          .filter(item => this.props.externalViews[item.toString('yyyy-MM-dd')] != undefined)
+          .forEach(item => {
+            weeks.push(this.props.externalViews[item.toString('yyyy-MM-dd')]);
+          });
+      }
     }
     let indicator;
     const current = parseDate(this.props.current);
@@ -268,6 +281,7 @@ class Calendar extends Component {
           weekNumbers={this.props.showWeekNumbers}
           onPressArrowLeft={this.props.onPressArrowLeft}
           onPressArrowRight={this.props.onPressArrowRight}
+          capitalizeMonthName={this.props.capitalizeMonthName}
         />
         <View style={this.style.monthView}>{weeks}</View>
       </View>);

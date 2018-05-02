@@ -1,16 +1,24 @@
-import React, { PureComponent } from 'react'
+import React, { PureComponent, Component } from 'react'
 import { StyleSheet, View, Text, ActivityIndicator } from 'react-native'
 import * as Res from '../../res'
 import styles from './style.js'
 import { CalendarView, CalendarStyles } from '../../components/CalendarView'
+import { ExpandingView, CollapsingView } from '../../components'
 import { connect } from 'react-redux'
 import { DeliveryAction } from '../../actions'
-import XDate from 'xdate';
+import DeliveryPopupView from './popup'
+import XDate from 'xdate'
 
 class _scheduleScreen extends PureComponent {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      deliveries: [],
+      lastDeliveryPopup: null,
+      externalViews: {}
+    };
   }
 
   componentDidMount() {
@@ -42,6 +50,35 @@ class _scheduleScreen extends PureComponent {
     );
   }
 
+  _onDaySelected(day) {
+    let delivery = this.props.deliveries.find(item =>
+      item.deliveryDate.getFullYear() === day.year &&
+      item.deliveryDate.getMonth() + 1 === day.month &&
+      item.deliveryDate.getDate() === day.day
+    )
+    let expands = {};
+    let newDeliveryPopup = null;
+    if(delivery) {
+      expands = {
+        [day.dateString]: <ExpandingView key={`Expand-${day.dateString}`} expandingHeight={DeliveryPopupView.measuredHeight()} duration={250}><DeliveryPopupView delivery={delivery} /></ExpandingView>
+      };
+      newDeliveryPopup = { date: day.dateString, delivery: delivery };
+    }
+
+    let collapses = {};
+    if(this.state.lastDeliveryPopup) {
+      let { lastDeliveryPopup } = this.state;
+      collapses = {
+        [lastDeliveryPopup.date]: <CollapsingView key={`Collapse-${lastDeliveryPopup.date}`} collapsingHeight={DeliveryPopupView.measuredHeight()} duration={250}><DeliveryPopupView delivery={lastDeliveryPopup.delivery} /></CollapsingView>
+      };
+    }
+
+    this.setState({
+      externalViews: Object.assign({}, collapses, expands),
+      lastDeliveryPopup: newDeliveryPopup
+    });
+  }
+
   _renderDeliveries() {
     return (
       <View style={styles.listContainer}>
@@ -49,6 +86,9 @@ class _scheduleScreen extends PureComponent {
           futureScrollRange={this._displayWeekRange().monthCount}
           defaultSelectedDateStyle={ CalendarStyles.customFilledCircle(Res.Colors.scheduleNonDelivery) }
           datesStyle={this._styledDates()}
+          dynamicHeight={true}
+          onDaySelected={day => this._onDaySelected(day)}
+          externalViews={this.state.externalViews}
         />
       </View>
     );

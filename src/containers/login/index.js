@@ -42,15 +42,24 @@ class _loginScreen extends PureComponent {
         <View style={styles.fieldsContainer}>
           <Text>Username:</Text>
           <TextInput
+            id="UsernameId"
+            testID="UsernameTestId"
+            accessibilityLabel="UsernameAccessibilityLabel"
             onChangeText={(text) => this.setState({username: text})}
             style={styles.editText} />
 
           <Text>Password:</Text>
           <TextInput
+            id="PasswordId"
+            testID="PasswordTestId"
+            accessibilityLabel="PasswordAccessibilityLabel"
             onChangeText={(text) => this.setState({password: text})}
             style={styles.editText} />
 
           <Button
+            id="LoginId"
+            testID="LoginTestId"
+            accessibilityLabel="LoginAccessibilityLabel"
             title="Login"
             onPress={() => this._onLoginRequested()}
             style={styles.loginButton}/>

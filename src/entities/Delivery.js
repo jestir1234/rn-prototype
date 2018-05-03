@@ -7,7 +7,7 @@ export const DeliveryPropType = PropTypes.shape({
   deliveryDate: PropTypes.instanceOf(Date).isRequired,
   cutoffDate: PropTypes.instanceOf(Date).isRequired,
   status: PropTypes.string.isRequired,
-  subscriptionId: PropTypes.string.isRequired
+  subscriptionId: PropTypes.number.isRequired
 });
 
 export function Delivery(json) {

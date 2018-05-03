@@ -13,7 +13,9 @@ export default class CalendarView extends Component {
     ...CalendarList.propTypes,
 
     datesStyle: PropTypes.object,
-    defaultSelectedDateStyle: PropTypes.object
+    defaultSelectedDateStyle: PropTypes.object,
+    onDaySelected: PropTypes.func,
+    dynamicHeight: PropTypes.bool
   };
 
   constructor(props) {
@@ -48,12 +50,13 @@ export default class CalendarView extends Component {
         <CalendarList
           hideDayNames={true}
           monthFormat={'MMMM'}
+          capitalizeMonthName={true}
           pastScrollRange={0}
           futureScrollRange={6}
-          onDayPress={(day) => this._changeCurrentDate(day.dateString)}
+          onDayPress={(day) => this._changeCurrentDate(day)}
           markingType={'custom'}
           markedDates={this.state.markedDates}
-          theme={Styles.theme}
+          theme={Styles.theme(this.props.dynamicHeight)}
           {...this.props}
         />
       </View>
@@ -74,7 +77,8 @@ export default class CalendarView extends Component {
     }
   }
 
-  _changeCurrentDate(dateString) {
+  _changeCurrentDate(day) {
+    let dateString = day.dateString
     let markedDates = Object.freeze(Object.assign({}, this._getNormalStyles(this.props.datesStyle),
       { [dateString]: this._getSelectedStyleForDate(this.props.datesStyle, dateString) }
     ));
@@ -82,5 +86,8 @@ export default class CalendarView extends Component {
       selectedDate: dateString,
       markedDates: markedDates
     });
+    if(this.props.onDaySelected) {
+      this.props.onDaySelected(day)
+    }
   }
 }

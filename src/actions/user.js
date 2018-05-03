@@ -4,7 +4,7 @@ import DefaultPreference from 'react-native-default-preference'
 import { UserInfo, UserInfoInit, UserInfoLoaded } from '../entities'
 import { Urls } from '../res'
 
-const USER_INFO_STORAGE_KEY = 'USER_INFO_STORAGE_KEY'
+export const USER_INFO_STORAGE_KEY = 'USER_INFO_STORAGE_KEY'
 
 export const AuthenticationErrorType = {
   AUTHENTICATION_ERROR_USER_EMPTY: 'AUTHENTICATION_ERROR_USER_EMPTY',
@@ -81,10 +81,10 @@ export function loadAuthCredentialsFromStorage() {
       .then((userInfoString) => {
         if (userInfoString !== null){
           let userInfo = new UserInfo(JSON.parse(userInfoString));
-          let elapsedTime = Date.now().valueOf - userInfo.received_at;
-          if (elapsedTime > userInfo.expiresIn) {
+          let elapsedTime = Date.now() - userInfo.received_at;
+          if (elapsedTime > userInfo.expires_in) {
             console.log('Authentication: need to refresh');
-            refreshToken();
+            refreshToken(dispatch, '');
           } else {
             console.log('Authentication: all good');
             dispatch(receivedAuthentication(userInfo));
@@ -95,7 +95,7 @@ export function loadAuthCredentialsFromStorage() {
         }
       });
     } catch (error) {
-      console.log('Authentication: error occured');
+      console.log('Authentication: error occured' , error);
       dispatch(receivedAuthenticationError(null));
     }
   }
@@ -112,7 +112,7 @@ function saveAuthCredentialsToStorage(userInfo) {
   }
 }
 
-function refreshToken(refreshToken) {
+function refreshToken(dispatch, refreshToken) {
   // TODO (se): make an actual call to refresh the token
   dispatch(receivedAuthenticationError(''));
 }

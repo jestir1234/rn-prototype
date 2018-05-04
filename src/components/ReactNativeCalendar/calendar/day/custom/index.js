@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import {
   TouchableOpacity,
+  View,
   Text,
 } from 'react-native';
 import PropTypes from 'prop-types';
+import { StyleSheet } from 'react-native'
 
 import styleConstructor from './style';
 
@@ -66,6 +68,7 @@ class Day extends Component {
   render() {
     let containerStyle = [this.style.base];
     let textStyle = [this.style.text];
+    let backgroundStyle = [];
 
     let marking = this.props.marking || {};
     if (marking && marking.constructor === Array && marking.length) {
@@ -86,13 +89,13 @@ class Day extends Component {
     if (marking.customStyles && typeof marking.customStyles === 'object') {
       const styles = marking.customStyles;
       if (styles.container) {
-        if (styles.container.borderRadius === undefined) {
-          styles.container.borderRadius = 16;
-        }
         containerStyle.push(styles.container);
       }
       if (styles.text) {
         textStyle.push(styles.text);
+      }
+      if(styles.background) {
+        backgroundStyle.push(styles.background);
       }
     }
 
@@ -104,6 +107,9 @@ class Day extends Component {
         activeOpacity={marking.activeOpacity}
         disabled={marking.disableTouchEvent}
       >
+        {backgroundStyle.length > 0 &&
+          <View style={backgroundStyle} />
+        }
         <Text allowFontScaling={false} style={textStyle}>{String(this.props.children)}</Text>
       </TouchableOpacity>
     );

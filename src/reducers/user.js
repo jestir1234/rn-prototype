@@ -4,7 +4,8 @@ let initState = {
   isLoggedIn: false,
   isLoading: false,
   userInfo: null,
-  authErrorType: null
+  authErrorType: null,
+  authErrorMessage: null
 };
 
 const userReducer = (state = initState, action) => {
@@ -16,14 +17,31 @@ const userReducer = (state = initState, action) => {
         isLoggedIn: true,
         isLoading: false,
         userInfo: action.userInfo,
-        authErrorType: null
+        authErrorType: null,
+        authErrorMessage: null
       });
     case UserAction.RECEIVED_AUTHENTICATION_ERROR:
       return Object.assign({}, state, {
         isLoggedIn: false,
         isLoading: false,
         userInfo: null,
-        authErrorType: action.authenticationErrorType
+        authErrorType: action.authErrorType,
+        authErrorMessage: action.authErrorMessage
+      });
+    case UserAction.RECEIVED_LOGOUT:
+      return Object.assign({}, state, {
+        isLoggedIn: false,
+        isLoading: false,
+        userInfo: null,
+        authErrorType: null,
+        authErrorMessage: null
+      });
+    case UserAction.RECEIVED_LOGOUT_ERROR:
+      return Object.assign({}, state, {
+        isLoggedIn: true,
+        isLoading: false,
+        authErrorType: null,
+        authErrorMessage: action.errorMessage
       });
     default:
       return state;

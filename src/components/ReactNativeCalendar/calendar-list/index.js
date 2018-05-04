@@ -42,6 +42,7 @@ class CalendarList extends Component {
     horizontal: PropTypes.bool,
     // Dynamic calendar height
     calendarHeight: PropTypes.number,
+    dynamicHeight: PropTypes.bool
   };
 
   constructor(props) {
@@ -198,7 +199,7 @@ class CalendarList extends Component {
         scrollEnabled={this.props.scrollingEnabled !== undefined ? this.props.scrollingEnabled : true}
         keyExtractor={(item, index) => String(index)}
         initialScrollIndex={this.state.openDate ? this.getMonthIndex(this.state.openDate) : false}
-        getItemLayout={this.getItemLayout}
+        getItemLayout={this.props.dynamicHeight? this.getItemLayout : null }
         scrollsToTop={this.props.scrollsToTop !== undefined ? this.props.scrollsToTop : false}
       />
     );

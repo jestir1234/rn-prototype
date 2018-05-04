@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native'
+import * as Res from '../../res'
 
 const styles = StyleSheet.create({
     rootContainer: {

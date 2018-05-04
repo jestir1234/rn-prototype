@@ -143,9 +143,8 @@ function refreshToken(dispatch, refreshToken) {
     .then(response => {
       console.log(response);
       if (response.status >= 400) {
-        const error = new Error();
+        let error = new Error(response.statusText);
         error.response = response;
-        error.message = response.statusText;
         console.log(error);
         throw error;
       }
@@ -158,7 +157,7 @@ function refreshToken(dispatch, refreshToken) {
       dispatch(receivedAuthentication(userInfo));
     }).catch(e => {
       console.log(e);
-      requestLogOut();
+      dispatch(requestLogOut());
     });
 }
 

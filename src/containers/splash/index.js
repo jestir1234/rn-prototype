@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react'
 import { StyleSheet, View, Image, Text, TextInput, Button, ActivityIndicator } from 'react-native'
-import * as Res from '../../res'
 import styles from './style.js'
 import { connect } from 'react-redux'
 import { UserAction } from '../../actions'

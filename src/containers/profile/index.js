@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import { StyleSheet, View, Text, Button, ActivityIndicator } from 'react-native'
 import * as Res from '../../res'
+import styles from './style.js'
 import { connect } from 'react-redux'
 import { UserAction } from '../../actions'
 
@@ -20,6 +21,9 @@ class _profileScreen extends PureComponent {
         <View style={styles.fieldsContainer}>
           <Text style={styles.text}>Profile</Text>
             <Button
+              id="LogoutId"
+              testID="LogoutTestId"
+              accessibilityLabel="LogoutAccessibilityLabel"
               title="Logout"
               onPress={() => this._onLogoutRequested()}
               color={Res.Colors.primary} />
@@ -40,36 +44,6 @@ class _profileScreen extends PureComponent {
     }
   }
 }
-
-const styles = StyleSheet.create({
-  rootContainer: {
-    backgroundColor: '#FFFFFF',
-    flex: 1,
-  },
-  fieldsContainer: {
-    display: 'flex',
-    flex: -1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'stretch',
-    marginTop: 24,
-    padding: 16
-  },
-  loadingContainer: {
-    backgroundColor: '#00000022',
-    display: 'flex',
-    flex: 1,
-    alignItems: 'stretch',
-    width: '100%',
-    height: '100%',
-    position: 'absolute'
-  },
-  text: {
-    fontSize: 20,
-    marginTop: 50,
-    marginLeft: 50,
-  }
-});
 
 const mapStateToProp = (state) => {
   return {

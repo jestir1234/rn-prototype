@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import { StyleSheet, View, Image, Text, TextInput, Button, ActivityIndicator } from 'react-native'
 import * as Res from '../../res'
+import styles from './style.js'
 import { connect } from 'react-redux'
 import { UserAction } from '../../actions'
 
@@ -15,18 +16,10 @@ class _loginScreen extends PureComponent {
     };
   }
 
-  componentDidMount() {
-    this._onLoadAuthCredentialsRequested();
-  }
-
   componentDidUpdate(prevProps, prevState) {
     if(this.props.isLoggedIn) {
       this._onShowHomeScreen();
     }
-  }
-
-  _onLoadAuthCredentialsRequested() {
-    this.props.onLoadAuthCredentialsRequested();
   }
 
   _onLoginRequested() {
@@ -141,50 +134,6 @@ class _loginScreen extends PureComponent {
   }
 }
 
-const styles = StyleSheet.create({
-  rootContainer: {
-    backgroundColor: '#FFFFFF',
-    flex: 1,
-  },
-  fieldsContainer: {
-    display: 'flex',
-    flex: -1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'stretch',
-    marginTop: 24,
-    padding: 16
-  },
-  imageView: {
-    width: '100%',
-    marginTop: 24,
-    marginBottom: 48,
-    resizeMode: 'contain'
-  },
-  editText: {
-    height: 40,
-    borderColor: 'gray',
-    padding: 4,
-    borderWidth: 1
-  },
-  loadingContainer: {
-    backgroundColor: '#00000022',
-    display: 'flex',
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
-    height: '100%',
-    position: 'absolute'
-  },
-  errorMessage: {
-    color: 'red',
-    marginTop: 4,
-    marginBottom: 16
-  }
-});
-
 const mapStateToProp = (state) => {
   return {
     loading: state.user.isLoading,
@@ -199,9 +148,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onLoginRequested: (username, password) => {
       dispatch(UserAction.requestLogIn(username, password))
-    },
-    onLoadAuthCredentialsRequested: () => {
-      dispatch(UserAction.loadAuthCredentialsFromStorage())
     }
   }
 };

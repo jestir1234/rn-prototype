@@ -188,11 +188,11 @@ function removeAuthCredentialsFromStorage(dispatch) {
   try {
     AsyncStorage.removeItem(USER_INFO_STORAGE_KEY)
     .then(() => {
-      console.log('Authentication: saved userInfo');
+      console.log('Authentication: removed saved userInfo');
       dispatch(receivedLogOut());
     });
   } catch (error) {
-    console.log('Authentication: saving userInfo failed');
+    console.log('Authentication: removing saved userInfo failed');
     dispatch(receivedLogOutError(error.message))
   }
 }

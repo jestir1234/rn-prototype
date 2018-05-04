@@ -7,8 +7,16 @@
       "bundleIdentifier": "com.hellofresh.goreadymade"
     },
     "android": {
-      "package": "com.hellofresh.goreadymade"
+      "package": "com.hellofresh.goreadymade",
+      "versionCode": 1,
+      "icon": "./app-icon.png",
+      "splash": {
+        "backgroundColor": "#53D493",
+        "resizeMode": "contain",
+        "hdpi": "./splash-logo-hdpi.png"
+      }
     },
-    "slug": "GoReadyMade"
+    "slug": "GoReadyMade",
+    "orientation": "portrait"
   }
 }

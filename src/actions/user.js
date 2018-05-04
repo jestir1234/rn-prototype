@@ -29,10 +29,11 @@ function receivedAuthentication(userInfo) {
 }
 
 export const RECEIVED_AUTHENTICATION_ERROR = 'RECEIVED_AUTHENTICATION_ERROR'
-function receivedAuthenticationError(authenticationErrorType) {
+function receivedAuthenticationError(errorType, errorMessage) {
   return {
     type: RECEIVED_AUTHENTICATION_ERROR,
-    authenticationErrorType: authenticationErrorType
+    authErrorType: errorType,
+    authErrorMessage: errorMessage
   }
 }
 
@@ -41,13 +42,13 @@ export function requestLogIn(username, password) {
     dispatch(requestAuthentication());
     if (!username || username.length === 0) {
       if (!password || password.length === 0) {
-        return dispatch(receivedAuthenticationError(AuthenticationErrorType.AUTHENTICATION_ERROR_USER_PASSWORD_EMPTY));
+        return dispatch(receivedAuthenticationError(AuthenticationErrorType.AUTHENTICATION_ERROR_USER_PASSWORD_EMPTY, null));
       } else {
-        return dispatch(receivedAuthenticationError(AuthenticationErrorType.AUTHENTICATION_ERROR_USER_EMPTY));
+        return dispatch(receivedAuthenticationError(AuthenticationErrorType.AUTHENTICATION_ERROR_USER_EMPTY, null));
       }
     } else {
       if (!password || password.length === 0) {
-        return dispatch(receivedAuthenticationError(AuthenticationErrorType.AUTHENTICATION_ERROR_PASSWORD_EMPTY));
+        return dispatch(receivedAuthenticationError(AuthenticationErrorType.AUTHENTICATION_ERROR_PASSWORD_EMPTY, null));
       }
     }
 
@@ -63,12 +64,28 @@ export function requestLogIn(username, password) {
           'password': password
         })
       })
-      .then(response => response.json())
+      .then(response => {
+        console.log(response);
+        if (response.status >= 400) {
+          const error = new Error();
+          error.response = response;
+          error.message = response.statusText;
+          console.log(error);
+          throw error;
+        }
+        return response.json();
+      })
       .then(json => {
         let userInfo = new UserInfo(json);
         console.log(userInfo);
         saveAuthCredentialsToStorage(userInfo);
         dispatch(receivedAuthentication(userInfo));
+      }).catch(e => {
+        console.log(e);
+        if (!e.message) {
+          e.message = "Something went wrong! Please check your credentials and try again!";
+        }
+        dispatch(receivedAuthenticationError(AuthenticationErrorType.AUTHENTICATION_ERROR_WRONG_CREDENTIALS, e.message));
       });
   }
 }
@@ -84,7 +101,7 @@ export function loadAuthCredentialsFromStorage() {
           let elapsedTime = Date.now() - userInfo.received_at;
           if (elapsedTime > userInfo.expires_in) {
             console.log('Authentication: need to refresh');
-            refreshToken(dispatch, '');
+            refreshToken(dispatch, userInfo.refreshToken);
           } else {
             console.log('Authentication: all good');
             dispatch(receivedAuthentication(userInfo));
@@ -113,6 +130,68 @@ function saveAuthCredentialsToStorage(userInfo) {
 }
 
 function refreshToken(dispatch, refreshToken) {
-  // TODO (se): make an actual call to refresh the token
-  dispatch(receivedAuthenticationError(''));
+  return fetch(Urls.LOGIN_URL, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        'refreshToken': refreshToken
+      })
+    })
+    .then(response => {
+      console.log(response);
+      if (response.status >= 400) {
+        let error = new Error(response.statusText);
+        error.response = response;
+        console.log(error);
+        throw error;
+      }
+      return response.json();
+    })
+    .then(json => {
+      let userInfo = new UserInfo(json);
+      console.log(userInfo);
+      saveAuthCredentialsToStorage(userInfo);
+      dispatch(receivedAuthentication(userInfo));
+    }).catch(e => {
+      console.log(e);
+      dispatch(requestLogOut());
+    });
+}
+
+export const RECEIVED_LOGOUT = 'RECEIVED_LOGOUT'
+function receivedLogOut() {
+  return {
+    type: RECEIVED_LOGOUT
+  }
+}
+
+export const RECEIVED_LOGOUT_ERROR = 'RECEIVED_LOGOUT_ERROR'
+function receivedLogOutError(errorMessage) {
+  return {
+    type: RECEIVED_LOGOUT_ERROR,
+    errorMessage: errorMessage
+  }
+}
+
+export function requestLogOut() {
+  return dispatch => {
+    dispatch(requestAuthentication());
+    return removeAuthCredentialsFromStorage(dispatch);
+  }
+}
+
+function removeAuthCredentialsFromStorage(dispatch) {
+  try {
+    AsyncStorage.removeItem(USER_INFO_STORAGE_KEY)
+    .then(() => {
+      console.log('Authentication: removed saved userInfo');
+      dispatch(receivedLogOut());
+    });
+  } catch (error) {
+    console.log('Authentication: removing saved userInfo failed');
+    dispatch(receivedLogOutError(error.message))
+  }
 }

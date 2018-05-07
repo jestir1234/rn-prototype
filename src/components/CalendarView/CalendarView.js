@@ -43,7 +43,7 @@ export default class CalendarView extends Component {
 
   render() {
     return (
-      <View style={{marginTop: 24}}>
+      <View style={{ marginTop: 24 }} testID="calendar">
         <CalendarWeekHeaderView
           dayNames={LocaleConfig.locales[LocaleConfig.defaultLocale].dayNamesShort}
         />
@@ -64,13 +64,13 @@ export default class CalendarView extends Component {
   }
 
   _getNormalStyles(datesStyle) {
-    let arrStyles = Object.keys(datesStyle).map((key) => { return { [key]: datesStyle[key].normal }});
+    let arrStyles = Object.keys(datesStyle).map((key) => { return { [key]: datesStyle[key].normal } });
     return Object.assign({}, ...arrStyles);
   }
 
   _getSelectedStyleForDate(datesStyle, date) {
     let style = datesStyle[date];
-    if(style !== undefined && style.selected !== undefined) {
+    if (style !== undefined && style.selected !== undefined) {
       return style.selected
     } else {
       return this.props.defaultSelectedDateStyle
@@ -86,7 +86,7 @@ export default class CalendarView extends Component {
       selectedDate: dateString,
       markedDates: markedDates
     });
-    if(this.props.onDaySelected) {
+    if (this.props.onDaySelected) {
       this.props.onDaySelected(day)
     }
   }

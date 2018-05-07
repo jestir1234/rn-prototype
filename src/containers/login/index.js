@@ -17,7 +17,7 @@ class _loginScreen extends PureComponent {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if(this.props.isLoggedIn) {
+    if (this.props.isLoggedIn) {
       this._onShowHomeScreen();
     }
   }
@@ -44,20 +44,20 @@ class _loginScreen extends PureComponent {
               id="UsernameId"
               testID="UsernameTestId"
               accessibilityLabel="UsernameAccessibilityLabel"
-              onChangeText={(text) => this.setState({username: text})}
+              onChangeText={(text) => this.setState({ username: text })}
               keyboardType='email-address'
               style={styles.editText} />
             {this._emailErrorMessage()}
           </View>
 
           <View
-            style={{marginBottom: 32}}>
+            style={{ marginBottom: 32 }}>
             <Text>Password:</Text>
             <TextInput
               id="PasswordId"
               testID="PasswordTestId"
               accessibilityLabel="PasswordAccessibilityLabel"
-              onChangeText={(text) => this.setState({password: text})}
+              onChangeText={(text) => this.setState({ password: text })}
               secureTextEntry={true}
               style={styles.editText} />
             {this._passwordErrorMessage()}
@@ -82,7 +82,7 @@ class _loginScreen extends PureComponent {
   }
 
   _loadingView() {
-    if(this.props.loading) {
+    if (this.props.loading) {
       return (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color={Res.Colors.primary} />
@@ -92,23 +92,23 @@ class _loginScreen extends PureComponent {
   }
 
   _message() {
-    if(this.props.isLoggedIn) {
+    if (this.props.isLoggedIn) {
       return (
         <Text color={Res.Colors.primary} style={{ marginTop: 32 }}>Logged in successfully!</Text>
       );
-    } else if(this.props.error !== null
+    } else if (this.props.error !== null
       && this.props.error === UserAction.AuthenticationErrorType.AUTHENTICATION_ERROR_WRONG_CREDENTIALS
       && this.props.errorMessage !== null) {
       return (
-        <Text style={{ marginTop: 32, color: 'red' }}>{this.props.errorMessage}</Text>
+        <Text testID="ErrorTestId" style={{ marginTop: 32, color: 'red' }}>{this.props.errorMessage}</Text>
       );
     }
   }
 
   _emailErrorMessage() {
-    if(this.props.error !== null
+    if (this.props.error !== null
       && (this.props.error === UserAction.AuthenticationErrorType.AUTHENTICATION_ERROR_USER_EMPTY
-      || this.props.error === UserAction.AuthenticationErrorType.AUTHENTICATION_ERROR_USER_PASSWORD_EMPTY)) {
+        || this.props.error === UserAction.AuthenticationErrorType.AUTHENTICATION_ERROR_USER_PASSWORD_EMPTY)) {
       return (
         <Text style={styles.errorMessage}>You need to provide an email!</Text>
       );
@@ -120,9 +120,9 @@ class _loginScreen extends PureComponent {
   }
 
   _passwordErrorMessage() {
-    if(this.props.error !== null
+    if (this.props.error !== null
       && (this.props.error === UserAction.AuthenticationErrorType.AUTHENTICATION_ERROR_PASSWORD_EMPTY
-      || this.props.error === UserAction.AuthenticationErrorType.AUTHENTICATION_ERROR_USER_PASSWORD_EMPTY)) {
+        || this.props.error === UserAction.AuthenticationErrorType.AUTHENTICATION_ERROR_USER_PASSWORD_EMPTY)) {
       return (
         <Text style={styles.errorMessage}>You need to provide a password!</Text>
       );

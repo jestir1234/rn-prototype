@@ -1,15 +1,14 @@
 import 'cross-fetch/polyfill'
 import DefaultPreference from 'react-native-default-preference'
 import { UserInfo, UserInfoInit, UserInfoLoaded } from '../entities'
-import { Urls } from '../res'
+import * as Res from '../res'
 
-export const USER_INFO_STORAGE_KEY = 'USER_INFO_STORAGE_KEY'
+const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-export const AuthenticationErrorType = {
-  AUTHENTICATION_ERROR_USER_EMPTY: 'AUTHENTICATION_ERROR_USER_EMPTY',
-  AUTHENTICATION_ERROR_PASSWORD_EMPTY: 'AUTHENTICATION_ERROR_PASSWORD_EMPTY',
-  AUTHENTICATION_ERROR_USER_PASSWORD_EMPTY: 'AUTHENTICATION_ERROR_USER_PASSWORD_EMPTY',
-  AUTHENTICATION_ERROR_WRONG_CREDENTIALS: 'AUTHENTICATION_ERROR_WRONG_CREDENTIALS'
+const AuthenticationErrorType = {
+  AUTHENTICATION_ERROR_USER: 'AUTHENTICATION_ERROR_USER',
+  AUTHENTICATION_ERROR_PASSWORD: 'AUTHENTICATION_ERROR_PASSWORD',
+  AUTHENTICATION_ERROR_REQUEST: 'AUTHENTICATION_ERROR_REQUEST'
 }
 
 export const REQUEST_AUTHENTICATION = 'REQUEST_AUTHENTICATION'
@@ -27,32 +26,61 @@ function receivedAuthentication(userInfo) {
   }
 }
 
+export const RECEIVED_USER_ERROR = 'RECEIVED_USER_ERROR'
+export const RECEIVED_PASSWORD_ERROR = 'RECEIVED_PASSWORD_ERROR'
 export const RECEIVED_AUTHENTICATION_ERROR = 'RECEIVED_AUTHENTICATION_ERROR'
 function receivedAuthenticationError(errorType, errorMessage) {
+  switch(errorType) {
+    case AuthenticationErrorType.AUTHENTICATION_ERROR_USER:
+      return {
+        type: RECEIVED_USER_ERROR,
+        authErrorMessage: errorMessage
+      };
+    case AuthenticationErrorType.AUTHENTICATION_ERROR_PASSWORD:
+      return {
+        type: RECEIVED_PASSWORD_ERROR,
+        authErrorMessage: errorMessage
+      };
+    default:
+      return {
+        type: RECEIVED_AUTHENTICATION_ERROR,
+        authErrorMessage: errorMessage
+      };
+  }
+}
+
+export const STOP_LOADING = 'STOP_LOADING'
+function stopLoading() {
   return {
-    type: RECEIVED_AUTHENTICATION_ERROR,
-    authErrorType: errorType,
-    authErrorMessage: errorMessage
+    type: STOP_LOADING
   }
 }
 
 export function requestLogIn(username, password) {
   return dispatch => {
     dispatch(requestAuthentication());
+    let isValid = true;
     if (!username || username.length === 0) {
-      if (!password || password.length === 0) {
-        return dispatch(receivedAuthenticationError(AuthenticationErrorType.AUTHENTICATION_ERROR_USER_PASSWORD_EMPTY, null));
-      } else {
-        return dispatch(receivedAuthenticationError(AuthenticationErrorType.AUTHENTICATION_ERROR_USER_EMPTY, null));
-      }
+      dispatch(receivedAuthenticationError(AuthenticationErrorType.AUTHENTICATION_ERROR_USER, Res.Strings.login_error_no_email));
+      isValid = false;
+    } else if (!EMAIL_REGEX.test(username)){
+      dispatch(receivedAuthenticationError(AuthenticationErrorType.AUTHENTICATION_ERROR_USER, Res.Strings.login_error_invalid_email));
+      isValid = false;
     } else {
-      if (!password || password.length === 0) {
-        return dispatch(receivedAuthenticationError(AuthenticationErrorType.AUTHENTICATION_ERROR_PASSWORD_EMPTY, null));
-      }
+      dispatch(receivedAuthenticationError(AuthenticationErrorType.AUTHENTICATION_ERROR_USER, ' '));
+    }
+    if (!password || password.length === 0) {
+      dispatch(receivedAuthenticationError(AuthenticationErrorType.AUTHENTICATION_ERROR_PASSWORD, Res.Strings.login_error_no_password));
+      isValid = false;
+    } else {
+      dispatch(receivedAuthenticationError(AuthenticationErrorType.AUTHENTICATION_ERROR_PASSWORD, ' '));
+    }
+    if (!isValid) {
+      return dispatch(stopLoading());
     }
 
     let params = '?country=ML'
-    return fetch(Urls.LOGIN_URL + params, {
+    return fetch(Res.Urls.LOGIN_URL + params, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -80,9 +108,9 @@ export function requestLogIn(username, password) {
       }).catch(e => {
         console.log(e);
         if (!e.message) {
-          e.message = "Something went wrong! Please check your credentials and try again!";
+          e.message = Res.Strings.login_error_server;
         }
-        dispatch(receivedAuthenticationError(AuthenticationErrorType.AUTHENTICATION_ERROR_WRONG_CREDENTIALS, e.message));
+        dispatch(receivedAuthenticationError(AuthenticationErrorType.AUTHENTICATION_ERROR_REQUEST, e.message));
       });
   }
 }
@@ -102,7 +130,7 @@ export function checkAuthCredentials() {
       }
     } else {
       console.log('Authentication: nothing stored');
-      dispatch(receivedAuthenticationError(null, null));
+      dispatch(receivedAuthenticationError(AuthenticationErrorType.AUTHENTICATION_ERROR_REQUEST, ' '));
     }
   }
 }
@@ -110,7 +138,7 @@ export function checkAuthCredentials() {
 function refreshToken(refreshToken) {
   return dispatch => {
     let params = '?country=ML'
-    fetch(Urls.LOGIN_URL + params, {
+    fetch(Res.Urls.LOGIN_URL + params, {
       method: 'POST',
       headers: {
         Accept: 'application/json',

@@ -3,7 +3,7 @@ import * as Res from '../../res'
 
 const styles = StyleSheet.create({
   rootContainer: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Res.Colors.windowBackground,
     flex: 1,
   },
   fieldsContainer: {
@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     padding: 16
   },
   loadingContainer: {
-    backgroundColor: '#00000022',
+    backgroundColor: Res.Colors.loadingOverlay,
     display: 'flex',
     flex: 1,
     alignItems: 'stretch',
@@ -24,11 +24,23 @@ const styles = StyleSheet.create({
     height: '100%',
     position: 'absolute'
   },
+  button: {
+    height: 40,
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold'
+  },
   text: {
     fontSize: 20,
     marginTop: 50,
     marginLeft: 50,
   }
 });
-
+  
 export default styles;

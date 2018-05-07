@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { StyleSheet, View, Text, Button, ActivityIndicator } from 'react-native'
+import { StyleSheet, View, Text, TouchableOpacity, ActivityIndicator } from 'react-native'
 import * as Res from '../../res'
 import styles from './style.js'
 import { connect } from 'react-redux'
@@ -20,14 +20,16 @@ class _profileScreen extends PureComponent {
       <View style={Res.Styles.safeAreaTop}>
         <View style={styles.rootContainer}>
           <View style={styles.fieldsContainer}>
-            <Text style={styles.text}>Profile</Text>
-              <Button
+            <Text style={styles.text}>{Res.Strings.profile_title}</Text>
+              <TouchableOpacity
                 id="LogoutId"
                 testID="LogoutTestId"
                 accessibilityLabel="LogoutAccessibilityLabel"
-                title="Logout"
                 onPress={() => this._onLogoutRequested()}
-                color={Res.Colors.primary} />
+                style={[styles.button, {backgroundColor: Res.Colors.primary}]} >
+                <Text
+                  style={styles.buttonText} >{Res.Strings.profile_logout_button}</Text>
+              </TouchableOpacity>
           </View>
 
           {this._loadingView()}
@@ -52,7 +54,6 @@ const mapStateToProp = (state) => {
     loading: state.user.isLoading,
     isLoggedIn: state.user.isLoggedIn,
     userInfo: state.user.userInfo,
-    error: state.user.authErrorType,
     errorMessage: state.user.authErrorMessage
   }
 };

@@ -46,7 +46,7 @@ class _loginScreen extends PureComponent {
               accessibilityLabel="UsernameAccessibilityLabel"
               onChangeText={(text) => this.setState({username: text})}
               keyboardType='email-address'
-              style={styles.editText} />
+              style={styles.editText} > {this.state.username} </TextInput>
             {this._emailErrorMessage()}
           </View>
 
@@ -59,7 +59,7 @@ class _loginScreen extends PureComponent {
               accessibilityLabel="PasswordAccessibilityLabel"
               onChangeText={(text) => this.setState({password: text})}
               secureTextEntry={true}
-              style={styles.editText} />
+              style={styles.editText} > {this.state.password} </TextInput>
             {this._passwordErrorMessage()}
           </View>
 

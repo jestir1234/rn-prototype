@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     },
     imageView: {
       width: '100%',
-      resizeMode: 'contain'
+      resizeMode: 'cover'
     }
   });
   

@@ -5,8 +5,9 @@ import { SwitchNavigator } from 'react-navigation';
 import SplashScreen from './src/containers/splash'
 import LoginScreen from './src/containers/login'
 import HomeScreen from './src/containers/home'
-import store from './src/stores'
+import provideStoreManager from './src/stores'
 import { YellowBox } from 'react-native';
+import { PersistGate } from 'redux-persist/integration/react'
 
 if (__DEV__) {
   require('react-devtools');
@@ -26,9 +27,12 @@ const RootStack = SwitchNavigator({
 
 export default class App extends Component {
   render() {
+    let storeManager = provideStoreManager()
     return (
-      <Provider store={store}>
-        <RootStack />
+      <Provider store={storeManager.store}>
+        <PersistGate loading={null} persistor={storeManager.persistor}>
+          <RootStack />
+        </PersistGate>
       </Provider>
     );
   }

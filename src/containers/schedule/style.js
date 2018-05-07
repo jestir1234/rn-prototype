@@ -1,23 +1,46 @@
 import { StyleSheet } from 'react-native'
+import * as Res from '../../res'
 
 const styles = StyleSheet.create({
+  rootContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'stretch',
+    width: '100%',
+    height: '100%'
+  },
   loadingContainer: {
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignSelf: 'stretch',
+    alignItems: 'center',
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    backgroundColor: Res.Colors.windowBackground,
+    opacity: 0.9
   },
   errorContainer: {
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignSelf: 'stretch',
+    alignItems: 'center',
+    position: 'absolute',
+    width: '100%',
+    height: '100%'
   },
   listContainer: {
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    alignItems: 'stretch'
+    alignSelf: 'stretch',
+    alignItems: 'stretch',
+    position: 'absolute',
+    width: '100%',
+    height: '100%'
   }
 });
 

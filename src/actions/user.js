@@ -1,5 +1,4 @@
 import 'cross-fetch/polyfill'
-import { AsyncStorage } from 'react-native'
 import DefaultPreference from 'react-native-default-preference'
 import { UserInfo, UserInfoInit, UserInfoLoaded } from '../entities'
 import { Urls } from '../res'
@@ -67,9 +66,8 @@ export function requestLogIn(username, password) {
       .then(response => {
         console.log(response);
         if (response.status >= 400) {
-          const error = new Error();
+          let error = new Error(response.statusText);
           error.response = response;
-          error.message = response.statusText;
           console.log(error);
           throw error;
         }
@@ -78,7 +76,6 @@ export function requestLogIn(username, password) {
       .then(json => {
         let userInfo = new UserInfo(json);
         console.log(userInfo);
-        saveAuthCredentialsToStorage(userInfo);
         dispatch(receivedAuthentication(userInfo));
       }).catch(e => {
         console.log(e);
@@ -90,47 +87,30 @@ export function requestLogIn(username, password) {
   }
 }
 
-export function loadAuthCredentialsFromStorage() {
-  return dispatch => {
+export function checkAuthCredentials() {
+  return (dispatch, getState) => {
     dispatch(requestAuthentication());
-    try {
-      AsyncStorage.getItem(USER_INFO_STORAGE_KEY)
-      .then((userInfoString) => {
-        if (userInfoString !== null){
-          let userInfo = new UserInfo(JSON.parse(userInfoString));
-          let elapsedTime = Date.now() - userInfo.received_at;
-          if (elapsedTime > userInfo.expires_in) {
-            console.log('Authentication: need to refresh');
-            refreshToken(dispatch, userInfo.refreshToken);
-          } else {
-            console.log('Authentication: all good');
-            dispatch(receivedAuthentication(userInfo));
-          }
-        } else {
-          console.log('Authentication: nothing stored');
-          dispatch(receivedAuthenticationError(null));
-        }
-      });
-    } catch (error) {
-      console.log('Authentication: error occured' , error);
-      dispatch(receivedAuthenticationError(null));
+    let userInfo = getState().user.userInfo;
+    if (userInfo !== undefined && userInfo !== null){
+      let elapsedTime = Date.now() - userInfo.received_at;
+      if (elapsedTime > userInfo.expires_in) {
+        console.log('Authentication: need to refresh');
+        dispatch(refreshToken(userInfo.refreshToken));
+      } else {
+        console.log('Authentication: all good');
+        dispatch(receivedAuthentication(userInfo));
+      }
+    } else {
+      console.log('Authentication: nothing stored');
+      dispatch(receivedAuthenticationError(null, null));
     }
   }
 }
 
-function saveAuthCredentialsToStorage(userInfo) {
-  try {
-    AsyncStorage.setItem(USER_INFO_STORAGE_KEY, JSON.stringify(userInfo))
-    .then(() => {
-      console.log('Authentication: saved userInfo');
-    });
-  } catch (error) {
-    console.log('Authentication: saving userInfo failed');
-  }
-}
-
-function refreshToken(dispatch, refreshToken) {
-  return fetch(Urls.LOGIN_URL, {
+function refreshToken(refreshToken) {
+  return dispatch => {
+    let params = '?country=ML'
+    fetch(Urls.LOGIN_URL + params, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -153,12 +133,12 @@ function refreshToken(dispatch, refreshToken) {
     .then(json => {
       let userInfo = new UserInfo(json);
       console.log(userInfo);
-      saveAuthCredentialsToStorage(userInfo);
       dispatch(receivedAuthentication(userInfo));
     }).catch(e => {
       console.log(e);
       dispatch(requestLogOut());
     });
+  }
 }
 
 export const RECEIVED_LOGOUT = 'RECEIVED_LOGOUT'
@@ -179,19 +159,6 @@ function receivedLogOutError(errorMessage) {
 export function requestLogOut() {
   return dispatch => {
     dispatch(requestAuthentication());
-    return removeAuthCredentialsFromStorage(dispatch);
-  }
-}
-
-function removeAuthCredentialsFromStorage(dispatch) {
-  try {
-    AsyncStorage.removeItem(USER_INFO_STORAGE_KEY)
-    .then(() => {
-      console.log('Authentication: removed saved userInfo');
-      dispatch(receivedLogOut());
-    });
-  } catch (error) {
-    console.log('Authentication: removing saved userInfo failed');
-    dispatch(receivedLogOutError(error.message))
+    dispatch(receivedLogOut());
   }
 }

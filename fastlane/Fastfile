@@ -72,7 +72,7 @@ platform :ios do
       output_name: IOS_IPA_NAME,
       configuration: "Release"
     )
-    UI.message "IPA: " + lane_context[IPA_OUTPUT_PATH]
+    UI.message "IPA: " + lane_context[SharedValues::IPA_OUTPUT_PATH]
   end
 
   private_lane :set_build_number do |options|

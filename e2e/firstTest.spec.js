@@ -19,6 +19,7 @@ describe('Example Detox Test', () => {
   });
 
   it('Perform Valid Login', async () => {
+    await element(by.id('UsernameTestId')).tap();
     await element(by.id('UsernameTestId')).typeText('andre.huschek@rocket-internet.de');
     await element(by.id('PasswordTestId')).typeText('testing\n');
     await waitFor(element(by.id('LoginTestId'))).toBeVisible().withTimeout(2000);

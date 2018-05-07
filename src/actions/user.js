@@ -93,7 +93,7 @@ export function checkAuthCredentials() {
     let userInfo = getState().user.userInfo;
     if (userInfo !== undefined && userInfo !== null){
       let elapsedTime = Date.now() - userInfo.received_at;
-      if (elapsedTime > userInfo.expires_in) {
+      if (elapsedTime > userInfo.expires_in * 1000) {
         console.log('Authentication: need to refresh');
         dispatch(refreshToken(userInfo.refreshToken));
       } else {

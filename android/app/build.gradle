@@ -87,11 +87,6 @@ apply from: "../../node_modules/react-native/react.gradle"
  */
 def enableSeparateBuildPerCPUArchitecture = false
 
-/**
- * Run Proguard to shrink the Java bytecode in release builds.
- */
-def enableProguardInReleaseBuilds = false
-
 android {
     compileSdkVersion 27
     buildToolsVersion '26.0.2'
@@ -153,7 +148,7 @@ android {
         }
         release {
             signingConfig signingConfigs.release
-            minifyEnabled enableProguardInReleaseBuilds
+            minifyEnabled true
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             debuggable false
             shrinkResources true
@@ -181,8 +176,8 @@ dependencies {
     implementation "com.facebook.react:react-native:+"  // From node_modules
     androidTestImplementation(project(path: ":detox"))
     androidTestImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test:rules:1.0.1'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test:rules:1.0.2'
 }
 
 // Run this once to be able to run the application with BUCK

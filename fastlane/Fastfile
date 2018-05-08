@@ -1,0 +1,177 @@
+fastlane_version '2.53.1'
+
+HOCKEYAPP_API_TOKEN = "0823b11280c34c99bfbbd7e298dac262"
+DEVELOPMENT_BRANCH_NAME = "development"
+
+ANDROID_HOCKEYAPP_STAGING_APP_ID = "70ca4978a957449586bbab756d2f3f26"
+ANDROID_STAGING_BUILD_VARIANT = "Staging"
+ANDROID_STAGING_APK_FILENAME = "app-staging.apk"
+
+IOS_HOCKEYAPP_STAGING_APP_ID = "62398936977b4d7a8dfbe56d2017fa99"
+IOS_IPA_NAME = "GoReadyMade.ipa"
+IOS_SCHEME = "GoReadyMade"
+IOS_XCODE_VERSION = "9.3"
+
+before_all do
+  # download node dependencies
+  sh("npm install")
+end
+
+after_all do |lane|
+  subtitle = "Fastlane: #{lane}"
+  message = "Fastlane has finished successfully 🎉"
+  # sends a notification
+  notification(subtitle: subtitle, message: message)
+end
+
+platform :ios do
+  before_all do
+    if is_ci
+      # If you want to automatically update fastlane if a new version is available:
+      # update_fastlane
+      setup_jenkins
+      xcode_select "/Applications/Xcode.app"
+      # reset_simulators
+    end
+
+    # ensure_xcode_version(version: XCODE_VERSION)
+    # ensure_git_status_clean
+  end
+
+  desc "This lane releases the current status of the development branch on HockeyApp"
+  lane :release_development_branch do |options|
+    build_number = options[:build_number]
+    UI.crash!("You didn\'t specified the build number") if build_number == nil
+
+    ensure_git_branch(branch: DEVELOPMENT_BRANCH_NAME)
+
+    set_build_number(job_build_number: build_number)
+
+    build
+    release_hockey(
+      ipa_output_path: SharedValues::IPA_OUTPUT_PATH,
+      hockey_app_id: IOS_HOCKEYAPP_STAGING_APP_ID
+    )
+  end
+
+  desc 'Build the iOS application.'
+  private_lane :build do
+    get_certificates           # invokes cert
+    get_provisioning_profile   # invokes sigh
+
+    gym(
+      project: './ios/GoReadyMade.xcodeproj',
+      # workspace: workspace, # TODO if start using workspace, probably need to use this one
+      scheme: IOS_SCHEME,
+      silent: false,
+      export_method: "enterprise",
+      clean: true,
+      # derived_data_path: "DerivedData",
+      output_directory: "build",
+      archive_path: "build/",
+      output_name: IOS_IPA_NAME,
+      configuration: "Release"
+    )
+    UI.message "IPA: " + lane_context[SharedValues::IPA_OUTPUT_PATH]
+  end
+
+  private_lane :set_build_number do |options|
+    job_build_number = options[:job_build_number]
+
+    if(job_build_number)
+      build_number = "#{job_build_number}"
+    else
+      build_number = "1"
+    end
+
+    increment_build_number(
+      build_number: build_number,
+      xcodeproj: './ios/GoReadyMade.xcodeproj'
+    )
+  end
+
+  private_lane :release_hockey do |options|
+    ipa_output_path = options[:ipa_output_path]
+    pr_title = options[:pr_title]
+    hockey_app_id = options[:hockey_app_id]
+
+  	if(pr_title)
+      notes = "Pull request title: #{pr_title}"
+    else
+      notes = "Build for branch : #{git_branch}"
+    end
+
+    hockey(
+      api_token: HOCKEYAPP_API_TOKEN,
+      ipa: lane_context[ipa_output_path],
+      notes: notes,
+      public_identifier: hockey_app_id,
+      notify: "0"
+    )
+  end
+end
+
+platform :android do
+  before_all do |lane|
+    UI.important("Using JDK:")
+    puts `java -version`
+  end
+
+  desc "This lane releases the current status of the development branch on HockeyApp"
+  lane :release_development_branch do |options|
+    build_number = options[:build_number]
+    UI.crash!("You didn\'t specified the build number") if build_number == nil
+
+    ensure_git_branch(branch: DEVELOPMENT_BRANCH_NAME)
+
+    ENV["VERSION_CODE"] = build_number
+
+    build(build_variant: ANDROID_STAGING_BUILD_VARIANT)
+    release_hockey(
+      apk_filename: ANDROID_STAGING_APK_FILENAME,
+      hockey_app_id: ANDROID_HOCKEYAPP_STAGING_APP_ID
+    )
+  end
+
+  desc 'Build the Android application.'
+  private_lane :build do |options|
+    build_variant = options[:build_variant]
+
+    if !build_variant
+      UI.important("Building all variants")
+      build_variant = ""
+    else
+      UI.important("Building variant " + build_variant)
+    end
+
+    UI.important("Cleaning project")
+    gradle(task: 'clean', project_dir: 'android/')
+
+    UI.important("Building project")
+    gradle(task: 'assemble', build_type: build_variant, project_dir: 'android/')
+  end
+
+  desc "Clean, build and release the app on HockeyApp"
+  private_lane :release_hockey do |options|
+    apk_filename = options[:apk_filename]
+    hockey_app_id = options[:hockey_app_id]
+
+    found = false
+    for apk_path in lane_context[SharedValues::GRADLE_ALL_APK_OUTPUT_PATHS]
+      found = apk_path.include? apk_filename
+      if found
+        break
+      end
+    end
+
+    UI.crash!("Cannot find the APK " + apk_filename) if !found
+    UI.important("Uploading to HockeyApp " + apk_path)
+
+    hockey(
+      api_token: HOCKEYAPP_API_TOKEN,
+      apk: apk_path,
+      public_identifier: hockey_app_id,
+      notify: '0'
+    )
+  end
+end

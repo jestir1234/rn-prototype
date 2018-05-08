@@ -11,6 +11,7 @@ describe('Example Detox Test', () => {
   });
 
   it('Perform invalid Login', async () => {
+    await waitFor(element(by.id('UsernameTestId'))).toBeVisible().withTimeout(2000);
     await element(by.id('UsernameTestId')).typeText('username');
     await element(by.id('PasswordTestId')).typeText('password\n');
     await waitFor(element(by.id('LoginTestId'))).toBeVisible().withTimeout(2000);
@@ -19,6 +20,7 @@ describe('Example Detox Test', () => {
   });
 
   it('Perform Valid Login', async () => {
+    await waitFor(element(by.id('UsernameTestId'))).toBeVisible().withTimeout(2000);
     await element(by.id('UsernameTestId')).tap();
     await element(by.id('UsernameTestId')).typeText('andre.huschek@rocket-internet.de');
     await element(by.id('PasswordTestId')).typeText('testing\n');

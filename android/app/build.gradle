@@ -13,18 +13,18 @@ import com.android.build.OutputFile
  */
 project.ext.react = [
         // the name of the generated asset file containing your JS bundle
-        bundleAssetName: "index.android.bundle",
+        bundleAssetName      : "index.android.bundle",
 
         // the entry file for bundle generation
-        entryFile: "index.js",
+        entryFile            : "index.js",
 
         // whether to bundle JS and assets in debug mode
-        bundleInDebug: false,
+        bundleInDebug        : false,
 
-        bundleInStaging: true,
+        bundleInStaging      : true,
 
         // whether to bundle JS and assets in release mode
-        bundleInRelease: true,
+        bundleInRelease      : true,
 
         // whether to bundle JS and assets in another build variant (if configured).
         // See http://tools.android.com/tech-docs/new-build-system/user-guide#TOC-Build-Variants
@@ -37,44 +37,43 @@ project.ext.react = [
 
         // whether to disable dev mode in custom build variants (by default only disabled in release)
         // for example: to disable dev mode in the staging build type (if configured)
-        devDisabledInDebug: false,
-        devDisabledInStaging: true,
-        devDisabledInRelease: true,
+        devDisabledInDebug   : false,
+        devDisabledInStaging : true,
+        devDisabledInRelease : true,
         // The configuration property can be in the following formats
         //         'devDisabledIn${productFlavor}${buildType}'
         //         'devDisabledIn${buildType}'
 
         // the root of your project, i.e. where "package.json" lives
-        root: "../../",
+        root                 : "../../",
 
         // where to put the JS bundle asset in staging mode
-        jsBundleDirStaging: "$buildDir/intermediates/assets/staging",
+        jsBundleDirStaging   : "$buildDir/intermediates/assets/staging",
 
         // where to put the JS bundle asset in release mode
-        jsBundleDirRelease: "$buildDir/intermediates/assets/release",
+        jsBundleDirRelease   : "$buildDir/intermediates/assets/release",
 
         // where to put drawable resources / React Native assets, e.g. the ones you use via
         // require('./image.png')), in staging mode
-        resourcesDirStaging: "$buildDir/intermediates/res/merged/staging",
+        resourcesDirStaging  : "$buildDir/intermediates/res/merged/staging",
 
         // where to put drawable resources / React Native assets, e.g. the ones you use via
         // require('./image.png')), in release mode
-        resourcesDirRelease: "$buildDir/intermediates/res/merged/release",
+        resourcesDirRelease  : "$buildDir/intermediates/res/merged/release",
 
         // by default the gradle tasks are skipped if none of the JS files or assets change; this means
         // that we don't look at files in android/ or ios/ to determine whether the tasks are up to
         // date; if you have any other folders that you want to ignore for performance reasons (gradle
         // indexes the entire tree), add them here. Alternatively, if you have JS files in android/
         // for example, you might want to remove it from here.
-        inputExcludes: ["android/**", "ios/**"],
+        inputExcludes        : ["android/**", "ios/**"],
 
         // override which node gets called and with what additional arguments
         nodeExecutableAndArgs: ["node"],
 
         // supply additional arguments to the packager
-        extraPackagerArgs: [],
+        extraPackagerArgs    : [],
 ]
-
 apply from: "../../node_modules/react-native/react.gradle"
 
 /**
@@ -97,12 +96,13 @@ android {
         targetSdkVersion 27
         System.getenv("VERSION_CODE") as Integer ?: 1
         versionName System.getenv('VERSION_NAME') ?: "1.0"
+        testBuildType System.getProperty('testBuildType', 'debug')
+        //this will later be used to control the test apk build type
+        missingDimensionStrategy "minReactNative", "minReactNative46" //read note
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
-        testBuildType System.getProperty('testBuildType', 'debug')  //this will later be used to control the test apk build type
-        missingDimensionStrategy "minReactNative", "minReactNative46" //read note
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     splits {
         abi {
@@ -137,15 +137,6 @@ android {
             shrinkResources false
             zipAlignEnabled false
         }
-        staging {
-            applicationIdSuffix '.staging'
-            signingConfig signingConfigs.debug
-
-            debuggable true
-            minifyEnabled false
-            shrinkResources false
-            zipAlignEnabled false
-        }
         release {
             signingConfig signingConfigs.release
             minifyEnabled true
@@ -160,7 +151,7 @@ android {
         variant.outputs.each { output ->
             // For each separate APK per architecture, set a unique version code as described here:
             // http://tools.android.com/tech-docs/new-build-system/user-guide/apk-splits
-            def versionCodes = ["armeabi-v7a":1, "x86":2]
+            def versionCodes = ["armeabi-v7a": 1, "x86": 2]
             def abi = output.getFilter(OutputFile.ABI)
             if (abi != null) {  // null for the universal-debug, universal-release variants
                 output.versionCodeOverride =
@@ -171,8 +162,9 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation project(':react-native-vector-icons')
+    implementation project(':react-native-default-preference')
+    implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.android.support:appcompat-v7:27.1.1"
     implementation "com.facebook.react:react-native:+"  // From node_modules
     androidTestImplementation(project(path: ":detox"))

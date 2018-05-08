@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   },
   popupButtonNonImportant: {
     flexGrow: 1,
-    backgroundColor: Res.Colors.scheduleNonDelivery,
+    backgroundColor: Res.Colors.nonImportantButton,
     height: 40,
     flexDirection: 'row',
     justifyContent: 'center',
@@ -83,11 +83,16 @@ const styles = StyleSheet.create({
   popupButtonRight: {
     marginLeft: 4
   },
-  popupButtonText: {
+  popupButtonImportantText: {
     color: 'white',
     fontSize: 16,
     fontWeight: 'bold'
-  }
+  },
+  popupButtonNonImportantText: {
+    color: Res.Colors.primaryText,
+    fontSize: 16,
+    fontWeight: 'bold'
+  },
 });
 
 export default styles;

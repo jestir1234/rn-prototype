@@ -55,7 +55,7 @@ const mapStateToProp = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onLoadAuthCredentialsRequested: () => {
-      dispatch(UserAction.loadAuthCredentialsFromStorage())
+      dispatch(UserAction.checkAuthCredentials())
     }
   }
 };

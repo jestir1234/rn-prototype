@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { Root } from "native-base"
 import { Provider } from 'react-redux'
 import { SwitchNavigator } from 'react-navigation';
 import SplashScreen from './src/containers/splash'
 import LoginScreen from './src/containers/login'
 import HomeScreen from './src/containers/home'
-import store from './src/stores'
+import provideStoreManager from './src/stores'
 import { YellowBox } from 'react-native';
+import { PersistGate } from 'redux-persist/integration/react'
 
 if (__DEV__) {
   require('react-devtools');
@@ -26,9 +28,12 @@ const RootStack = SwitchNavigator({
 
 export default class App extends Component {
   render() {
+    let storeManager = provideStoreManager()
     return (
-      <Provider store={store}>
-        <RootStack />
+      <Provider store={storeManager.store}>
+        <PersistGate loading={null} persistor={storeManager.persistor}>
+          <Root><RootStack /></Root>
+        </PersistGate>
       </Provider>
     );
   }

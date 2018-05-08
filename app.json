@@ -1,4 +1,29 @@
 {
-  "name": "GoReadyMade",
-  "displayName": "GoReadyMade"
+  "expo": {
+    "sdkVersion": "26.0.0",
+    "name": "Go Ready Made",
+    "version": "1.0.0",
+    "ios": {
+      "bundleIdentifier": "com.hellofresh.goreadymade",
+      "buildNumber": "1.0.0",
+      "icon": "./app-icon.png",
+      "splash": {
+        "backgroundColor": "#53D493",
+        "resizeMode": "contain",
+        "hdpi": "./splash-logo-hdpi.png"
+      }
+    },
+    "android": {
+      "package": "com.hellofresh.goreadymade",
+      "versionCode": 1,
+      "icon": "./app-icon.png",
+      "splash": {
+        "backgroundColor": "#53D493",
+        "resizeMode": "contain",
+        "hdpi": "./splash-logo-hdpi.png"
+      }
+    },
+    "slug": "GoReadyMade",
+    "orientation": "portrait"
+  }
 }

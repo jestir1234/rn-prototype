@@ -1,5 +1,6 @@
 import React, { PureComponent, Component } from 'react'
 import { StyleSheet, View, Text, ActivityIndicator } from 'react-native'
+import { Toast } from 'native-base'
 import * as Res from '../../res'
 import styles from './style.js'
 import { CalendarView, CalendarStyles } from '../../components/CalendarView'
@@ -7,6 +8,7 @@ import { ExpandingView, CollapsingView } from '../../components'
 import { connect } from 'react-redux'
 import { DeliveryAction } from '../../actions'
 import DeliveryPopupView from './popup'
+import { SkipDialog } from './dialog'
 import XDate from 'xdate'
 
 class _scheduleScreen extends PureComponent {
@@ -27,11 +29,24 @@ class _scheduleScreen extends PureComponent {
   }
 
   render() {
-    const root = (this.props.loading) ? this._renderLoading()
-      : (this.props.error) ? this._renderError()
-      : this._renderDeliveries();
+    let list = this.props.deliveries ? this._renderDeliveries() : null;
+    let progress = this.props.loading ? this._renderLoading() : null;
+    let message = this.props.error ? this._renderError() : null;
+    let skipDialog = this.state.lastDeliveryPopup
+      ? (<SkipDialog
+          ref={dialog => {this.skipDialog = dialog; }}
+          date={this.state.lastDeliveryPopup.date}
+          onSkip={date => this._onSkipConfirmed(date)} />)
+      : null;
 
-    return root;
+    return (
+      <View style={styles.rootContainer}>
+        {message}
+        {list}
+        {progress}
+        {skipDialog}
+      </View>
+    )
   }
 
   _renderLoading() {
@@ -51,18 +66,26 @@ class _scheduleScreen extends PureComponent {
   }
 
   _onDaySelected(day) {
+    let selectedDate = new XDate(day)
     let delivery = this.props.deliveries.find(item =>
-      item.deliveryDate.getFullYear() === day.year &&
-      item.deliveryDate.getMonth() + 1 === day.month &&
-      item.deliveryDate.getDate() === day.day
+      item.deliveryDate.getFullYear() === selectedDate.getFullYear() &&
+      item.deliveryDate.getMonth() === selectedDate.getMonth() &&
+      item.deliveryDate.getDate() === selectedDate.getDate()
     )
     let expands = {};
     let newDeliveryPopup = null;
     if(delivery) {
+      let popup = (
+        <DeliveryPopupView
+          delivery={delivery}
+          onSkipPressed={ delivery => this._onSkipPressed(delivery)}
+          onUnskipPressed={ delivery => this._onUnskipPressed(delivery)}
+          onViewMenuPressed={ delivery => this._onViewMenuPressed(delivery)} />
+      )
       expands = {
-        [day.dateString]: <ExpandingView key={`Expand-${day.dateString}`} expandingHeight={DeliveryPopupView.measuredHeight()} duration={250}><DeliveryPopupView delivery={delivery} /></ExpandingView>
+        [day]: <ExpandingView key={`Expand-${day}`} expandingHeight={DeliveryPopupView.measuredHeight()} duration={250}>{popup}</ExpandingView>
       };
-      newDeliveryPopup = { date: day.dateString, delivery: delivery };
+      newDeliveryPopup = { date: day, delivery: delivery };
     }
 
     let collapses = {};
@@ -125,7 +148,7 @@ class _scheduleScreen extends PureComponent {
     let firstWeek = `${startDate.toString('yyyy')}-W${startDate.toString('ww')}`;
 
     let endDate = new XDate(startDate);
-    endDate.addWeeks(12);
+    endDate.addWeeks(Res.Configs.CALENDAR_DISPLAY_WEEKS_RANGE);
     endDate.setMonth(endDate.getMonth() + 1);
     endDate.setDate(0);
     let lastWeek = `${endDate.toString('yyyy')}-W${endDate.toString('ww')}`;
@@ -138,20 +161,76 @@ class _scheduleScreen extends PureComponent {
       monthCount
     }
   }
+
+  _onSkipPressed(delivery) {
+    this.skipDialog.show();
+  }
+
+  _onSkipConfirmed(day) {
+    let selectedDate = new XDate(day)
+    let delivery = this.props.deliveries.find(item =>
+      item.deliveryDate.getFullYear() === selectedDate.getFullYear() &&
+      item.deliveryDate.getMonth() === selectedDate.getMonth() &&
+      item.deliveryDate.getDate() === selectedDate.getDate()
+    )
+
+    if(delivery) {
+      this.props.onSkipDeliveryRequested(delivery)
+        .then(newDelivery => this._refreshPopupForDelivery(newDelivery))
+    }
+  }
+
+  _onUnskipPressed(delivery) {
+    this.props.onUnskipDeliveryRequested(delivery)
+      .then(newDelivery => this._refreshPopupForDelivery(newDelivery))
+  }
+
+  _refreshPopupForDelivery(newDelivery) {
+    let dateString = new XDate(newDelivery.deliveryDate).toString('yyyy-MM-dd')
+    let popup = (
+      <DeliveryPopupView
+        key={`Popup-${dateString}`}
+        delivery={newDelivery}
+        onSkipPressed={ delivery => this._onSkipPressed(delivery)}
+        onUnskipPressed={ delivery => this._onUnskipPressed(delivery)}
+        onViewMenuPressed={ delivery => this._onViewMenuPressed(delivery)} />
+    )
+    popups = {
+      [dateString]: popup
+    };
+    newDeliveryPopup = { date: dateString, delivery: newDelivery };
+
+    let newExternalViews = Object.assign({}, this.state.externalViews, popups);
+    this.setState({
+      externalViews: newExternalViews,
+      lastDeliveryPopup: newDeliveryPopup
+    })
+  }
+
+  _onViewMenuPressed(delivery) {
+    Toast.show({ text: 'Not Implemented Yet!' })
+  }
 }
 
 const mapStateToProps = (state) => {
   return {
     deliveries: state.delivery.deliveries,
     loading: state.delivery.isLoading,
-    error: state.delivery.error
+    error: state.delivery.error,
+    editError: state.delivery.editError
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onLoadMealsRequested: (firstWeek, lastWeek) => {
-      dispatch(DeliveryAction.loadDeliveries(firstWeek, lastWeek))
+      return dispatch(DeliveryAction.loadDeliveries(firstWeek, lastWeek))
+    },
+    onSkipDeliveryRequested: (delivery) => {
+      return dispatch(DeliveryAction.skipDelivery(delivery))
+    },
+    onUnskipDeliveryRequested: (delivery) => {
+      return dispatch(DeliveryAction.unskipDelivery(delivery))
     }
   }
 }

@@ -36,14 +36,14 @@ export default class CalendarWeekHeaderView extends Component {
 
 const styles = StyleSheet.create({
   rootContainer: {
-    marginTop: 24,
     display: 'flex',
     paddingLeft: 4,
     paddingRight: 4,
     flex: -1,
     flexDirection: 'column',
-    justifyContent: 'flex-start',
-    alignItems: 'stretch'
+    justifyContent: 'center',
+    alignItems: 'stretch',
+    height: 40
   },
   weekTitleContainer: {
     display: 'flex',

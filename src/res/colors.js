@@ -5,4 +5,5 @@ export const secondaryText = '#777777';
 export const windowBackground = '#ffffff';
 
 export const scheduleNonDelivery = '#D0D0D0';
+export const nonImportantButton = '#f0f0f0'
 export const scheduleTags = '#f4db99';

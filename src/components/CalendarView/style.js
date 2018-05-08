@@ -123,17 +123,23 @@ export const theme = (dynamicHeight) => {
       }
     }
   };
-  let calendarHeightStyle = {
-    'stylesheet.calendar-list.main': {
-      calendar: {
-        height: MONTH_HEIGHT
+  let calendarHeightStyle = dynamicHeight
+    ? {
+      'stylesheet.calendar-list.main': {
+        calendar: {
+          paddingLeft: 4,
+          paddingRight: 4
+        }
       }
-    }
+    } : {
+      'stylesheet.calendar-list.main': {
+        calendar: {
+          paddingLeft: 4,
+          paddingRight: 4,
+          height: MONTH_HEIGHT
+        }
+      }
   };
 
-  if(dynamicHeight) {
-    return normStyles;
-  } else {
-    return Object.assign({}, normStyles, calendarHeightStyle);
-  }
+  return Object.assign({}, normStyles, calendarHeightStyle);
 };

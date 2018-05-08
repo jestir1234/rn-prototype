@@ -1,5 +1,6 @@
 import React, { PureComponent, Component } from 'react'
 import { View, Text, TouchableHighlight, StyleSheet } from 'react-native'
+import PropTypes from 'prop-types'
 import { Delivery, DeliveryPropType, DeliveryStatus } from '../../../entities'
 import XDate from 'xdate'
 import styles from './style.js'
@@ -7,7 +8,10 @@ import * as Res from '../../../res'
 
 export default class DeliveryPopupView extends Component {
   static propTypes = {
-    delivery: DeliveryPropType
+    delivery: DeliveryPropType.isRequired,
+    onViewMenuPressed: PropTypes.func,
+    onSkipPressed: PropTypes.func,
+    onUnskipPressed: PropTypes.func
   };
   static measuredHeight = () => {
     return StyleSheet.flatten(styles.popupContainer).height;
@@ -61,11 +65,11 @@ export default class DeliveryPopupView extends Component {
           <Text style={styles.popupSubtitleDate}>{new XDate(delivery.cutoffDate).toString('dddd, MMMM d')}</Text>
         </View>
         <View style={styles.popupButtonContainer}>
-          <TouchableHighlight style={[styles.popupButtonImportant, styles.popupButtonLeft]}>
-            <Text style={styles.popupButtonText}>{Res.Strings.schedule_ViewMenu}</Text>
+          <TouchableHighlight style={[styles.popupButtonImportant, styles.popupButtonLeft]} onPress={this._onViewMenuPressed}>
+            <Text style={styles.popupButtonImportantText}>{Res.Strings.schedule_ViewMenu}</Text>
           </TouchableHighlight>
-          <TouchableHighlight style={[styles.popupButtonNonImportant, styles.popupButtonRight]}>
-            <Text style={styles.popupButtonText}>{Res.Strings.schedule_SkipWeeks}</Text>
+          <TouchableHighlight style={[styles.popupButtonNonImportant, styles.popupButtonRight]} onPress={this._onSkipPressed}>
+            <Text style={styles.popupButtonNonImportantText}>{Res.Strings.schedule_SkipWeeks}</Text>
           </TouchableHighlight>
         </View>
       </View>
@@ -82,8 +86,8 @@ export default class DeliveryPopupView extends Component {
           <Text style={styles.popupSubtitleDate}>{new XDate(delivery.cutoffDate).toString('dddd, MMMM d')}</Text>
         </View>
         <View style={styles.popupButtonContainer}>
-          <TouchableHighlight style={styles.popupButtonImportant}>
-            <Text style={styles.popupButtonText}>{Res.Strings.schedule_UnskipWeek}</Text>
+          <TouchableHighlight style={styles.popupButtonImportant} onPress={this._onUnskipPressed}>
+            <Text style={styles.popupButtonImportantText}>{Res.Strings.schedule_UnskipWeek}</Text>
           </TouchableHighlight>
         </View>
       </View>
@@ -94,7 +98,7 @@ export default class DeliveryPopupView extends Component {
     let { delivery } = this.props;
     let now = new XDate()
     let deliveryDate = new XDate(delivery.deliveryDate)
-    let diffDeliveryDays = now.diffDays(deliveryDate);
+    let diffDeliveryDays = Math.floor(now.diffDays(deliveryDate))
 
     let boxStatus = null;
     if(diffDeliveryDays < 0) {
@@ -117,8 +121,8 @@ export default class DeliveryPopupView extends Component {
           {boxStatus}
         </View>
         <View style={styles.popupButtonContainer}>
-          <TouchableHighlight style={styles.popupButtonImportant}>
-            <Text style={styles.popupButtonText}>{Res.Strings.schedule_ViewMenu}</Text>
+          <TouchableHighlight style={styles.popupButtonImportant} onPress={this._onViewMenuPressed}>
+            <Text style={styles.popupButtonImportantText}>{Res.Strings.schedule_ViewMenu}</Text>
           </TouchableHighlight>
         </View>
       </View>
@@ -135,12 +139,29 @@ export default class DeliveryPopupView extends Component {
           <Text style={styles.popupSubtitleFail}>{Res.Strings.schedule_Skipped}</Text>
         </View>
         <View style={styles.popupButtonContainer}>
-          <TouchableHighlight style={styles.popupButtonImportant}>
-            <Text style={styles.popupButtonText}>{Res.Strings.schedule_ViewMenu}</Text>
+          <TouchableHighlight style={styles.popupButtonImportant} onPress={this._onViewMenuPressed}>
+            <Text style={styles.popupButtonImportantText}>{Res.Strings.schedule_ViewMenu}</Text>
           </TouchableHighlight>
         </View>
       </View>
     );
   }
 
+  _onViewMenuPressed = () => {
+    if(this.props.onViewMenuPressed) {
+      this.props.onViewMenuPressed(this.props.delivery)
+    }
+  }
+
+  _onSkipPressed = () => {
+    if(this.props.onSkipPressed) {
+      this.props.onSkipPressed(this.props.delivery)
+    }
+  }
+
+  _onUnskipPressed = () => {
+    if(this.props.onUnskipPressed) {
+      this.props.onUnskipPressed(this.props.delivery)
+    }
+  }
 };

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { Root } from "native-base"
 import { Provider } from 'react-redux'
 import { SwitchNavigator } from 'react-navigation';
 import SplashScreen from './src/containers/splash'
@@ -31,7 +32,7 @@ export default class App extends Component {
     return (
       <Provider store={storeManager.store}>
         <PersistGate loading={null} persistor={storeManager.persistor}>
-          <RootStack />
+          <Root><RootStack /></Root>
         </PersistGate>
       </Provider>
     );

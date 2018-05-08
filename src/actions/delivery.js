@@ -1,6 +1,7 @@
 import 'cross-fetch/polyfill'
-import { Delivery, DeliveryPropType } from '../entities'
+import { Delivery, DeliveryPropType, DeliveryStatus } from '../entities'
 import { Urls } from '../res'
+import XDate from 'xdate'
 
 /*
 *  Action constants
@@ -8,6 +9,9 @@ import { Urls } from '../res'
 export const REQUEST_DELIVERIES = "REQUEST_DELIVERIES"
 export const RECEIVED_DELIVERIES = "RECEIVED_DELIVERIES"
 export const RECEIVED_DELIVERIES_ERROR = "RECEIVED_DELIVERIES_ERROR"
+export const REQUEST_EDIT_DELIVERY = "REQUEST_EDIT_DELIVERY"
+export const RECEIVED_EDIT_DELIVERY = "RECEIVED_EDIT_DELIVERY"
+export const RECEIVED_EDIT_DELIVERY_ERROR = "RECEIVED_EDIT_DELIVERY_ERROR"
 
 /*
 * Action creators
@@ -28,7 +32,27 @@ function createReceivedDeliveries(deliveries) {
 function createReceivedDeliveriesError(error) {
   return {
     type: RECEIVED_DELIVERIES_ERROR,
-    error: error
+    error
+  }
+}
+
+function createRequestEditDelivery() {
+  return {
+    type: REQUEST_EDIT_DELIVERY
+  }
+}
+
+function createReceivedEditDelivery(delivery) {
+  return {
+    type: RECEIVED_EDIT_DELIVERY,
+    delivery
+  }
+}
+
+function createReceivedEditDeliveryError(error) {
+  return {
+    type: RECEIVED_EDIT_DELIVERY_ERROR,
+    error
   }
 }
 
@@ -50,7 +74,6 @@ export function loadDeliveries(firstWeek, lastWeek) {
       }
     })
     .then(response => {
-		console.log("Response code: ", response.status)
       if(response.status >= 200 && response.status < 300) {
         return response
       } else {
@@ -67,4 +90,79 @@ export function loadDeliveries(firstWeek, lastWeek) {
     })
     .catch(error => dispatch(createReceivedDeliveriesError(error)))
   }
+}
+
+function editDelivery(delivery, edit) {
+  return (dispatch, getState) => {
+    dispatch(createRequestEditDelivery())
+
+    let accessToken = getState().user.userInfo.access_token;
+    let editUrl = Urls.SKIP_DELIVERY_URL
+      .replace('${subscription_id}', delivery.subscriptionId)
+      .replace('${delivery_id}', delivery.id);
+    let getUrl = Urls.GET_DELIVERY_URL
+      .replace('${subscription_id}', delivery.subscriptionId)
+      .replace('${delivery_id}', delivery.id);
+    let params = '?country=ML&locale=en-US';
+    return _fetch(editUrl + params, {
+      method: 'PATCH',
+      body: JSON.stringify(edit),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`
+      }
+    })
+    .then(response => _fetch(getUrl + params, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`
+      }
+    }))
+    .then(response => response.json())
+    .then(json => {
+      let newDelivery = new Delivery(json)
+      newDelivery.subscriptionId = delivery.subscriptionId //FIX: should be removed if they fix the backend!
+      dispatch(createReceivedEditDelivery(newDelivery))
+      return newDelivery
+    })
+    .catch(error => dispatch(createReceivedEditDeliveryError(error)))
+  }
+}
+
+export function skipDelivery(delivery) {
+  let editObj = {
+    "delivery": {
+      "status": DeliveryStatus.PAUSED,
+      "deliveryDate": new XDate(delivery.deliveryDate).toString('u')
+    }
+  };
+  return editDelivery(delivery, editObj);
+}
+
+export function unskipDelivery(delivery) {
+  let editObj = {
+    "delivery": {
+      "status": DeliveryStatus.RUNNING,
+      "deliveryDate": new XDate(delivery.deliveryDate).toString('u')
+    }
+  };
+  return editDelivery(delivery, editObj);
+}
+
+/*
+* Helpers(Will be handled by network layer later!)
+*/
+function _fetch(url, options) {
+  return fetch(url, options)
+    .then(response => {
+      if(response.status >= 200 && response.status < 300) {
+        return response
+      } else {
+        console.log(`Error calling api! url=${url} status:${response.status}`);
+        throw response.statusText
+      }
+    })
 }

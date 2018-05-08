@@ -5,8 +5,7 @@ import CalendarWeekHeaderView from './CalendarWeekHeaderView.js'
 import * as Res from '../../res'
 import { Calendar, CalendarList, Agenda, LocaleConfig } from '../ReactNativeCalendar'
 import * as Styles from './style.js'
-
-const XDate = require('xdate');
+import XDate from 'xdate'
 
 export default class CalendarView extends Component {
   static propTypes = {
@@ -25,9 +24,6 @@ export default class CalendarView extends Component {
       selectedDate: XDate(Date.now()).toString('yyyy-MM-dd'),
       markedDates: {}
     };
-    this.state.markedDates = Object.assign({}, this._getNormalStyles(this.props.datesStyle), {
-      [this.state.selectedDate]: this._getSelectedStyleForDate(this.props.datesStyle, this.state.selectedDate)
-    });
     this._initLocale();
   }
 
@@ -39,6 +35,15 @@ export default class CalendarView extends Component {
       dayNamesShort: Res.Strings.calendar_DayNamesShort
     });
     LocaleConfig.defaultLocale = 'en';
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    let newMarkedDates = Object.assign({}, CalendarView._getNormalStyles(nextProps.datesStyle), {
+      [prevState.selectedDate]: CalendarView._getSelectedStyleForDate(nextProps.datesStyle, prevState.selectedDate, nextProps)
+    });
+    return {
+      markedDates: newMarkedDates
+    }
   }
 
   render() {
@@ -63,31 +68,34 @@ export default class CalendarView extends Component {
     );
   }
 
-  _getNormalStyles(datesStyle) {
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if(this.state.selectedDate !== prevState.selectedDate) {
+      this.props.onDaySelected(this.state.selectedDate)
+    }
+  }
+
+  static _getNormalStyles(datesStyle) {
     let arrStyles = Object.keys(datesStyle).map((key) => { return { [key]: datesStyle[key].normal }});
     return Object.assign({}, ...arrStyles);
   }
 
-  _getSelectedStyleForDate(datesStyle, date) {
+  static _getSelectedStyleForDate(datesStyle, date, props) {
     let style = datesStyle[date];
     if(style !== undefined && style.selected !== undefined) {
       return style.selected
     } else {
-      return this.props.defaultSelectedDateStyle
+      return props.defaultSelectedDateStyle
     }
   }
 
   _changeCurrentDate(day) {
     let dateString = day.dateString
-    let markedDates = Object.freeze(Object.assign({}, this._getNormalStyles(this.props.datesStyle),
-      { [dateString]: this._getSelectedStyleForDate(this.props.datesStyle, dateString) }
+    let markedDates = Object.freeze(Object.assign({}, CalendarView._getNormalStyles(this.props.datesStyle),
+      { [dateString]: CalendarView._getSelectedStyleForDate(this.props.datesStyle, dateString, this.props) }
     ));
     this.setState({
       selectedDate: dateString,
       markedDates: markedDates
     });
-    if(this.props.onDaySelected) {
-      this.props.onDaySelected(day)
-    }
   }
 }

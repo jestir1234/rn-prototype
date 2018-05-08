@@ -40,11 +40,13 @@ class _scheduleScreen extends PureComponent {
       : null;
 
     return (
-      <View style={styles.rootContainer}>
-        {message}
-        {list}
-        {progress}
-        {skipDialog}
+      <View style={Res.Styles.safeAreaTop}>
+        <View style={styles.rootContainer}>
+          {message}
+          {list}
+          {progress}
+          {skipDialog}
+        </View>
       </View>
     )
   }
@@ -106,6 +108,7 @@ class _scheduleScreen extends PureComponent {
     return (
       <View style={styles.listContainer}>
         <CalendarView
+          testID='calendar'
           futureScrollRange={this._displayWeekRange().monthCount}
           defaultSelectedDateStyle={ CalendarStyles.customFilledCircle(Res.Colors.scheduleNonDelivery) }
           datesStyle={this._styledDates()}

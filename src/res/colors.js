@@ -7,3 +7,6 @@ export const windowBackground = '#ffffff';
 export const scheduleNonDelivery = '#D0D0D0';
 export const nonImportantButton = '#f0f0f0'
 export const scheduleTags = '#f4db99';
+export const bottomNavigationBackground = primary;
+export const bottomNavigationActiveTintColor = '#ffffff';
+export const bottomNavigationInactiveTintColor = '#ffffffbb';

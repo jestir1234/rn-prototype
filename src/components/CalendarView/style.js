@@ -143,3 +143,9 @@ export const theme = (dynamicHeight) => {
 
   return Object.assign({}, normStyles, calendarHeightStyle);
 };
+
+export const calendar = StyleSheet.create({
+  rootContainer: {
+    backgroundColor: 'white'
+  }
+});

@@ -21,6 +21,7 @@ project.ext.react = [
         // whether to bundle JS and assets in debug mode
         bundleInDebug        : false,
 
+        // whether to bundle JS and assets in Staging mode
         bundleInStaging      : true,
 
         // whether to bundle JS and assets in release mode
@@ -48,14 +49,14 @@ project.ext.react = [
         root                 : "../../",
 
         // where to put the JS bundle asset in staging mode
-        jsBundleDirStaging   : "$buildDir/intermediates/assets/staging",
+        jsBundleDirDebug     : "$buildDir/intermediates/assets/debug",
 
         // where to put the JS bundle asset in release mode
         jsBundleDirRelease   : "$buildDir/intermediates/assets/release",
 
         // where to put drawable resources / React Native assets, e.g. the ones you use via
         // require('./image.png')), in staging mode
-        resourcesDirStaging  : "$buildDir/intermediates/res/merged/staging",
+        resourcesDirDebug    : "$buildDir/intermediates/res/merged/debug",
 
         // where to put drawable resources / React Native assets, e.g. the ones you use via
         // require('./image.png')), in release mode
@@ -137,6 +138,17 @@ android {
             shrinkResources false
             zipAlignEnabled false
         }
+        staging {
+            applicationIdSuffix '.staging'
+            signingConfig signingConfigs.debug
+
+            debuggable true
+            minifyEnabled false
+            shrinkResources false
+            zipAlignEnabled false
+            matchingFallbacks = ['debug']
+        }
+
         release {
             signingConfig signingConfigs.release
             minifyEnabled true

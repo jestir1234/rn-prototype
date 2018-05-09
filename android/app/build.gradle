@@ -123,15 +123,15 @@ android {
 
         release {
             storeFile file("../keystores/release.keystore")
-            storePassword 'goreadymade123'
+            storePassword 'GoReadyMade1234'
             keyAlias 'GoReadyMade'
-            keyPassword 'goreadymade123'
+            keyPassword 'GoReadyMade1234'
         }
     }
     buildTypes {
         debug {
+            manifestPlaceholders = [app_name: "GRM Debug"]
             applicationIdSuffix '.debug'
-            resValue "string", "app_name", "GRM debug"
             signingConfig signingConfigs.debug
 
             debuggable true
@@ -140,10 +140,9 @@ android {
             zipAlignEnabled false
         }
         staging {
+            manifestPlaceholders = [app_name: "GRM Staging"]
             applicationIdSuffix '.staging'
-            resValue "string", "app_name", "GRM Staging"
             signingConfig signingConfigs.debug
-
             debuggable true
             minifyEnabled false
             shrinkResources false
@@ -152,7 +151,7 @@ android {
         }
 
         release {
-            resValue "string", "app_name", "GoReadyMade"
+            manifestPlaceholders = [app_name: "GoReadyMade"]
             signingConfig signingConfigs.release
             minifyEnabled true
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"

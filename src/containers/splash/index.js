@@ -36,7 +36,7 @@ class _splashScreen extends PureComponent {
 
   render() {
     return (
-      <View style={styles.rootContainer}>
+      <View style={styles.rootContainer} testID="SplashScreenTestId">
         <Image
           source={require('../../res/image/splash-logo-hdpi.png')}
           style={styles.imageView} />

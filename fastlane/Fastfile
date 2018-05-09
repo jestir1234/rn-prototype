@@ -43,7 +43,7 @@ platform :ios do
     build_number = options[:build_number]
     UI.crash!("You didn\'t specified the build number") if build_number == nil
 
-    ensure_git_branch(branch: DEVELOPMENT_BRANCH_NAME)
+    # ensure_git_branch(branch: DEVELOPMENT_BRANCH_NAME)
 
     set_build_number(job_build_number: build_number)
 

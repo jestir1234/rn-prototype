@@ -4,7 +4,7 @@
     "name": "Go Ready Made",
     "version": "1.0.0",
     "ios": {
-      "bundleIdentifier": "com.hellofresh.goreadymade",
+      "bundleIdentifier": "com.grm.customer",
       "buildNumber": "1.0.0",
       "icon": "./app-icon.png",
       "splash": {
@@ -14,7 +14,7 @@
       }
     },
     "android": {
-      "package": "com.hellofresh.goreadymade",
+      "package": "com.grm.customer",
       "versionCode": 1,
       "icon": "./app-icon.png",
       "splash": {

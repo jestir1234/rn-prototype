@@ -1,3 +1,3 @@
-app_identifier "com.hellofresh.goreadymade" # The bundle identifier of your app
-apple_id "silvio.fragnani@rocket-internet.de" # Your Apple email address
+app_identifier "com.grm.customer" # The bundle identifier of your app
+apple_id "sheraz.khilji@rocket-internet.de" # Your Apple email address
 team_id "92UNL35DF8"  # Developer Portal Team ID

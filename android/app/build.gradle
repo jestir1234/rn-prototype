@@ -92,10 +92,10 @@ android {
     buildToolsVersion '26.0.2'
 
     defaultConfig {
-        applicationId "com.hellofresh.goreadymade"
+        applicationId "com.grm.customer"
         minSdkVersion 18
         targetSdkVersion 27
-        System.getenv("VERSION_CODE") as Integer ?: 1
+        versionCode System.getenv("VERSION_CODE") as Integer ?: 2
         versionName System.getenv('VERSION_NAME') ?: "1.0"
         testBuildType System.getProperty('testBuildType', 'debug')
         //this will later be used to control the test apk build type
@@ -123,14 +123,15 @@ android {
 
         release {
             storeFile file("../keystores/release.keystore")
-            storePassword 'GoReadyMade1234'
+            storePassword 'goreadymade123'
             keyAlias 'GoReadyMade'
-            keyPassword 'GoReadyMade1234'
+            keyPassword 'goreadymade123'
         }
     }
     buildTypes {
         debug {
             applicationIdSuffix '.debug'
+            resValue "string", "app_name", "GRM debug"
             signingConfig signingConfigs.debug
 
             debuggable true
@@ -140,6 +141,7 @@ android {
         }
         staging {
             applicationIdSuffix '.staging'
+            resValue "string", "app_name", "GRM Staging"
             signingConfig signingConfigs.debug
 
             debuggable true
@@ -150,6 +152,7 @@ android {
         }
 
         release {
+            resValue "string", "app_name", "GoReadyMade"
             signingConfig signingConfigs.release
             minifyEnabled true
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"

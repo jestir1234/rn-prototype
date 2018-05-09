@@ -45,10 +45,10 @@ export default class SkipDialog extends Component {
             <Text style={styles.titleDate}>{formattedDate}</Text>
             <Text style={styles.subtitle}>{Res.Strings.schedule_SkipDeliveryMessage}</Text>
             <View style={styles.buttonContainer}>
-              <TouchableHighlight style={styles.buttonSecondary} onPress={this._onCancelPressed}>
+              <TouchableHighlight style={styles.buttonSecondary} onPress={this._onCancelPressed} underlayColor={Res.Colors.nonImportantButtonDark}>
                 <Text style={styles.buttonSecondaryText}>{Res.Strings.schedule_SkipDeliveryCancel}</Text>
               </TouchableHighlight>
-              <TouchableHighlight style={styles.buttonPrimary} onPress={this._onSkipPressed}>
+              <TouchableHighlight style={styles.buttonPrimary} onPress={this._onSkipPressed} underlayColor={Res.Colors.primaryDark}>
                 <Text style={styles.buttonPrimaryText}>{Res.Strings.schedule_SkipDeliverySkipWeek}</Text>
               </TouchableHighlight>
             </View>

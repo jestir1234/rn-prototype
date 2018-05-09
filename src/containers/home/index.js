@@ -3,10 +3,16 @@ import { StyleSheet, Text, View, Button } from 'react-native'
 import { TabNavigator, TabBarBottom } from 'react-navigation'
 import { Icon } from 'native-base';
 import { connect } from 'react-redux'
+import * as Res from '../../res'
+
 
 import ContactScreen from '../contact'
 import ProfileScreen from '../profile'
 import ScheduleScreen from '../schedule'
+
+const SafeTabBarBottom = (props) => {
+  return <TabBarBottom {...props} style={[props.style, {backgroundColor: Res.Colors.bottomNavigationBackground}]} />
+}
 
 const HomeTabNavigator = TabNavigator (
   {
@@ -32,14 +38,16 @@ const HomeTabNavigator = TabNavigator (
             style={{fontSize: 24, color: tintColor}}/>;
       },
     }),
-    tabBarComponent: TabBarBottom,
+    tabBarComponent: SafeTabBarBottom,
     swipeEnabled: false,
     animationEnabled: false,
     backBehavior: 'none',
     tabBarPosition: 'bottom',
     tabBarOptions: {
-      activeTintColor: '#50d691',
-      inactiveTintColor: '#acacac',
+      activeBackgroundColor: Res.Colors.bottomNavigationBackground,
+      inactiveBackgroundColor: Res.Colors.bottomNavigationBackground,
+      activeTintColor: Res.Colors.bottomNavigationActiveTintColor,
+      inactiveTintColor: Res.Colors.bottomNavigationInactiveTintColor
     }
   }
 )

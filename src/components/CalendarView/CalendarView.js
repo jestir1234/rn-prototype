@@ -48,7 +48,7 @@ export default class CalendarView extends Component {
 
   render() {
     return (
-      <View style={{ marginTop: 24 }} testID="calendar">
+      <View style={Styles.calendar.rootContainer}>
         <CalendarWeekHeaderView
           dayNames={LocaleConfig.locales[LocaleConfig.defaultLocale].dayNamesShort}
         />

@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Platform } from 'react-native'
 import * as Res from '../../res'
 
 const styles = StyleSheet.create({
@@ -8,7 +8,8 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'stretch',
     width: '100%',
-    height: '100%'
+    height: '100%',
+    backgroundColor: Res.Colors.windowBackground
   },
   loadingContainer: {
     flex: 1,

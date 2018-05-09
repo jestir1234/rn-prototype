@@ -1,12 +1,15 @@
 import React, { PureComponent } from 'react'
 import { StyleSheet, View, Text } from 'react-native'
+import * as Res from '../../res'
 
 export default class ContactScreen extends PureComponent {
-  
+
   render() {
     return (
-      <View style={{backgroundColor: '#999', flex: 1}}>
-        <Text style={styles.text}>Contact</Text>
+      <View style={Res.Styles.safeAreaTop}>
+        <View style={styles.rootContainer}>
+          <Text style={styles.text}>Contact</Text>
+        </View>
       </View>
     );
   }
@@ -15,6 +18,7 @@ export default class ContactScreen extends PureComponent {
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
+    backgroundColor: Res.Colors.windowBackground
   },
   text: {
     fontSize: 20,

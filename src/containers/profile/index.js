@@ -17,19 +17,21 @@ class _profileScreen extends PureComponent {
 
   render() {
     return (
-      <View style={styles.rootContainer}>
-        <View style={styles.fieldsContainer}>
-          <Text style={styles.text}>Profile</Text>
-            <Button
-              id="LogoutId"
-              testID="LogoutTestId"
-              accessibilityLabel="LogoutAccessibilityLabel"
-              title="Logout"
-              onPress={() => this._onLogoutRequested()}
-              color={Res.Colors.primary} />
-        </View>
+      <View style={Res.Styles.safeAreaTop}>
+        <View style={styles.rootContainer}>
+          <View style={styles.fieldsContainer}>
+            <Text style={styles.text}>Profile</Text>
+              <Button
+                id="LogoutId"
+                testID="LogoutTestId"
+                accessibilityLabel="LogoutAccessibilityLabel"
+                title="Logout"
+                onPress={() => this._onLogoutRequested()}
+                color={Res.Colors.primary} />
+          </View>
 
-        {this._loadingView()}
+          {this._loadingView()}
+        </View>
       </View>
     );
   }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, StatusBar } from 'react-native';
 import { Root } from "native-base"
 import { Provider } from 'react-redux'
 import { SwitchNavigator } from 'react-navigation';
@@ -9,6 +9,7 @@ import HomeScreen from './src/containers/home'
 import provideStoreManager from './src/stores'
 import { YellowBox } from 'react-native';
 import { PersistGate } from 'redux-persist/integration/react'
+import * as Res from './src/res'
 
 if (__DEV__) {
   require('react-devtools');
@@ -32,7 +33,12 @@ export default class App extends Component {
     return (
       <Provider store={storeManager.store}>
         <PersistGate loading={null} persistor={storeManager.persistor}>
-          <Root><RootStack /></Root>
+          <Root>
+            <StatusBar
+              backgroundColor={Res.Colors.bottomNavigationBackground}
+              barStyle="light-content" />
+            <RootStack />
+          </Root>
         </PersistGate>
       </Provider>
     );

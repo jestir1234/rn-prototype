@@ -65,10 +65,10 @@ export default class DeliveryPopupView extends Component {
           <Text style={styles.popupSubtitleDate}>{new XDate(delivery.cutoffDate).toString('dddd, MMMM d')}</Text>
         </View>
         <View style={styles.popupButtonContainer}>
-          <TouchableHighlight style={[styles.popupButtonImportant, styles.popupButtonLeft]} onPress={this._onViewMenuPressed}>
+          <TouchableHighlight style={[styles.popupButtonImportant, styles.popupButtonLeft]} onPress={this._onViewMenuPressed} underlayColor={Res.Colors.primaryDark}>
             <Text style={styles.popupButtonImportantText}>{Res.Strings.schedule_ViewMenu}</Text>
           </TouchableHighlight>
-          <TouchableHighlight style={[styles.popupButtonNonImportant, styles.popupButtonRight]} onPress={this._onSkipPressed}>
+          <TouchableHighlight style={[styles.popupButtonNonImportant, styles.popupButtonRight]} onPress={this._onSkipPressed} underlayColor={Res.Colors.nonImportantButtonDark}>
             <Text style={styles.popupButtonNonImportantText}>{Res.Strings.schedule_SkipWeeks}</Text>
           </TouchableHighlight>
         </View>
@@ -86,7 +86,7 @@ export default class DeliveryPopupView extends Component {
           <Text style={styles.popupSubtitleDate}>{new XDate(delivery.cutoffDate).toString('dddd, MMMM d')}</Text>
         </View>
         <View style={styles.popupButtonContainer}>
-          <TouchableHighlight style={styles.popupButtonImportant} onPress={this._onUnskipPressed}>
+          <TouchableHighlight style={styles.popupButtonImportant} onPress={this._onUnskipPressed} underlayColor={Res.Colors.primaryDark}>
             <Text style={styles.popupButtonImportantText}>{Res.Strings.schedule_UnskipWeek}</Text>
           </TouchableHighlight>
         </View>
@@ -121,7 +121,7 @@ export default class DeliveryPopupView extends Component {
           {boxStatus}
         </View>
         <View style={styles.popupButtonContainer}>
-          <TouchableHighlight style={styles.popupButtonImportant} onPress={this._onViewMenuPressed}>
+          <TouchableHighlight style={styles.popupButtonImportant} onPress={this._onViewMenuPressed} underlayColor={Res.Colors.primaryDark}>
             <Text style={styles.popupButtonImportantText}>{Res.Strings.schedule_ViewMenu}</Text>
           </TouchableHighlight>
         </View>
@@ -139,7 +139,7 @@ export default class DeliveryPopupView extends Component {
           <Text style={styles.popupSubtitleFail}>{Res.Strings.schedule_Skipped}</Text>
         </View>
         <View style={styles.popupButtonContainer}>
-          <TouchableHighlight style={styles.popupButtonImportant} onPress={this._onViewMenuPressed}>
+          <TouchableHighlight style={styles.popupButtonImportant} onPress={this._onViewMenuPressed} underlayColor={Res.Colors.primaryDark}>
             <Text style={styles.popupButtonImportantText}>{Res.Strings.schedule_ViewMenu}</Text>
           </TouchableHighlight>
         </View>

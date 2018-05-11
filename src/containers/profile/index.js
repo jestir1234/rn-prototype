@@ -20,7 +20,7 @@ class _profileScreen extends PureComponent {
       <View style={Res.Styles.safeAreaTop}>
         <View style={styles.rootContainer}>
           <View style={styles.fieldsContainer}>
-            <Text style={styles.header}>{Res.Strings.profile_Profile}</Text>
+            <Text style={styles.header}>{Res.Strings.profile_Title}</Text>
             <TouchableHighlight
               id="LogoutId"
               testID="LogoutTestId"
@@ -28,7 +28,7 @@ class _profileScreen extends PureComponent {
               style={styles.logoutButton}
               onPress={() => this._onLogoutRequested()}
               color={Res.Colors.primary}>
-              <Text style={styles.logoutText}>{Res.Strings.profile_logout}</Text>
+              <Text style={styles.logoutText}>{Res.Strings.profile_Logout}</Text>
             </TouchableHighlight>
           </View>
 

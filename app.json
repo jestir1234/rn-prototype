@@ -6,24 +6,26 @@
     "ios": {
       "bundleIdentifier": "com.grm.customer",
       "buildNumber": "1.0.0",
-      "icon": "./app-icon.png",
+      "icon": "./src/res/image/app-icon.png",
       "splash": {
         "backgroundColor": "#53D493",
         "resizeMode": "contain",
-        "hdpi": "./splash-logo-hdpi.png"
+        "image": "./src/res/image/splash-logo-hdpi.png"
       }
     },
     "android": {
       "package": "com.grm.customer",
       "versionCode": 1,
-      "icon": "./app-icon.png",
+      "icon": "./src/res/image/app-icon.png",
       "splash": {
         "backgroundColor": "#53D493",
         "resizeMode": "contain",
-        "hdpi": "./splash-logo-hdpi.png"
+        "hdpi": "./src/res/image/splash-logo-hdpi.png"
       }
     },
     "slug": "GoReadyMade",
     "orientation": "portrait"
-  }
+  },
+  "name": "GoReadyMade",
+  "displayName": "Go Ready Made"
 }

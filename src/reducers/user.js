@@ -1,11 +1,7 @@
 import { UserAction } from '../actions'
 
 let initState = {
-  isLoggedIn: false,
-  isLoading: false,
-  userInfo: null,
-  authErrorType: null,
-  authErrorMessage: null
+  userInfo: null
 };
 
 const userReducer = (state = initState, action) => {
@@ -17,15 +13,31 @@ const userReducer = (state = initState, action) => {
         isLoggedIn: true,
         isLoading: false,
         userInfo: action.userInfo,
-        authErrorType: null,
-        authErrorMessage: null
+        emailErrorMessage: ' ',
+        passwordErrorMessage: ' ',
+        authErrorMessage: ' '
+      });
+    case UserAction.RECEIVED_USER_ERROR:
+      return Object.assign({}, state, {
+        isLoggedIn: false,
+        userInfo: null,
+        emailErrorMessage: action.authErrorMessage,
+        authErrorMessage: ' '
+      });
+    case UserAction.RECEIVED_PASSWORD_ERROR:
+      return Object.assign({}, state, {
+        isLoggedIn: false,
+        userInfo: null,
+        passwordErrorMessage: action.authErrorMessage,
+        authErrorMessage: ' '
       });
     case UserAction.RECEIVED_AUTHENTICATION_ERROR:
       return Object.assign({}, state, {
         isLoggedIn: false,
         isLoading: false,
         userInfo: null,
-        authErrorType: action.authErrorType,
+        emailErrorMessage: ' ',
+        passwordErrorMessage: ' ',
         authErrorMessage: action.authErrorMessage
       });
     case UserAction.RECEIVED_LOGOUT:
@@ -33,16 +45,20 @@ const userReducer = (state = initState, action) => {
         isLoggedIn: false,
         isLoading: false,
         userInfo: null,
-        authErrorType: null,
-        authErrorMessage: null
+        emailErrorMessage: ' ',
+        passwordErrorMessage: ' ',
+        authErrorMessage: ' '
       });
     case UserAction.RECEIVED_LOGOUT_ERROR:
       return Object.assign({}, state, {
         isLoggedIn: true,
         isLoading: false,
-        authErrorType: null,
+        emailErrorMessage: ' ',
+        passwordErrorMessage: ' ',
         authErrorMessage: action.errorMessage
       });
+    case UserAction.STOP_LOADING:
+      return Object.assign({}, state, { isLoading: false });
     default:
       return state;
   }

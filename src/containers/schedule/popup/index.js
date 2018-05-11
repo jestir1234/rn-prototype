@@ -1,5 +1,6 @@
 import React, { PureComponent, Component } from 'react'
 import { View, Text, TouchableHighlight, StyleSheet } from 'react-native'
+import { Icon } from 'native-base'
 import PropTypes from 'prop-types'
 import { Delivery, DeliveryPropType, DeliveryStatus } from '../../../entities'
 import XDate from 'xdate'
@@ -11,7 +12,8 @@ export default class DeliveryPopupView extends Component {
     delivery: DeliveryPropType.isRequired,
     onViewMenuPressed: PropTypes.func,
     onSkipPressed: PropTypes.func,
-    onUnskipPressed: PropTypes.func
+    onUnskipPressed: PropTypes.func,
+    onClosePressed: PropTypes.func
   };
   static measuredHeight = () => {
     return StyleSheet.flatten(styles.popupContainer).height;
@@ -59,7 +61,10 @@ export default class DeliveryPopupView extends Component {
     let { delivery } = this.props;
     return (
       <View style={styles.popupContainer}>
-        <Text style={styles.popupTitle}>{new XDate(delivery.deliveryDate).toString('dddd, MMMM d')}</Text>
+        <View style={styles.popupTitleContainer}>
+          <Icon name={'calendar'} type={'Entypo'} style={styles.popupTitleIcon}/>
+          <Text style={styles.popupTitle}>{new XDate(delivery.deliveryDate).toString('dddd, MMMM d')}</Text>
+        </View>
         <View style={styles.popupSubtitleContainer}>
           <Text style={styles.popupSubtitleMessage}>{Res.Strings.schedule_ChangeMealsOrSkip}</Text>
           <Text style={styles.popupSubtitleDate}>{new XDate(delivery.cutoffDate).toString('dddd, MMMM d')}</Text>
@@ -72,6 +77,9 @@ export default class DeliveryPopupView extends Component {
             <Text style={styles.popupButtonNonImportantText}>{Res.Strings.schedule_SkipWeeks}</Text>
           </TouchableHighlight>
         </View>
+        <TouchableHighlight style={styles.popupClose} onPress={this._onClosePressed} underlayColor={Res.Colors.windowBackground}>
+          <Icon name={'close'} type={'EvilIcons'} style={styles.popupCloseIcon}/>
+        </TouchableHighlight>
       </View>
     );
   }
@@ -80,7 +88,10 @@ export default class DeliveryPopupView extends Component {
     let { delivery } = this.props;
     return (
       <View style={styles.popupContainer}>
-        <Text style={styles.popupTitle}>{new XDate(delivery.deliveryDate).toString('dddd, MMMM d')}</Text>
+        <View style={styles.popupTitleContainer}>
+          <Icon name={'calendar'} type={'Entypo'} style={styles.popupTitleIcon}/>
+          <Text style={styles.popupTitle}>{new XDate(delivery.deliveryDate).toString('dddd, MMMM d')}</Text>
+        </View>
         <View style={styles.popupSubtitleContainer}>
           <Text style={styles.popupSubtitleMessage}>{Res.Strings.schedule_UnskipWeekBy}</Text>
           <Text style={styles.popupSubtitleDate}>{new XDate(delivery.cutoffDate).toString('dddd, MMMM d')}</Text>
@@ -90,6 +101,9 @@ export default class DeliveryPopupView extends Component {
             <Text style={styles.popupButtonImportantText}>{Res.Strings.schedule_UnskipWeek}</Text>
           </TouchableHighlight>
         </View>
+        <TouchableHighlight style={styles.popupClose} onPress={this._onClosePressed} underlayColor={Res.Colors.windowBackground}>
+          <Icon name={'close'} type={'EvilIcons'} style={styles.popupCloseIcon}/>
+        </TouchableHighlight>
       </View>
     );
   }
@@ -115,7 +129,10 @@ export default class DeliveryPopupView extends Component {
 
     return (
       <View style={styles.popupContainer}>
-        <Text style={styles.popupTitle}>{new XDate(delivery.deliveryDate).toString('dddd, MMMM d')}</Text>
+        <View style={styles.popupTitleContainer}>
+          <Icon name={'calendar'} type={'Entypo'} style={styles.popupTitleIcon}/>
+          <Text style={styles.popupTitle}>{new XDate(delivery.deliveryDate).toString('dddd, MMMM d')}</Text>
+        </View>
         <View style={styles.popupSubtitleContainer}>
           <Text style={styles.popupSubtitleMessage}>{Res.Strings.schedule_BoxStatus}</Text>
           {boxStatus}
@@ -125,6 +142,9 @@ export default class DeliveryPopupView extends Component {
             <Text style={styles.popupButtonImportantText}>{Res.Strings.schedule_ViewMenu}</Text>
           </TouchableHighlight>
         </View>
+        <TouchableHighlight style={styles.popupClose} onPress={this._onClosePressed} underlayColor={Res.Colors.windowBackground}>
+          <Icon name={'close'} type={'EvilIcons'} style={styles.popupCloseIcon}/>
+        </TouchableHighlight>
       </View>
     );
   }
@@ -133,7 +153,10 @@ export default class DeliveryPopupView extends Component {
     let { delivery } = this.props;
     return (
       <View style={styles.popupContainer}>
-        <Text style={styles.popupTitle}>{new XDate(delivery.deliveryDate).toString('dddd, MMMM d')}</Text>
+        <View style={styles.popupTitleContainer}>
+          <Icon name={'calendar'} type={'Entypo'} style={styles.popupTitleIcon}/>
+          <Text style={styles.popupTitle}>{new XDate(delivery.deliveryDate).toString('dddd, MMMM d')}</Text>
+        </View>
         <View style={styles.popupSubtitleContainer}>
           <Text style={styles.popupSubtitleMessage}>{Res.Strings.schedule_BoxStatus}</Text>
           <Text style={styles.popupSubtitleFail}>{Res.Strings.schedule_Skipped}</Text>
@@ -143,6 +166,9 @@ export default class DeliveryPopupView extends Component {
             <Text style={styles.popupButtonImportantText}>{Res.Strings.schedule_ViewMenu}</Text>
           </TouchableHighlight>
         </View>
+        <TouchableHighlight style={styles.popupClose} onPress={this._onClosePressed} underlayColor={Res.Colors.windowBackground}>
+          <Icon name={'close'} type={'EvilIcons'} style={styles.popupCloseIcon}/>
+        </TouchableHighlight>
       </View>
     );
   }
@@ -162,6 +188,12 @@ export default class DeliveryPopupView extends Component {
   _onUnskipPressed = () => {
     if(this.props.onUnskipPressed) {
       this.props.onUnskipPressed(this.props.delivery)
+    }
+  }
+
+  _onClosePressed = () => {
+    if(this.props.onClosePressed) {
+      this.props.onClosePressed(this.props.delivery)
     }
   }
 };

@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { StyleSheet, View, Text, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { StyleSheet, View, Text, ActivityIndicator, TouchableHighlight } from 'react-native'
 import * as Res from '../../res'
 import styles from './style.js'
 import { connect } from 'react-redux'
@@ -20,16 +20,16 @@ class _profileScreen extends PureComponent {
       <View style={Res.Styles.safeAreaTop}>
         <View style={styles.rootContainer}>
           <View style={styles.fieldsContainer}>
-            <Text style={styles.text}>{Res.Strings.profile_title}</Text>
-              <TouchableOpacity
-                id="LogoutId"
-                testID="LogoutTestId"
-                accessibilityLabel="LogoutAccessibilityLabel"
-                onPress={() => this._onLogoutRequested()}
-                style={[styles.button, {backgroundColor: Res.Colors.primary}]} >
-                <Text
-                  style={styles.buttonText} >{Res.Strings.profile_logout_button}</Text>
-              </TouchableOpacity>
+            <Text style={styles.header}>{Res.Strings.profile_Profile}</Text>
+            <TouchableHighlight
+              id="LogoutId"
+              testID="LogoutTestId"
+              accessibilityLabel="LogoutAccessibilityLabel"
+              style={styles.logoutButton}
+              onPress={() => this._onLogoutRequested()}
+              color={Res.Colors.primary}>
+              <Text style={styles.logoutText}>{Res.Strings.profile_logout}</Text>
+            </TouchableHighlight>
           </View>
 
           {this._loadingView()}

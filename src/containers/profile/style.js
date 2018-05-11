@@ -5,15 +5,18 @@ const styles = StyleSheet.create({
   rootContainer: {
     backgroundColor: Res.Colors.windowBackground,
     flex: 1,
+    width: '100%',
+    height: '100%',
   },
   fieldsContainer: {
     display: 'flex',
-    flex: -1,
+    flex: 1,
     flexDirection: 'column',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'stretch',
-    marginTop: 24,
-    padding: 16
+    padding: 16,
+    width: '100%',
+    height: '100%',
   },
   loadingContainer: {
     backgroundColor: Res.Colors.loadingOverlay,
@@ -24,22 +27,22 @@ const styles = StyleSheet.create({
     height: '100%',
     position: 'absolute'
   },
-  button: {
+  header: {
+    fontSize: 18,
+  },
+  logoutButton: {
+    display: 'flex',
+    backgroundColor: Res.Colors.primary,
     height: 40,
-    width: '100%',
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginTop: 16
   },
-  buttonText: {
+  logoutText: {
     color: 'white',
     fontSize: 16,
     fontWeight: 'bold'
-  },
-  text: {
-    fontSize: 20,
-    marginTop: 50,
-    marginLeft: 50,
   }
 });
   

@@ -13,10 +13,21 @@ const styles = StyleSheet.create({
     height: 132,
     backgroundColor: 'white'
   },
+  popupTitleContainer: {
+    flex: -1,
+    flexDirection: 'row',
+    justifyContent: 'flex-start'
+  },
+  popupTitleIcon: {
+    fontSize: 20,
+    color: Res.Colors.primaryText,
+    marginTop: 4
+  },
   popupTitle: {
     color: Res.Colors.primaryText,
     fontSize: 20,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    marginLeft: 4
   },
   popupSubtitleContainer: {
     flex: -1,
@@ -93,6 +104,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold'
   },
+  popupClose: {
+    position: 'absolute',
+    right: 0,
+    marginRight: 16,
+    marginTop: 16
+  },
+  popupCloseIcon: {
+    fontSize: 20,
+    color: Res.Colors.primaryText
+  }
 });
 
 export default styles;

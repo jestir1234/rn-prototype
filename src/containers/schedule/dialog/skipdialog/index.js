@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { StyleSheet, Dimensions, View, Text, Image, TouchableHighlight } from 'react-native'
+import { Icon } from 'native-base'
 import PopupDialog from 'react-native-popup-dialog'
 import PropTypes from 'prop-types'
 import styles from './style.js'
@@ -53,6 +54,9 @@ export default class SkipDialog extends Component {
               </TouchableHighlight>
             </View>
           </View>
+          <TouchableHighlight style={styles.close} onPress={this._onCancelPressed} underlayColor={Res.Colors.transparent}>
+            <Icon name={'close'} type={'EvilIcons'} style={styles.closeIcon}/>
+          </TouchableHighlight>
         </View>
       </PopupDialog>
     )

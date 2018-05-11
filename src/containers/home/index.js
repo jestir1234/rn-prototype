@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import { StyleSheet, Text, View, Button } from 'react-native'
 import { TabNavigator, TabBarBottom } from 'react-navigation'
-import { Icon } from 'native-base';
+import { Icon } from 'native-base'
 import { connect } from 'react-redux'
 import * as Res from '../../res'
 

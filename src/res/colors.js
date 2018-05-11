@@ -5,6 +5,7 @@ export const primaryText = '#4c4c4c';
 export const secondaryText = '#777777';
 export const windowBackground = '#ffffff';
 export const loadingOverlay = '#00000022';
+export const transparent = '#ffffff00'
 
 export const scheduleNonDelivery = '#D0D0D0';
 export const nonImportantButton = '#f0f0f0'

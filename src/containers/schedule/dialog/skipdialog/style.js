@@ -70,6 +70,16 @@ const styles = StyleSheet.create({
     color: Res.Colors.primaryText,
     fontSize: 16,
     fontWeight: 'bold'
+  },
+  close: {
+    position: 'absolute',
+    right: 0,
+    marginRight: 3,
+    marginTop: 8
+  },
+  closeIcon: {
+    fontSize: 20,
+    color: 'white'
   }
 });
 

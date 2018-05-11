@@ -82,7 +82,8 @@ class _scheduleScreen extends PureComponent {
           delivery={delivery}
           onSkipPressed={ delivery => this._onSkipPressed(delivery)}
           onUnskipPressed={ delivery => this._onUnskipPressed(delivery)}
-          onViewMenuPressed={ delivery => this._onViewMenuPressed(delivery)} />
+          onViewMenuPressed={ delivery => this._onViewMenuPressed(delivery)}
+          onClosePressed={ delivery => this._onClosePopupPressed(delivery)} />
       )
       expands = {
         [day]: <ExpandingView key={`Expand-${day}`} expandingHeight={DeliveryPopupView.measuredHeight()} duration={250}>{popup}</ExpandingView>
@@ -212,6 +213,21 @@ class _scheduleScreen extends PureComponent {
 
   _onViewMenuPressed(delivery) {
     Toast.show({ text: 'Not Implemented Yet!' })
+  }
+
+  _onClosePopupPressed(delivery) {
+    let collapses = {};
+    if(this.state.lastDeliveryPopup) {
+      let { lastDeliveryPopup } = this.state;
+      collapses = {
+        [lastDeliveryPopup.date]: <CollapsingView key={`Collapse-${lastDeliveryPopup.date}`} collapsingHeight={DeliveryPopupView.measuredHeight()} duration={250}><DeliveryPopupView delivery={lastDeliveryPopup.delivery} /></CollapsingView>
+      };
+    }
+
+    this.setState({
+      externalViews: Object.assign({}, collapses),
+      lastDeliveryPopup: undefined
+    });
   }
 }
 

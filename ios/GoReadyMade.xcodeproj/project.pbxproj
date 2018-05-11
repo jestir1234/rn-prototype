@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -61,6 +60,7 @@
 		E6F2A6689B29475994A9C979 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5DBF312D53B040DB968E52AA /* Foundation.ttf */; };
 		EB7D6EEF234745D799241AF6 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C6445107572044CD829FB0B3 /* Foundation.ttf */; };
 		F47A126BDF294CD78D3D25DC /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B05F21E871654309B25D405E /* Octicons.ttf */; };
+		C52442232E044CAB97DFE6F6 /* rubicon-icon-font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 197D103E57CC4BCD8988EF4C /* rubicon-icon-font.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -406,6 +406,7 @@
 		F119BABE0792445D9A2F57D8 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/native-base/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		F2DF55A7F7794B508E0A700A /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		F7042569EAED452DBDDBDA41 /* Roboto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Roboto.ttf; path = "../node_modules/native-base/Fonts/Roboto.ttf"; sourceTree = "<group>"; };
+		197D103E57CC4BCD8988EF4C /* rubicon-icon-font.ttf */ = {isa = PBXFileReference; name = "rubicon-icon-font.ttf"; path = "../node_modules/native-base/Fonts/rubicon-icon-font.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -722,6 +723,7 @@
 				F7042569EAED452DBDDBDA41 /* Roboto.ttf */,
 				CB6059469B764E9C88BFB527 /* SimpleLineIcons.ttf */,
 				F08D784DB85F48288609E2F3 /* Zocial.ttf */,
+				197D103E57CC4BCD8988EF4C /* rubicon-icon-font.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1220,6 +1222,7 @@
 				501B598EC09D44E390C7584F /* Roboto.ttf in Resources */,
 				2102FC989E044F04951253CA /* SimpleLineIcons.ttf in Resources */,
 				D128E4C65345401E8F23D6FD /* Zocial.ttf in Resources */,
+				C52442232E044CAB97DFE6F6 /* rubicon-icon-font.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

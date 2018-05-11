@@ -21,8 +21,7 @@ const styles = StyleSheet.create({
     backgroundColor: Res.Colors.windowBackground
   },
   text: {
-    fontSize: 20,
-    marginTop: 50,
-    marginLeft: 50,
+    fontSize: 18,
+    padding: 16
   }
 });

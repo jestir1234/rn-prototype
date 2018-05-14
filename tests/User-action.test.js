@@ -6,6 +6,8 @@ import thunk from 'redux-thunk'
 import fetchMock from 'fetch-mock'
 import expect from 'expect'
 
+import * as Res from '../src/res'
+
 import MockAsyncStorage from 'mock-async-storage'
 const releaseAsyncStorageFunction = () => jest.unmock('AsyncStorage')
 const mockAsyncStorageFunction = () => {
@@ -117,7 +119,7 @@ describe('user actions tests', () => {
 	  expect(store.getActions()).toEqual(expectedActions)
   })
 
-  it('loadAuthCredentialsFromStorage saved', () => {
+  it('checkAuthCredentials saved', () => {
     let username = 'correct_username'
     let password = 'correct_password'
     let userDataString = {
@@ -147,29 +149,42 @@ describe('user actions tests', () => {
       {type: actions.RECEIVED_AUTHENTICATION, userInfo: userInfo}
     ]
 
-    let store = mockStore({ userInfo: [] })
-
-    return AsyncStorage.setItem(actions.USER_INFO_STORAGE_KEY, JSON.stringify(userInfoString)).then(() => {
-      store.dispatch(actions.loadAuthCredentialsFromStorage())
+    let store = mockStore({ user: { userInfo: userInfo} })
+    
+    const delay = (ms) => new Promise(resolve =>
+      setTimeout(resolve, ms)
+    );
+    
+    return delay(10).then(() => {
+      store.dispatch(actions.checkAuthCredentials())
     }).then(() => {
-      return expect(store.getActions()).toEqual(expectedActions)
+      return delay(10).then(() => {
+        return expect(store.getActions()).toEqual(expectedActions)
+      })
     })
   })
 
   it('loadAuthCredentialsFromStorage nothing stored', () => {
 
     let userInfo = null
+
     let expectedActions = [
       {type: actions.REQUEST_AUTHENTICATION},
-      {type: actions.RECEIVED_AUTHENTICATION_ERROR, authenticationErrorType: userInfo}
+      {type: actions.RECEIVED_AUTHENTICATION_ERROR, authErrorMessage: ' '}
     ]
 
-    let store = mockStore({ userInfo: [] })
+    let store = mockStore({ user: { userInfo: userInfo} })
 
-    return AsyncStorage.setItem(actions.USER_INFO_STORAGE_KEY, userInfo).then(() => {
-      store.dispatch(actions.loadAuthCredentialsFromStorage())
+    const delay = (ms) => new Promise(resolve =>
+      setTimeout(resolve, ms)
+    );
+    
+    return delay(10).then(() => {
+      store.dispatch(actions.checkAuthCredentials())
     }).then(() => {
-      return expect(store.getActions()).toEqual(expectedActions)
+      return delay(10).then(() => {
+        return expect(store.getActions()).toEqual(expectedActions)
+      })
     })
   })
 
@@ -198,17 +213,29 @@ describe('user actions tests', () => {
     }
 
     let userInfo = new userInfoEntities.UserInfo(userInfoString)
+
+    let params = '?country=ML'
+    fetchMock
+      .postOnce(Res.Urls.LOGIN_URL + params,
+        { body: userInfo, headers: { 'content-type': 'application/json' } }
+      )
     let expectedActions = [
-      {type: actions.REQUEST_AUTHENTICATION},
-      {type: actions.RECEIVED_AUTHENTICATION_ERROR, authenticationErrorType: ''}
+      { type: actions.REQUEST_AUTHENTICATION},
+      { type: actions.RECEIVED_AUTHENTICATION, userInfo: userInfo }
     ]
 
-    let store = mockStore({ userInfo: [] })
+    let store = mockStore({ user: { userInfo: userInfo} })
 
-    return AsyncStorage.setItem(actions.USER_INFO_STORAGE_KEY, JSON.stringify(userInfoString)).then(() => {
-      store.dispatch(actions.loadAuthCredentialsFromStorage())
+    const delay = (ms) => new Promise(resolve =>
+      setTimeout(resolve, ms)
+    );
+    
+    return delay(10).then(() => {
+      store.dispatch(actions.checkAuthCredentials())
     }).then(() => {
-      return expect(store.getActions()).toEqual(expectedActions)
+      return delay(10).then(() => {
+        return expect(store.getActions()).toEqual(expectedActions)
+      })
     })
   })
 })

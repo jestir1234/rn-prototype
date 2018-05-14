@@ -52,7 +52,6 @@ buck-out/
 */fastlane/Preview.html
 */fastlane/screenshots
 
-*
 package-lock.json
 fastlane/report.xml
 3CMDP257KB.cer

@@ -34,13 +34,13 @@ class _scheduleScreen extends PureComponent {
     let message = this.props.error ? this._renderError() : null;
     let skipDialog = this.state.lastDeliveryPopup
       ? (<SkipDialog
-          ref={dialog => {this.skipDialog = dialog; }}
-          date={this.state.lastDeliveryPopup.date}
-          onSkip={date => this._onSkipConfirmed(date)} />)
+        ref={dialog => { this.skipDialog = dialog; }}
+        date={this.state.lastDeliveryPopup.date}
+        onSkip={date => this._onSkipConfirmed(date)} />)
       : null;
 
     return (
-      <View style={Res.Styles.safeAreaTop}>
+      <View testID='CalendarTestid' style={Res.Styles.safeAreaTop}>
         <View style={styles.rootContainer}>
           {message}
           {list}
@@ -76,14 +76,14 @@ class _scheduleScreen extends PureComponent {
     )
     let expands = {};
     let newDeliveryPopup = null;
-    if(delivery) {
+    if (delivery) {
       let popup = (
         <DeliveryPopupView
           delivery={delivery}
-          onSkipPressed={ delivery => this._onSkipPressed(delivery)}
-          onUnskipPressed={ delivery => this._onUnskipPressed(delivery)}
-          onViewMenuPressed={ delivery => this._onViewMenuPressed(delivery)}
-          onClosePressed={ delivery => this._onClosePopupPressed(delivery)} />
+          onSkipPressed={delivery => this._onSkipPressed(delivery)}
+          onUnskipPressed={delivery => this._onUnskipPressed(delivery)}
+          onViewMenuPressed={delivery => this._onViewMenuPressed(delivery)}
+          onClosePressed={delivery => this._onClosePopupPressed(delivery)} />
       )
       expands = {
         [day]: <ExpandingView key={`Expand-${day}`} expandingHeight={DeliveryPopupView.measuredHeight()} duration={250}>{popup}</ExpandingView>
@@ -92,7 +92,7 @@ class _scheduleScreen extends PureComponent {
     }
 
     let collapses = {};
-    if(this.state.lastDeliveryPopup) {
+    if (this.state.lastDeliveryPopup) {
       let { lastDeliveryPopup } = this.state;
       collapses = {
         [lastDeliveryPopup.date]: <CollapsingView key={`Collapse-${lastDeliveryPopup.date}`} collapsingHeight={DeliveryPopupView.measuredHeight()} duration={250}><DeliveryPopupView delivery={lastDeliveryPopup.delivery} /></CollapsingView>
@@ -109,9 +109,8 @@ class _scheduleScreen extends PureComponent {
     return (
       <View style={styles.listContainer}>
         <CalendarView
-          testID='calendar'
           futureScrollRange={this._displayWeekRange().monthCount}
-          defaultSelectedDateStyle={ CalendarStyles.customFilledCircle(Res.Colors.scheduleNonDelivery) }
+          defaultSelectedDateStyle={CalendarStyles.customFilledCircle(Res.Colors.scheduleNonDelivery)}
           datesStyle={this._styledDates()}
           dynamicHeight={true}
           onDaySelected={day => this._onDaySelected(day)}
@@ -178,7 +177,7 @@ class _scheduleScreen extends PureComponent {
       item.deliveryDate.getDate() === selectedDate.getDate()
     )
 
-    if(delivery) {
+    if (delivery) {
       this.props.onSkipDeliveryRequested(delivery)
         .then(newDelivery => this._refreshPopupForDelivery(newDelivery))
     }
@@ -195,9 +194,9 @@ class _scheduleScreen extends PureComponent {
       <DeliveryPopupView
         key={`Popup-${dateString}`}
         delivery={newDelivery}
-        onSkipPressed={ delivery => this._onSkipPressed(delivery)}
-        onUnskipPressed={ delivery => this._onUnskipPressed(delivery)}
-        onViewMenuPressed={ delivery => this._onViewMenuPressed(delivery)} />
+        onSkipPressed={delivery => this._onSkipPressed(delivery)}
+        onUnskipPressed={delivery => this._onUnskipPressed(delivery)}
+        onViewMenuPressed={delivery => this._onViewMenuPressed(delivery)} />
     )
     popups = {
       [dateString]: popup
@@ -217,7 +216,7 @@ class _scheduleScreen extends PureComponent {
 
   _onClosePopupPressed(delivery) {
     let collapses = {};
-    if(this.state.lastDeliveryPopup) {
+    if (this.state.lastDeliveryPopup) {
       let { lastDeliveryPopup } = this.state;
       collapses = {
         [lastDeliveryPopup.date]: <CollapsingView key={`Collapse-${lastDeliveryPopup.date}`} collapsingHeight={DeliveryPopupView.measuredHeight()} duration={250}><DeliveryPopupView delivery={lastDeliveryPopup.delivery} /></CollapsingView>

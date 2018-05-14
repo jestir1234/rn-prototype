@@ -51,11 +51,11 @@ class _loginScreen extends PureComponent {
               id="LoginWithFacebookId"
               testID="LoginWithFacebookTestId"
               accessibilityLabel="LoginWithFacebookAccessibilityLabel"
-              onPress={() => {}}
-              style={[styles.button, {backgroundColor: Res.Colors.facebookBlue}]} >
+              onPress={() => { }}
+              style={[styles.button, { backgroundColor: Res.Colors.facebookBlue }]} >
               <Image
                 source={require('../../res/image/facebook_icon.png')}
-                style={{width: 18, height: 18, marginRight: 12, marginTop: 9, marginBottom: 13}} />
+                style={{ width: 18, height: 18, marginRight: 12, marginTop: 9, marginBottom: 13 }} />
               <Text
                 style={styles.buttonText} >{Res.Strings.login_login_facebook_button}</Text>
             </TouchableOpacity>
@@ -75,13 +75,13 @@ class _loginScreen extends PureComponent {
               keyboardType='email-address'
               underlineColorAndroid="transparent"
               style={[styles.generalText, styles.textInput]}>{this.state.username}</TextInput>
-            <Text style={styles.errorMessage}>{this.props.emailErrorMessage}</Text>
+            <Text style={styles.errorMessage} testID="UsernameErrorTestId">{this.props.emailErrorMessage}</Text>
           </View>
 
           <View
             style={{ marginTop: 7 }}>
             <Text
-            style={[styles.generalText, styles.hintText]}>{Res.Strings.login_password}</Text>
+              style={[styles.generalText, styles.hintText]}>{Res.Strings.login_password}</Text>
             <TextInput
               id="PasswordId"
               testID="PasswordTestId"
@@ -90,11 +90,11 @@ class _loginScreen extends PureComponent {
               secureTextEntry={true}
               underlineColorAndroid="transparent"
               style={[styles.generalText, styles.textInput]}>{this.state.password}</TextInput>
-            <Text style={styles.errorMessage}>{this.props.passwordErrorMessage}</Text>
+            <Text style={styles.errorMessage} testID="PasswordErrorTestId">{this.props.passwordErrorMessage}</Text>
           </View>
 
           <Text
-            style={[styles.generalText, styles.orangeText, styles.rightAlignText, {marginBottom: 16}]}>{Res.Strings.login_forgot_password}</Text>
+            style={[styles.generalText, styles.orangeText, styles.rightAlignText, { marginBottom: 16 }]}>{Res.Strings.login_forgot_password}</Text>
 
           <View >
             <TouchableOpacity
@@ -102,14 +102,14 @@ class _loginScreen extends PureComponent {
               testID="LoginTestId"
               accessibilityLabel="LoginAccessibilityLabel"
               onPress={() => this._onLoginRequested()}
-              style={[styles.button, {backgroundColor: Res.Colors.primary}]} >
+              style={[styles.button, { backgroundColor: Res.Colors.primary }]} >
               <Text
                 style={styles.buttonText} >{Res.Strings.login_login_button}</Text>
             </TouchableOpacity>
           </View>
 
           <Text
-            style={[styles.centerText, {marginTop: 16}]}>
+            style={[styles.centerText, { marginTop: 16 }]}>
             <Text
               style={styles.generalText}>{Res.Strings.login_register_question}</Text>
             <Text
@@ -141,7 +141,7 @@ class _loginScreen extends PureComponent {
       );
     } else {
       return (
-        <Text testID="ErrorTestId" style={{ marginTop: 8, color: 'red' }}>{this.props.authErrorMessage}</Text>
+        <Text style={{ marginTop: 8, color: 'red' }}>{this.props.authErrorMessage}</Text>
       );
     }
   }

@@ -59,3 +59,5 @@ package-lock.json
 fastlane/report.xml
 3CMDP257KB.cer
 InHouse_com.grm.customer.mobileprovision
+
+ios/calabash.framework

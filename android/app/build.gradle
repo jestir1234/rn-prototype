@@ -123,9 +123,9 @@ android {
 
         release {
             storeFile file("../keystores/release.keystore")
-            storePassword 'GoReadyMade1234'
+            storePassword 'goreadymade123'
             keyAlias 'GoReadyMade'
-            keyPassword 'GoReadyMade1234'
+            keyPassword 'goreadymade123'
         }
     }
     buildTypes {

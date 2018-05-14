@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
       height: 40,
       borderColor: Res.Colors.textInputBorder,
       color: Res.Colors.loginTextInput,
-      padding: 4,
+      padding: 8,
       borderWidth: 1
     },
     generalText: {
@@ -74,8 +74,7 @@ const styles = StyleSheet.create({
       textAlign: 'right'
     },
     orangeText: {
-      color: Res.Colors.loginAccent,
-      fontWeight: 'bold'
+      color: Res.Colors.loginAccent
     },
     hintText: {
       color: Res.Colors.loginHint,

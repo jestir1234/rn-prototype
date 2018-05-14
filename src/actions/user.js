@@ -49,6 +49,20 @@ function receivedAuthenticationError(errorType, errorMessage) {
   }
 }
 
+export const RESET_USER_ERROR = 'RESET_USER_ERROR'
+export const RESET_PASSWORD_ERROR = 'RESET_PASSWORD_ERROR'
+function resetTextInputError(isUserInputField) {
+  if (isUserInputField) {
+    return {
+      type: RESET_USER_ERROR
+    }
+  } else {
+    return {
+      type: RESET_PASSWORD_ERROR
+    }
+  }
+}
+
 export const STOP_LOADING = 'STOP_LOADING'
 function stopLoading() {
   return {
@@ -67,13 +81,13 @@ export function requestLogIn(username, password) {
       dispatch(receivedAuthenticationError(AuthenticationErrorType.AUTHENTICATION_ERROR_USER, Res.Strings.login_error_invalid_email));
       isValid = false;
     } else {
-      dispatch(receivedAuthenticationError(AuthenticationErrorType.AUTHENTICATION_ERROR_USER, ' '));
+      dispatch(resetTextInputError(true));
     }
     if (!password || password.length === 0) {
       dispatch(receivedAuthenticationError(AuthenticationErrorType.AUTHENTICATION_ERROR_PASSWORD, Res.Strings.login_error_no_password));
       isValid = false;
     } else {
-      dispatch(receivedAuthenticationError(AuthenticationErrorType.AUTHENTICATION_ERROR_PASSWORD, ' '));
+      dispatch(resetTextInputError(false));
     }
     if (!isValid) {
       return dispatch(stopLoading());
@@ -130,7 +144,7 @@ export function checkAuthCredentials() {
       }
     } else {
       console.log('Authentication: nothing stored');
-      dispatch(receivedAuthenticationError(AuthenticationErrorType.AUTHENTICATION_ERROR_REQUEST, ' '));
+      dispatch(receivedAuthenticationError(AuthenticationErrorType.AUTHENTICATION_ERROR_REQUEST, null));
     }
   }
 }

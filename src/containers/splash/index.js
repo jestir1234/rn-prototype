@@ -38,7 +38,7 @@ class _splashScreen extends PureComponent {
     return (
       <View style={styles.rootContainer} testID="SplashScreenTestId">
         <Image
-          source={require('../../res/image/splash-logo-hdpi.png')}
+          source={require('../../res/image/goreadymade-logo.png')}
           style={styles.imageView} />
       </View>
     );
@@ -60,9 +60,9 @@ const mapDispatchToProps = (dispatch) => {
   }
 };
 
-const SplashScreen = connect(
+const MySplashScreen = connect(
   mapStateToProp,
   mapDispatchToProps,
 )(_splashScreen);
 
-export default SplashScreen;
+export default MySplashScreen;

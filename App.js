@@ -3,7 +3,8 @@ import { StyleSheet, Text, View, StatusBar } from 'react-native';
 import { Root } from "native-base"
 import { Provider } from 'react-redux'
 import { SwitchNavigator } from 'react-navigation';
-import SplashScreen from './src/containers/splash'
+import SplashScreen from 'react-native-splash-screen';
+import MySplashScreen from './src/containers/splash'
 import LoginScreen from './src/containers/login'
 import HomeScreen from './src/containers/home'
 import provideStoreManager from './src/stores'
@@ -22,12 +23,17 @@ YellowBox.ignoreWarnings([
 ]);
 
 const RootStack = SwitchNavigator({
-  Splash: { screen: SplashScreen },
+  Splash: { screen: MySplashScreen },
   Login: { screen: LoginScreen },
   Home: { screen: HomeScreen },
 });
 
 export default class App extends Component {
+
+  componentDidMount() {
+    SplashScreen.hide()
+  }
+
   render() {
     let storeManager = provideStoreManager()
     return (

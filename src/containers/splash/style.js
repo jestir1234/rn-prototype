@@ -3,7 +3,7 @@ import * as Res from '../../res'
 
 const styles = StyleSheet.create({
     rootContainer: {
-      backgroundColor: Res.Colors.primary,
+      backgroundColor: Res.Colors.windowBackground,
       flex: 1,
       flexDirection: 'column',
       justifyContent: 'center',
@@ -11,7 +11,8 @@ const styles = StyleSheet.create({
     },
     imageView: {
       width: '100%',
-      resizeMode: 'cover'
+      resizeMode: 'cover',
+      padding: 16
     }
   });
   

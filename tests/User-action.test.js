@@ -29,7 +29,7 @@ describe('user actions tests', () => {
   })
 
   it('creates RECEIVED_AUTHENTICATION when login with correct credentials', () => {
-    let username = 'correct_username'
+    let username = 'correct_username@gmail.com'
     let password = 'correct_password'
     let userDataString = {
         id: 12345678,
@@ -58,6 +58,8 @@ describe('user actions tests', () => {
       )
     let expectedActions = [
       { type: actions.REQUEST_AUTHENTICATION},
+      { type: actions.RECEIVED_USER_ERROR, authErrorMessage: " "},
+      { type: actions.RECEIVED_PASSWORD_ERROR, authErrorMessage: " "},
       { type: actions.RECEIVED_AUTHENTICATION, userInfo: userInfo }
     ]
     let store = mockStore({ userInfo: [] })
@@ -73,7 +75,9 @@ describe('user actions tests', () => {
 
     let expectedActions = [
       {type: actions.REQUEST_AUTHENTICATION},
-      {type: actions.RECEIVED_AUTHENTICATION_ERROR, authenticationErrorType: actions.AuthenticationErrorType.AUTHENTICATION_ERROR_USER_PASSWORD_EMPTY}
+      {type: actions.RECEIVED_USER_ERROR, authErrorMessage: "You need to provide an email!"},
+      {type: actions.RECEIVED_PASSWORD_ERROR, authErrorMessage: "You need to provide a password!"},
+      {type: actions.STOP_LOADING}
     ]
     let store = mockStore({ userInfo: [] })
 
@@ -87,7 +91,9 @@ describe('user actions tests', () => {
 
     let expectedActions = [
       {type: actions.REQUEST_AUTHENTICATION},
-      {type: actions.RECEIVED_AUTHENTICATION_ERROR, authenticationErrorType: actions.AuthenticationErrorType.AUTHENTICATION_ERROR_USER_EMPTY}
+      {type: actions.RECEIVED_USER_ERROR, authErrorMessage: "You need to provide an email!"},
+      {type: actions.RECEIVED_PASSWORD_ERROR, authErrorMessage: " "},
+      {type: actions.STOP_LOADING}
     ]
     let store = mockStore({ userInfo: [] })
 
@@ -101,7 +107,9 @@ describe('user actions tests', () => {
 
     let expectedActions = [
       {type: actions.REQUEST_AUTHENTICATION},
-      {type: actions.RECEIVED_AUTHENTICATION_ERROR, authenticationErrorType: actions.AuthenticationErrorType.AUTHENTICATION_ERROR_PASSWORD_EMPTY}
+      {type: actions.RECEIVED_USER_ERROR, authErrorMessage: "You entered an invalid email!"},
+      {type: actions.RECEIVED_PASSWORD_ERROR, authErrorMessage: "You need to provide a password!"},
+      {type: actions.STOP_LOADING}
     ]
     let store = mockStore({ userInfo: [] })
 

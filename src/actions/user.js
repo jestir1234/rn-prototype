@@ -5,7 +5,7 @@ import * as Res from '../res'
 
 const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-const AuthenticationErrorType = {
+export const AuthenticationErrorType = {
   AUTHENTICATION_ERROR_USER: 'AUTHENTICATION_ERROR_USER',
   AUTHENTICATION_ERROR_PASSWORD: 'AUTHENTICATION_ERROR_PASSWORD',
   AUTHENTICATION_ERROR_REQUEST: 'AUTHENTICATION_ERROR_REQUEST'
@@ -92,7 +92,6 @@ export function requestLogIn(username, password) {
     if (!isValid) {
       return dispatch(stopLoading());
     }
-
     let params = '?country=ML'
     return fetch(Res.Urls.LOGIN_URL + params, {
         method: 'POST',

@@ -20,7 +20,12 @@ or alternatively using `brew cask install fastlane`
 ```
 fastlane ios release_development_branch
 ```
-This lane releases the current status of the development branch on HockeyApp
+This lane releases IOS app for current development branch on HockeyApp
+### ios build_development_branch
+```
+fastlane ios build_development_branch
+```
+This lane builds IOS app for current development branch
 
 ----
 
@@ -29,7 +34,12 @@ This lane releases the current status of the development branch on HockeyApp
 ```
 fastlane android release_development_branch
 ```
-This lane releases the current status of the development branch on HockeyApp
+This lane releases android app for current development branch on HockeyApp
+### android build_development_branch
+```
+fastlane android build_development_branch
+```
+This lane builds android app for current development branch
 
 ----
 

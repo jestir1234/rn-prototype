@@ -14,8 +14,38 @@ IOS_XCODE_VERSION = "9.3"
 
 before_all do
   # download node dependencies
-  sh("npm install")
+  sh("cd .. && npm install")
 end
+
+########## TEST RELATED FASTLANE LANES COME HERE ##########
+
+desc 'Running Ui tests on Android.'
+private_lane :run_ui_tests_android do
+  # installing Detox
+  sh("pwd && cd .. && pwd && npm install -g detox-cli")
+  # Building Staging Android app for UI Tests
+  sh("pwd && cd .. && pwd && detox build -c android.emu.staging")
+  # Executing UI Tests on Android staging app
+  sh("pwd && cd .. && pwd && detox test -c android.emu.staging -l verbose")
+end
+
+desc 'Running Ui tests on IOS.'
+private_lane :run_ui_tests_ios do
+  # installing Detox
+  sh("pwd && cd .. && pwd && npm install -g detox-cli")
+  # Building Release IOS app for UI Tests
+  sh("pwd && cd .. && pwd && detox build -c ios.sim.release")
+  # Executing UI Tests on IOS Release app
+  sh("pwd && cd .. && pwd && detox test -c ios.sim.release --cleanup")
+end
+
+desc 'Running Unit tests'
+private_lane :run_unit_tests do
+  sh("pwd && cd ..&& pwd && npm test")
+end
+
+########################################################## 
+
 
 after_all do |lane|
   subtitle = "Fastlane: #{lane}"
@@ -38,7 +68,7 @@ platform :ios do
     # ensure_git_status_clean
   end
 
-  desc "This lane releases the current status of the development branch on HockeyApp"
+  desc "This lane releases IOS app for current development branch on HockeyApp"
   lane :release_development_branch do |options|
     build_number = options[:build_number]
     UI.crash!("You didn\'t specified the build number") if build_number == nil
@@ -46,12 +76,24 @@ platform :ios do
     ensure_git_branch(branch: DEVELOPMENT_BRANCH_NAME)
 
     set_build_number(job_build_number: build_number)
-
+    # run_unit_tests
+    run_ui_tests_ios
     build
     release_hockey(
       ipa_output_path: SharedValues::IPA_OUTPUT_PATH,
       hockey_app_id: IOS_HOCKEYAPP_STAGING_APP_ID
     )
+  end
+
+desc "This lane builds IOS app for current development branch"
+  lane :build_development_branch do |options|
+    build_number = options[:build_number]
+    UI.crash!("You didn\'t specified the build number") if build_number == nil
+
+    set_build_number(job_build_number: build_number)
+    # run_unit_tests
+    run_ui_tests_ios
+    build
   end
 
   desc 'Build the iOS application.'
@@ -117,7 +159,7 @@ platform :android do
     puts `java -version`
   end
 
-  desc "This lane releases the current status of the development branch on HockeyApp"
+  desc "This lane releases android app for current development branch on HockeyApp"
   lane :release_development_branch do |options|
     build_number = options[:build_number]
     UI.crash!("You didn\'t specified the build number") if build_number == nil
@@ -125,12 +167,26 @@ platform :android do
     ensure_git_branch(branch: DEVELOPMENT_BRANCH_NAME)
 
     ENV["VERSION_CODE"] = build_number
-
+    #  Android Ui tests are Unrelaible
+    #  run_ui_tests_android
+    #  run_unit_tests
     build(build_variant: ANDROID_STAGING_BUILD_VARIANT)
     release_hockey(
       apk_filename: ANDROID_STAGING_APK_FILENAME,
       hockey_app_id: ANDROID_HOCKEYAPP_STAGING_APP_ID
     )
+  end
+
+  desc "This lane builds android app for current development branch"
+  lane :build_development_branch do |options|
+    build_number = options[:build_number]
+    UI.crash!("You didn\'t specified the build number") if build_number == nil
+
+    ENV["VERSION_CODE"] = build_number
+    #  Android Ui tests are Unrelaible
+    #  run_ui_tests_android
+    #  run_unit_tests
+    build(build_variant: ANDROID_STAGING_BUILD_VARIANT)
   end
 
   desc 'Build the Android application.'

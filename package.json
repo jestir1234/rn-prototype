@@ -5,7 +5,7 @@
   "devDependencies": {
     "asyncstorage-mock": "^1.0.1",
     "babel-jest": "^22.4.3",
-    "babel-preset-env": "^1.6.1",
+    "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "babel-preset-react-native-stage-0": "^1.0.1",
     "detox": "^7.3.5",
@@ -31,9 +31,6 @@
     "testPathIgnorePatterns": [
       "<rootDir>/node_modules/",
       "<rootDir>/e2e/"
-    ],
-    "transformIgnorePatterns": [
-      "node_modules/(?!react-native|react-devtools-core|native-base-shoutem-theme|@shoutem/animation|@shoutem/ui|tcomb-form-native|react-redux|react-native-drawer)"
     ]
   },
   "dependencies": {
@@ -50,6 +47,7 @@
     "react-native-keyboard-aware-scroll-view": "^0.5.0",
     "react-native-popup-dialog": "^0.11.46",
     "react-native-splash-screen": "^3.0.6",
+    "react-native-tab-view": "0.0.77",
     "react-native-vector-icons": "^4.6.0",
     "react-navigation": "^1.5.11",
     "react-redux": "^5.0.7",

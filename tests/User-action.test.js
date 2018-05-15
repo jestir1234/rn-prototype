@@ -60,8 +60,8 @@ describe('user actions tests', () => {
       )
     let expectedActions = [
       { type: actions.REQUEST_AUTHENTICATION},
-      { type: actions.RECEIVED_USER_ERROR, authErrorMessage: " "},
-      { type: actions.RECEIVED_PASSWORD_ERROR, authErrorMessage: " "},
+      { type: actions.RESET_USER_ERROR},
+      { type: actions.RESET_PASSWORD_ERROR},
       { type: actions.RECEIVED_AUTHENTICATION, userInfo: userInfo }
     ]
     let store = mockStore({ userInfo: [] })
@@ -94,7 +94,7 @@ describe('user actions tests', () => {
     let expectedActions = [
       {type: actions.REQUEST_AUTHENTICATION},
       {type: actions.RECEIVED_USER_ERROR, authErrorMessage: "You need to provide an email!"},
-      {type: actions.RECEIVED_PASSWORD_ERROR, authErrorMessage: " "},
+      {type: actions.RESET_PASSWORD_ERROR},
       {type: actions.STOP_LOADING}
     ]
     let store = mockStore({ userInfo: [] })
@@ -170,7 +170,7 @@ describe('user actions tests', () => {
 
     let expectedActions = [
       {type: actions.REQUEST_AUTHENTICATION},
-      {type: actions.RECEIVED_AUTHENTICATION_ERROR, authErrorMessage: ' '}
+      {type: actions.RECEIVED_AUTHENTICATION_ERROR, authErrorMessage: null}
     ]
 
     let store = mockStore({ user: { userInfo: userInfo} })

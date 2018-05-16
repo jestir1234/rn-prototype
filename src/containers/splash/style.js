@@ -7,12 +7,12 @@ const styles = StyleSheet.create({
       flex: 1,
       flexDirection: 'column',
       justifyContent: 'center',
-      alignItems: 'center'
+      alignItems: 'center',
+      padding: 64
     },
     imageView: {
       width: '100%',
-      resizeMode: 'cover',
-      padding: 16
+      resizeMode: 'contain'
     }
   });
   

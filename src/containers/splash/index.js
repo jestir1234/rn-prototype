@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import { StyleSheet, View, Image, Text, TextInput, Button, ActivityIndicator } from 'react-native'
 import styles from './style.js'
+import * as Res from '../../res'
 import { connect } from 'react-redux'
 import { UserAction } from '../../actions'
 
@@ -36,10 +37,12 @@ class _splashScreen extends PureComponent {
 
   render() {
     return (
-      <View style={styles.rootContainer} testID="SplashScreenTestId">
-        <Image
-          source={require('../../res/image/goreadymade-logo.png')}
-          style={styles.imageView} />
+      <View style={Res.Styles.safeAreaTop}>
+        <View style={styles.rootContainer} testID="SplashScreenTestId">
+          <Image
+            source={require('../../res/image/goreadymade-logo.png')}
+            style={styles.imageView} />
+        </View>
       </View>
     );
   }

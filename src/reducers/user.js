@@ -1,12 +1,6 @@
 import { UserAction } from '../actions'
 
-let initState = {
-  isLoading: false,
-  userInfo: null,
-  emailErrorMessage: null,
-  passwordErrorMessage: null,
-  authErrorMessage: null
-};
+let initState = {};
 
 const userReducer = (state = initState, action) => {
   switch(action.type) {

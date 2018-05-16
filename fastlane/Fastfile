@@ -14,7 +14,7 @@ IOS_XCODE_VERSION = "9.3"
 
 before_all do
   # download node dependencies
-  sh("cd .. && npm install")
+  sh("cd .. && rm -rf node_modules/ && npm install")
 end
 
 ########## TEST RELATED FASTLANE LANES COME HERE ##########

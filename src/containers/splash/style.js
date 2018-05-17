@@ -7,12 +7,12 @@ const styles = StyleSheet.create({
       flex: 1,
       flexDirection: 'column',
       justifyContent: 'center',
+      alignSelf: 'stretch',
       alignItems: 'center',
-      padding: 64
-    },
-    imageView: {
+      position: 'absolute',
       width: '100%',
-      resizeMode: 'contain'
+      height: '100%',
+      backgroundColor: Res.Colors.windowBackground
     }
   });
   

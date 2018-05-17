@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { StyleSheet, View, Image, Text, TextInput, ActivityIndicator, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, Image, Text, Keyboard, TextInput, ActivityIndicator, TouchableOpacity } from 'react-native'
 import { Toast } from 'native-base'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import * as Res from '../../res'
@@ -45,10 +45,7 @@ class _loginScreen extends PureComponent {
   render() {
     return (
       <View style={Res.Styles.safeAreaTop}>
-        <KeyboardAwareScrollView
-          style={{ backgroundColor: Res.Colors.windowBackground }}
-          resetScrollToCoords={{ x: 0, y: 0 }}
-          contentContainerStyle={styles.rootContainer} >
+        <View style={styles.rootContainer}>
 
           <View style={styles.backgroundView}>
 
@@ -58,91 +55,101 @@ class _loginScreen extends PureComponent {
 
           </View>
 
-          <View style={styles.fieldsContainer}>
-            <Text
-              style={styles.titleText}>{Res.Strings.login_login_title}</Text>
+          <KeyboardAwareScrollView
+            resetScrollToCoords={{ x: 0, y: 0 }}
+            scrollEnabled={true}
+            contentContainerStyle={{ flex: 1, justifyContent: 'center' }}
+            keyboardShouldPersistTaps='handled'
+            enableAutoAutomaticScroll={true}
+            enableOnAndroid={true} >
+            <View style={styles.fieldsContainer} >
+              <Text
+                style={styles.titleText}>{Res.Strings.login_login_title}</Text>
 
-            <View >
-              <TouchableOpacity
-                id="LoginWithFacebookId"
-                testID="LoginWithFacebookTestId"
-                accessibilityLabel="LoginWithFacebookAccessibilityLabel"
-                onPress={() => {}}
-                style={[styles.button, {backgroundColor: Res.Colors.facebookBlue}]} >
-                <Image
-                  source={require('../../res/image/facebook_icon.png')}
-                  style={{width: 18, height: 18, marginRight: 12, marginTop: 9, marginBottom: 13}} />
+              <View >
+                <TouchableOpacity
+                  id="LoginWithFacebookId"
+                  testID="LoginWithFacebookTestId"
+                  accessibilityLabel="LoginWithFacebookAccessibilityLabel"
+                  onPress={() => {}}
+                  style={[styles.button, {backgroundColor: Res.Colors.facebookBlue}]} >
+                  <Image
+                    source={require('../../res/image/facebook_icon.png')}
+                    style={{width: 18, height: 18, marginRight: 12, marginTop: 9, marginBottom: 13}} />
+                  <Text
+                    style={styles.buttonText} >{Res.Strings.login_login_facebook_button}</Text>
+                </TouchableOpacity>
+              </View>
+
+              <Text
+                style={[styles.generalText, styles.centerText, styles.orTextView]}>{Res.Strings.login_or}</Text>
+
+              <View >
                 <Text
-                  style={styles.buttonText} >{Res.Strings.login_login_facebook_button}</Text>
-              </TouchableOpacity>
-            </View>
+                  style={[styles.generalText, styles.hintText]}>{Res.Strings.login_email}</Text>
+                <TextInput
+                  id="UsernameId"
+                  testID="UsernameTestId"
+                  accessibilityLabel="UsernameAccessibilityLabel"
+                  onChangeText={(text) => this.setState({ username: text })}
+                  onSubmitEditing={() => {this.focusNextField('password')}}
+                  keyboardType='email-address'
+                  returnKeyType={ "next" }
+                  blurOnSubmit={ false }
+                  underlineColorAndroid="transparent"
+                  ref={ input => { this.inputs['email'] = input }}
+                  style={[styles.generalText, styles.textInput]}>{this.state.username}</TextInput>
+                  {this._textInputErrorMessage(this.props.emailErrorMessage, "EmailErrorTestId")}
+              </View>
 
-            <Text
-              style={[styles.generalText, styles.centerText, styles.orTextView]}>{Res.Strings.login_or}</Text>
-
-            <View >
-              <Text
-                style={[styles.generalText, styles.hintText]}>{Res.Strings.login_email}</Text>
-              <TextInput
-                id="UsernameId"
-                testID="UsernameTestId"
-                accessibilityLabel="UsernameAccessibilityLabel"
-                onChangeText={(text) => this.setState({ username: text })}
-                onSubmitEditing={() => {this.focusNextField('password')}}
-                keyboardType='email-address'
-                returnKeyType={ "next" }
-                blurOnSubmit={ false }
-                underlineColorAndroid="transparent"
-                ref={ input => { this.inputs['email'] = input }}
-                style={[styles.generalText, styles.textInput]}>{this.state.username}</TextInput>
-                {this._textInputErrorMessage(this.props.emailErrorMessage, "EmailErrorTestId")}
-            </View>
-
-            <View
-              style={{ marginTop: 7 }}>
-              <Text
-              style={[styles.generalText, styles.hintText]}>{Res.Strings.login_password}</Text>
-              <TextInput
-                id="PasswordId"
-                testID="PasswordTestId"
-                accessibilityLabel="PasswordAccessibilityLabel"
-                onChangeText={(text) => this.setState({ password: text })}
-                secureTextEntry={true}
-                returnKeyType={ "done" }
-                blurOnSubmit={ true }
-                underlineColorAndroid="transparent"
-                ref={ input => { this.inputs['password'] = input }}
-                style={[styles.generalText, styles.textInput]}>{this.state.password}</TextInput>
-                {this._textInputErrorMessage(this.props.passwordErrorMessage, "PasswordErrorTestId")}
-            </View>
-
-            <Text
-              style={[styles.generalText, styles.orangeText, styles.rightAlignText, {marginBottom: 16}]}>{Res.Strings.login_forgot_password}</Text>
-
-            <View >
-              <TouchableOpacity
-                id="LoginId"
-                testID="LoginTestId"
-                accessibilityLabel="LoginAccessibilityLabel"
-                onPress={() => this._onLoginRequested()}
-                style={[styles.button, {backgroundColor: Res.Colors.primary}]} >
+              <View
+                style={{ marginTop: 7 }}>
                 <Text
-                  style={styles.buttonText} >{Res.Strings.login_login_button}</Text>
-              </TouchableOpacity>
+                style={[styles.generalText, styles.hintText]}>{Res.Strings.login_password}</Text>
+                <TextInput
+                  id="PasswordId"
+                  testID="PasswordTestId"
+                  accessibilityLabel="PasswordAccessibilityLabel"
+                  onChangeText={(text) => this.setState({ password: text })}
+                  secureTextEntry={true}
+                  returnKeyType={ "done" }
+                  blurOnSubmit={ true }
+                  underlineColorAndroid="transparent"
+                  ref={ input => { this.inputs['password'] = input }}
+                  style={[styles.generalText, styles.textInput]}>{this.state.password}</TextInput>
+                  {this._textInputErrorMessage(this.props.passwordErrorMessage, "PasswordErrorTestId")}
+              </View>
+
+              <Text
+                style={[styles.generalText, styles.orangeText, styles.rightAlignText, {marginBottom: 16}]}>{Res.Strings.login_forgot_password}</Text>
+
+              <View >
+                <TouchableOpacity
+                  id="LoginId"
+                  testID="LoginTestId"
+                  accessibilityLabel="LoginAccessibilityLabel"
+                  onPress={() => {
+                    Keyboard.dismiss();
+                    this._onLoginRequested();
+                    }}
+                  style={[styles.button, {backgroundColor: Res.Colors.primary}]} >
+                  <Text
+                    style={styles.buttonText} >{Res.Strings.login_login_button}</Text>
+                </TouchableOpacity>
+              </View>
+
+              <Text
+                style={[styles.centerText, {marginTop: 16, marginBottom: 16 }]}>
+                <Text
+                  style={styles.generalText}>{Res.Strings.login_register_question}</Text>
+                <Text
+                  style={[styles.generalText, styles.orangeText]}>{Res.Strings.login_register_action}</Text>
+              </Text>
             </View>
-
-            <Text
-              style={[styles.centerText, {marginTop: 16, marginBottom: 16 }]}>
-              <Text
-                style={styles.generalText}>{Res.Strings.login_register_question}</Text>
-              <Text
-                style={[styles.generalText, styles.orangeText]}>{Res.Strings.login_register_action}</Text>
-            </Text>
-
-          </View>
+          </KeyboardAwareScrollView>
 
           {this._loadingView()}
-        </KeyboardAwareScrollView>
+        </View>
       </View>
     );
   }

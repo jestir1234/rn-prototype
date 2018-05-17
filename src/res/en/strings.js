@@ -1,3 +1,6 @@
+export const network_serverError = 'Server Error! server not responding correctly.'
+export const network_networkError = 'Network Error! Check your connection.'
+export const network_unknownError = 'Unknown Error! Try again later.'
 export const login_login_title = 'Log In'
 export const login_login_facebook_button = 'LOG IN WITH FACEBOOK'
 export const login_or = 'or'

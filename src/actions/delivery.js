@@ -2,6 +2,7 @@ import 'cross-fetch/polyfill'
 import { Delivery, DeliveryPropType, DeliveryStatus } from '../entities'
 import { Urls } from '../res'
 import XDate from 'xdate'
+import { doGet } from '../model/network/api.js'
 
 /*
 *  Action constants
@@ -63,32 +64,18 @@ export function loadDeliveries(firstWeek, lastWeek) {
   return (dispatch, getState) => {
     dispatch(createRequestDeliveries())
 
-    let accessToken = getState().user.userInfo.access_token;
-    let params = `?rangeStart=${firstWeek}&rangeEnd=${lastWeek}&country=ML&locale=en-US`;
-    return fetch(Urls.DELIVERIES_URL + params, {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${accessToken}`
-      }
-    })
-    .then(response => {
-      if(response.status >= 200 && response.status < 300) {
-        return response
-      } else {
-        console.log('Error getting deliveries! status:' + response.status);
-        throw response.statusText
-      }
-    })
-    .then(response => response.json())
-    .then(json => {
-      let deliveries = json.items.map(item => {
-        return new Delivery(item)
-      });
-      dispatch(createReceivedDeliveries(deliveries));
-    })
-    .catch(error => dispatch(createReceivedDeliveriesError(error)))
+    let params = {
+      'rangeStart': firstWeek,
+      'rangeEnd': lastWeek
+    };
+    return doGet(getState, Urls.DELIVERIES_URL, params)
+      .then(json => {
+        let deliveries = json.items.map(item => {
+          return new Delivery(item)
+        });
+        dispatch(createReceivedDeliveries(deliveries));
+      })
+      .catch(error => dispatch(createReceivedDeliveriesError(error.message)))
   }
 }
 

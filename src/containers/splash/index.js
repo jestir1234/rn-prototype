@@ -39,9 +39,7 @@ class _splashScreen extends PureComponent {
     return (
       <View style={Res.Styles.safeAreaTop}>
         <View style={styles.rootContainer} testID="SplashScreenTestId">
-          <Image
-            source={require('../../res/image/goreadymade-logo.png')}
-            style={styles.imageView} />
+          <ActivityIndicator size="large" color={Res.Colors.primary} />
         </View>
       </View>
     );

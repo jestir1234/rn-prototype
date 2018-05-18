@@ -81,15 +81,16 @@ const styles = StyleSheet.create({
       marginBottom: 9
     },
     loadingContainer: {
-      backgroundColor: Res.Colors.loadingOverlay,
-      display: 'flex',
       flex: 1,
       flexDirection: 'column',
       justifyContent: 'center',
+      alignSelf: 'stretch',
       alignItems: 'center',
+      position: 'absolute',
       width: '100%',
       height: '100%',
-      position: 'absolute'
+      backgroundColor: Res.Colors.windowBackground,
+      opacity: 0.9
     },
     errorMessage: {
       color: 'red',

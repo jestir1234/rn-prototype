@@ -115,9 +115,9 @@ export function requestLogIn(username, password) {
         return response.json();
       })
       .then(json => {
-        let userInfo = new UserInfo(json);
-        console.log(userInfo);
-        dispatch(receivedAuthentication(userInfo));
+        //let userInfo = new UserInfo(json);
+        //console.log(userInfo);
+        dispatch(receivedAuthentication({...json, receved_at: Date.now()}));//userInfo));
       }).catch(e => {
         console.log(e);
         if (!e.message) {
@@ -172,9 +172,9 @@ function refreshToken(refreshToken) {
       return response.json();
     })
     .then(json => {
-      let userInfo = new UserInfo(json);
-      console.log(userInfo);
-      dispatch(receivedAuthentication(userInfo));
+      //let userInfo = new UserInfo(json);
+      //console.log(userInfo);
+      dispatch(receivedAuthentication({...json, receved_at: Date.now()}));//userInfo));
     }).catch(e => {
       console.log(e);
       dispatch(requestLogOut());

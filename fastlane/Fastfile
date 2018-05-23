@@ -78,7 +78,7 @@ platform :ios do
     ensure_git_branch(branch: DEVELOPMENT_BRANCH_NAME)
 
     set_build_number(job_build_number: build_number)
-    # Ui tests are Unrelaible
+    # Ui tests are Unreliable
     # run_ui_tests_ios
     build
     release_hockey(
@@ -93,7 +93,7 @@ platform :ios do
     UI.crash!("You didn\'t specified the build number") if build_number == nil
 
     set_build_number(job_build_number: build_number)
-    # Ui tests are Unrelaible
+    # Ui tests are Unreliable
     # run_ui_tests_ios
     build
   end
@@ -174,7 +174,7 @@ platform :android do
     ensure_git_branch(branch: DEVELOPMENT_BRANCH_NAME)
 
     ENV["VERSION_CODE"] = build_number
-    #  Ui tests are Unrelaible
+    #  Ui tests are Unreliable
     #  run_ui_tests_android
     build(build_variant: ANDROID_STAGING_BUILD_VARIANT)
     release_hockey(
@@ -191,7 +191,7 @@ platform :android do
     UI.crash!("You didn\'t specified the build number") if build_number == nil
 
     ENV["VERSION_CODE"] = build_number
-    #  Ui tests are Unrelaible
+    #  Ui tests are Unreliable
     #  run_ui_tests_android
     build(build_variant: ANDROID_STAGING_BUILD_VARIANT)
   end

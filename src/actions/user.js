@@ -136,7 +136,9 @@ export function checkAuthCredentials() {
       let elapsedTime = Date.now() - userInfo.received_at;
       if (elapsedTime > userInfo.expires_in * 1000) {
         console.log('Authentication: need to refresh');
-        dispatch(refreshToken(userInfo.refreshToken));
+        // TODO (se): change to refresh once the call is working
+        dispatch(requestLogOut());
+        //dispatch(refreshToken(userInfo.refreshToken));
       } else {
         console.log('Authentication: all good');
         dispatch(receivedAuthentication(userInfo));

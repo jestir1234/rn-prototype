@@ -20,7 +20,7 @@ class _loginScreen extends PureComponent {
       username: '',
       password: '',
       fadeAnim: new Animated.Value(0),
-      backGroundLoading: false
+      backgroundLoading: false
     };
   }
 
@@ -31,7 +31,7 @@ class _loginScreen extends PureComponent {
     if (this.props.isLoggedIn) {
       this._onShowHomeScreen();
     }
-    if (this.state.backGroundLoading) {
+    if (this.state.backgroundLoading) {
       Animated.timing(                  // Animate over time
         this.state.fadeAnim,            // The animated value to drive
         {
@@ -64,7 +64,7 @@ class _loginScreen extends PureComponent {
 
             <Image
               source={backgroundImage}
-              onLoadStart={() => this.setState({backGroundLoading: true})}
+              onLoadStart={() => this.setState({backgroundLoading: true})}
               style={styles.backgroundImageView} />
 
           </View>

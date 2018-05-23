@@ -2,7 +2,6 @@ import 'cross-fetch/polyfill'
 import { Delivery, DeliveryPropType, DeliveryStatus } from '../entities'
 import { Urls } from '../res'
 import XDate from 'xdate'
-import { doGet } from '../model/network/api.js'
 
 /*
 *  Action constants
@@ -61,14 +60,14 @@ function createReceivedEditDeliveryError(error) {
 * Action triggers
 */
 export function loadDeliveries(firstWeek, lastWeek) {
-  return (dispatch, getState) => {
+  return (dispatch, getState, NetworkManager) => {
     dispatch(createRequestDeliveries())
 
     let params = {
       'rangeStart': firstWeek,
       'rangeEnd': lastWeek
     };
-    return doGet(getState, Urls.DELIVERIES_URL, params)
+    return NetworkManager.doGet(Urls.DELIVERIES_URL, params)
       .then(json => {
         let deliveries = json.items.map(item => {
           return new Delivery(item)
@@ -80,7 +79,7 @@ export function loadDeliveries(firstWeek, lastWeek) {
 }
 
 function editDelivery(delivery, edit) {
-  return (dispatch, getState) => {
+  return (dispatch, getState, NetworkManager) => {
     dispatch(createRequestEditDelivery())
 
     let accessToken = getState().user.userInfo.access_token;
@@ -90,25 +89,8 @@ function editDelivery(delivery, edit) {
     let getUrl = Urls.GET_DELIVERY_URL
       .replace('${subscription_id}', delivery.subscriptionId)
       .replace('${delivery_id}', delivery.id);
-    let params = '?country=ML&locale=en-US';
-    return _fetch(editUrl + params, {
-      method: 'PATCH',
-      body: JSON.stringify(edit),
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${accessToken}`
-      }
-    })
-    .then(response => _fetch(getUrl + params, {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${accessToken}`
-      }
-    }))
-    .then(response => response.json())
+    return NetworkManager.doPatch(editUrl, edit, {})
+    .then(response => NetworkManager.doGet(getUrl, {}))
     .then(json => {
       let newDelivery = new Delivery(json)
       newDelivery.subscriptionId = delivery.subscriptionId //FIX: should be removed if they fix the backend!
@@ -137,19 +119,4 @@ export function unskipDelivery(delivery) {
     }
   };
   return editDelivery(delivery, editObj);
-}
-
-/*
-* Helpers(Will be handled by network layer later!)
-*/
-function _fetch(url, options) {
-  return fetch(url, options)
-    .then(response => {
-      if(response.status >= 200 && response.status < 300) {
-        return response
-      } else {
-        console.log(`Error calling api! url=${url} status:${response.status}`);
-        throw response.statusText
-      }
-    })
 }

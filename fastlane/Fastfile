@@ -12,9 +12,18 @@ IOS_IPA_NAME = "GoReadyMade.ipa"
 IOS_SCHEME = "GoReadyMade"
 IOS_XCODE_VERSION = "9.3"
 
-before_all do
+
+desc 'Remove the node modules directory and download a fresh copy of node modules'
+private_lane :clean_and_install_node_modules do
   # download node dependencies
   sh("cd .. && rm -rf node_modules/ && npm install")
+end
+
+after_all do |lane|
+  subtitle = "Fastlane: #{lane}"
+  message = "Fastlane has finished successfully 🎉"
+  # sends a notification
+  notification(subtitle: subtitle, message: message)
 end
 
 ########## TEST RELATED FASTLANE LANES COME HERE ##########
@@ -26,7 +35,7 @@ private_lane :run_ui_tests_android do
   # Building Staging Android app for UI Tests
   sh("pwd && cd .. && pwd && detox build -c android.emu.staging")
   # Executing UI Tests on Android staging app
-  sh("pwd && cd .. && pwd && detox test -c android.emu.staging -l verbose")
+  sh("pwd && cd .. && pwd && detox test -c android.emu.staging --cleanup")
 end
 
 desc 'Running Ui tests on IOS.'
@@ -44,29 +53,22 @@ private_lane :run_unit_tests do
   sh("pwd && cd ..&& pwd && npm test")
 end
 
-########################################################## 
+########################################################### 
 
-
-after_all do |lane|
-  subtitle = "Fastlane: #{lane}"
-  message = "Fastlane has finished successfully 🎉"
-  # sends a notification
-  notification(subtitle: subtitle, message: message)
-end
+########## IOS RELATED FASTLANE LANES COME HERE ###########
 
 platform :ios do
-  before_all do
-    if is_ci
-      # If you want to automatically update fastlane if a new version is available:
-      # update_fastlane
-      setup_jenkins
-      xcode_select "/Applications/Xcode.app"
-      # reset_simulators
-    end
-
-    # ensure_xcode_version(version: XCODE_VERSION)
-    # ensure_git_status_clean
+  UI.important("Platform IOS")
+  if is_ci
+    # If you want to automatically update fastlane if a new version is available:
+    # update_fastlane
+    setup_jenkins
+    xcode_select "/Applications/Xcode.app"
+    # reset_simulators
   end
+
+  # ensure_xcode_version(version: XCODE_VERSION)
+  # ensure_git_status_clean
 
   desc "This lane releases IOS app for current development branch on HockeyApp"
   lane :release_development_branch do |options|
@@ -76,8 +78,8 @@ platform :ios do
     ensure_git_branch(branch: DEVELOPMENT_BRANCH_NAME)
 
     set_build_number(job_build_number: build_number)
-    # run_unit_tests
-    run_ui_tests_ios
+    # Ui tests are Unreliable
+    # run_ui_tests_ios
     build
     release_hockey(
       ipa_output_path: SharedValues::IPA_OUTPUT_PATH,
@@ -85,22 +87,21 @@ platform :ios do
     )
   end
 
-desc "This lane builds IOS app for current development branch"
+  desc "This lane builds IOS app for current development branch"
   lane :build_development_branch do |options|
     build_number = options[:build_number]
     UI.crash!("You didn\'t specified the build number") if build_number == nil
 
     set_build_number(job_build_number: build_number)
-    # run_unit_tests
-    run_ui_tests_ios
+    # Ui tests are Unreliable
+    # run_ui_tests_ios
     build
   end
 
   desc 'Build the iOS application.'
   private_lane :build do
-    get_certificates           # invokes cert
-    get_provisioning_profile   # invokes sigh
-
+    # get_certificates           # invokes cert
+    # get_provisioning_profile   # invokes sigh
     gym(
       project: './ios/GoReadyMade.xcodeproj',
       # workspace: workspace, # TODO if start using workspace, probably need to use this one
@@ -118,7 +119,7 @@ desc "This lane builds IOS app for current development branch"
   end
 
   private_lane :set_build_number do |options|
-    job_build_number = options[:job_build_number]
+   job_build_number = options[:job_build_number]
 
     if(job_build_number)
       build_number = "#{job_build_number}"
@@ -133,7 +134,7 @@ desc "This lane builds IOS app for current development branch"
   end
 
   private_lane :release_hockey do |options|
-    ipa_output_path = options[:ipa_output_path]
+   ipa_output_path = options[:ipa_output_path]
     pr_title = options[:pr_title]
     hockey_app_id = options[:hockey_app_id]
 
@@ -151,25 +152,30 @@ desc "This lane builds IOS app for current development branch"
       notify: "0"
     )
   end
+  
 end
+########################################################### 
+
+
+########## ANDROID RELATED FASTLANE LANES COME HERE #######
 
 platform :android do
-  before_all do |lane|
-    UI.important("Using JDK:")
-    puts `java -version`
-  end
-
+  UI.important("Platform Android")
+  UI.important("Using JDK:")
+  puts `java -version`
+  
   desc "This lane releases android app for current development branch on HockeyApp"
   lane :release_development_branch do |options|
+    clean_and_install_node_modules
+    run_unit_tests
     build_number = options[:build_number]
     UI.crash!("You didn\'t specified the build number") if build_number == nil
 
     ensure_git_branch(branch: DEVELOPMENT_BRANCH_NAME)
 
     ENV["VERSION_CODE"] = build_number
-    #  Android Ui tests are Unrelaible
+    #  Ui tests are Unreliable
     #  run_ui_tests_android
-    #  run_unit_tests
     build(build_variant: ANDROID_STAGING_BUILD_VARIANT)
     release_hockey(
       apk_filename: ANDROID_STAGING_APK_FILENAME,
@@ -179,13 +185,14 @@ platform :android do
 
   desc "This lane builds android app for current development branch"
   lane :build_development_branch do |options|
+    clean_and_install_node_modules
+    run_unit_tests
     build_number = options[:build_number]
     UI.crash!("You didn\'t specified the build number") if build_number == nil
 
     ENV["VERSION_CODE"] = build_number
-    #  Android Ui tests are Unrelaible
+    #  Ui tests are Unreliable
     #  run_ui_tests_android
-    #  run_unit_tests
     build(build_variant: ANDROID_STAGING_BUILD_VARIANT)
   end
 
@@ -230,4 +237,7 @@ platform :android do
       notify: '0'
     )
   end
+
 end
+
+###########################################################

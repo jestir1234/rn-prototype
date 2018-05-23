@@ -117,7 +117,7 @@ export function requestLogIn(username, password) {
       .then(json => {
         let userInfo = new UserInfo(json);
         console.log(userInfo);
-        dispatch(receivedAuthentication(userInfo));
+        dispatch(receivedAuthentication(userInfo));//{...json, receved_at: Date.now()}));
       }).catch(e => {
         console.log(e);
         if (!e.message) {
@@ -136,7 +136,9 @@ export function checkAuthCredentials() {
       let elapsedTime = Date.now() - userInfo.received_at;
       if (elapsedTime > userInfo.expires_in * 1000) {
         console.log('Authentication: need to refresh');
-        dispatch(refreshToken(userInfo.refreshToken));
+        // TODO (se): change to refresh once the call is working
+        dispatch(requestLogOut());
+        //dispatch(refreshToken(userInfo.refreshToken));
       } else {
         console.log('Authentication: all good');
         dispatch(receivedAuthentication(userInfo));
@@ -174,7 +176,7 @@ function refreshToken(refreshToken) {
     .then(json => {
       let userInfo = new UserInfo(json);
       console.log(userInfo);
-      dispatch(receivedAuthentication(userInfo));
+      dispatch(receivedAuthentication(userInfo));//{...json, receved_at: Date.now()}));
     }).catch(e => {
       console.log(e);
       dispatch(requestLogOut());

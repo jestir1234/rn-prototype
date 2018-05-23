@@ -1,11 +1,12 @@
 import React, { PureComponent } from 'react'
-import { StyleSheet, View, Image, Text, Keyboard, TextInput, ActivityIndicator, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, Image, Text, Keyboard, TextInput, ActivityIndicator, TouchableOpacity, Animated } from 'react-native'
 import { Toast } from 'native-base'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import * as Res from '../../res'
 import styles from './style.js'
 import { connect } from 'react-redux'
 import { UserAction } from '../../actions'
+import backgroundImage from '../../res/image/login_background.png'
 
 class _loginScreen extends PureComponent {
 
@@ -17,7 +18,9 @@ class _loginScreen extends PureComponent {
 
     this.state = {
       username: '',
-      password: ''
+      password: '',
+      fadeAnim: new Animated.Value(0),
+      backgroundLoading: false
     };
   }
 
@@ -27,6 +30,15 @@ class _loginScreen extends PureComponent {
     }
     if (this.props.isLoggedIn) {
       this._onShowHomeScreen();
+    }
+    if (this.state.backgroundLoading) {
+      Animated.timing(                  // Animate over time
+        this.state.fadeAnim,            // The animated value to drive
+        {
+          toValue: 1,                   // Animate to opacity: 1 (opaque)
+          duration: 300,                // Make it take a while
+        }
+      ).start();
     }
   }
 
@@ -43,6 +55,7 @@ class _loginScreen extends PureComponent {
   }
 
   render() {
+    let { fadeAnim } = this.state;
     return (
       <View style={Res.Styles.safeAreaTop}>
         <View style={styles.rootContainer}>
@@ -50,7 +63,8 @@ class _loginScreen extends PureComponent {
           <View style={styles.backgroundView}>
 
             <Image
-              source={require('../../res/image/login_background.png')}
+              source={backgroundImage}
+              onLoadStart={() => this.setState({backgroundLoading: true})}
               style={styles.backgroundImageView} />
 
           </View>
@@ -62,7 +76,9 @@ class _loginScreen extends PureComponent {
             keyboardShouldPersistTaps='handled'
             enableAutoAutomaticScroll={true}
             enableOnAndroid={true} >
-            <View style={styles.fieldsContainer} >
+            <Animated.View
+              style={[styles.fieldsContainer, {opacity: fadeAnim}]}
+              >
               <Text
                 style={styles.titleText}>{Res.Strings.login_login_title}</Text>
 
@@ -145,7 +161,7 @@ class _loginScreen extends PureComponent {
                 <Text
                   style={[styles.generalText, styles.orangeText]}>{Res.Strings.login_register_action}</Text>
               </Text>
-            </View>
+            </Animated.View>
           </KeyboardAwareScrollView>
 
           {this._loadingView()}

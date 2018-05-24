@@ -1,8 +1,7 @@
 import axios from 'axios'
 import * as Res from '../../res'
-import provideStoreManager from '../../stores'
 
-const axiosInstance = axios.create({
+export const axiosInstance = axios.create({
   baseURL: Res.Configs.BASE_URL,
   headers: {
     'Accept': 'application/json',
@@ -10,10 +9,18 @@ const axiosInstance = axios.create({
   }
 });
 
+let storeInstance;
+
+export function setStore(store) {
+  storeInstance = store;
+}
+
 axiosInstance.interceptors.request.use(config => {
-  let userInfo = provideStoreManager().store.getState().user.userInfo;
-  if (userInfo && userInfo.access_token) {
-    config.headers.Authorization = `Bearer ${userInfo.access_token}`;
+  if (storeInstance) {
+    let userInfo = storeInstance.getState().user.userInfo;
+    if (userInfo && userInfo.access_token) {
+      config.headers.Authorization = `Bearer ${userInfo.access_token}`;
+    }
   }
   config.params = {
     'country': Res.Configs.COUNTRY,
@@ -38,10 +45,12 @@ axiosInstance.interceptors.response.use(response => {
 function handleError(error) {
   let result = { message: Res.Strings.network_unknownError, status: 0 }
   let statusCode = error.response ? error.response.status : -1
-  if(statusCode == 400) {
-    result = { message: error.response.data, status: statusCode }
-  } else if(statusCode > 400 && statusCode < 500) {
-    result = { message: error.response.data.error, status: statusCode }
+  if(statusCode >= 400 && statusCode < 500) {
+    if (error.response.data.error) {
+      result = { message: error.response.data.error, status: statusCode }
+    } else {
+      result = { message: error.response.data, status: statusCode }
+    }
   } else if(statusCode >= 500) {
     result = { message: Res.Strings.network_serverError, status: statusCode }
   } else if(statusCode == -1) {

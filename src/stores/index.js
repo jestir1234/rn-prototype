@@ -8,5 +8,6 @@ const store = createStore(reducer, applyMiddleware(thunkMiddleware.withExtraArgu
 const persistor = persistStore(store)
 
 export default () => {
+  NetworkManager.setStore(store)
   return { store, persistor }
 };

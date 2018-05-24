@@ -1,9 +1,11 @@
 import * as actions from '../src/actions/user'
 import * as userInfoEntities from '../src/entities/UserInfo'
+import * as NetworkManager from '../src/model/network/api.js'
 
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import fetchMock from 'fetch-mock'
+import moxios from 'moxios'
 import expect from 'expect'
 
 import * as Res from '../src/res'
@@ -17,17 +19,15 @@ const mockAsyncStorageFunction = () => {
 
 import { AsyncStorage } from 'react-native'
 
-const middlewares = [thunk]
+const middlewares = [thunk.withExtraArgument(NetworkManager)]
 const mockStore = configureMockStore(middlewares)
 
 describe('user actions tests', () => {
   beforeEach(() => {
-    mockAsyncStorageFunction()
+    moxios.install(NetworkManager.axiosInstance)
   })
   afterEach(() => {
-    fetchMock.reset()
-    fetchMock.restore()
-    releaseAsyncStorageFunction()
+    moxios.uninstall(NetworkManager.axiosInstance)
   })
 
   it('creates RECEIVED_AUTHENTICATION when login with correct credentials', () => {
@@ -53,10 +53,10 @@ describe('user actions tests', () => {
       user_data: userData
     }
     let userInfo = new userInfoEntities.UserInfo(userInfoString)
-
-    fetchMock
-      .postOnce('https://gw-staging.hellofresh.com/login?country=ML',
-        { body: userInfo, headers: { 'content-type': 'application/json' } }
+    
+    moxios
+      .stubRequest('https://gw-staging.hellofresh.com/login?country=ML&locale=en-US',//login.*/,//
+        { status: 200, response: JSON.stringify(userInfo), headers: { 'content-type': 'application/json' } }
       )
     let expectedActions = [
       { type: actions.REQUEST_AUTHENTICATION},
@@ -64,7 +64,8 @@ describe('user actions tests', () => {
       { type: actions.RESET_PASSWORD_ERROR},
       { type: actions.RECEIVED_AUTHENTICATION, userInfo: userInfo }
     ]
-    let store = mockStore({ userInfo: [] })
+    let store = mockStore({ user: { userInfo: null } })
+    NetworkManager.setStore(store)
 
     return store.dispatch(actions.requestLogIn(username, password)).then(() => {
       expect(store.getActions()).toEqual(expectedActions)

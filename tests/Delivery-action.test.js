@@ -12,6 +12,8 @@ import expect from 'expect'
 import deliveriesDataJson from './mockData/deliveries.json'
 import * as utils from './utils/entities'
 
+import * as Res from '../src/res'
+
 const middlewares = [thunk.withExtraArgument(NetworkManager)]
 const mockStore = configureMockStore(middlewares)
 
@@ -26,9 +28,11 @@ describe('async actions', () => {
   it('sets state RECEIVED_DELIVERIES, if correct weeks are sent', () => {
     let firstWeek = '2018-W17'
     let lastWeek = '2018-W23'
+
+    let params = '?country=' + Res.Configs.COUNTRY + '&locale=' + Res.Configs.LOCALE + '&rangeStart=' + firstWeek + '&rangeEnd=' + lastWeek;
    
     moxios
-      .stubRequest('https://gw-staging.hellofresh.com/api/customers/me/deliveries?country=ML&locale=en-US&rangeStart=2018-W17&rangeEnd=2018-W23',
+      .stubRequest(Res.Urls.DELIVERIES_URL + params,
         { status: 200, response: deliveriesDataJson, headers: { 'content-type': 'application/json' } }
       )
 	  
@@ -54,9 +58,11 @@ describe('async actions', () => {
   it('sets state RECEIVED_DELIVERIES_ERROR, if server doesn not reply with HTTP Status Code 200', () => {
     let firstWeek = '2018-W17'
     let lastWeek = '2018-W23'
+    
+        let params = '?country=' + Res.Configs.COUNTRY + '&locale=' + Res.Configs.LOCALE + '&rangeStart=' + firstWeek + '&rangeEnd=' + lastWeek;
      
     moxios
-      .stubRequest('https://gw-staging.hellofresh.com/api/customers/me/deliveries?country=ML&locale=en-US&rangeStart=2018-W17&rangeEnd=2018-W23',
+      .stubRequest(Res.Urls.DELIVERIES_URL + params,
         { response: '', status: 500, headers: { 'content-type': 'application/json' } }
       )
 	  	

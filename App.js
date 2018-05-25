@@ -8,7 +8,6 @@ import MySplashScreen from './src/containers/splash'
 import LoginScreen from './src/containers/login'
 import HomeScreen from './src/containers/home'
 import provideStoreManager from './src/stores'
-//import { store, persistor } from './src/stores'
 import { YellowBox } from 'react-native';
 import { PersistGate } from 'redux-persist/integration/react'
 import * as Res from './src/res'

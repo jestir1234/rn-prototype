@@ -53,9 +53,11 @@ describe('user actions tests', () => {
       user_data: userData
     }
     let userInfo = new userInfoEntities.UserInfo(userInfoString)
+
+    let params = '?country=' + Res.Configs.COUNTRY + '&locale=' + Res.Configs.LOCALE;
     
     moxios
-      .stubRequest('https://gw-staging.hellofresh.com/login?country=ML&locale=en-US',//login.*/,//
+      .stubRequest(Res.Urls.LOGIN_URL + params,
         { status: 200, response: JSON.stringify(userInfo), headers: { 'content-type': 'application/json' } }
       )
     let expectedActions = [
@@ -215,10 +217,11 @@ describe('user actions tests', () => {
 
     let userInfo = new userInfoEntities.UserInfo(userInfoString)
 
-    let params = '?country=ML'
-    fetchMock
-      .postOnce(Res.Urls.LOGIN_URL + params,
-        { body: userInfo, headers: { 'content-type': 'application/json' } }
+    let params = '?country=' + Res.Configs.COUNTRY + '&locale=' + Res.Configs.LOCALE;
+
+    moxios
+      .stubRequest(Res.Urls.LOGIN_URL + params,
+        { status: 200, response: JSON.stringify(userInfo), headers: { 'content-type': 'application/json' } }
       )
     // TODO (se): change back when refresh is working and re-enabled
     let expectedActions = [

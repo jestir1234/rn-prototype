@@ -1,4 +1,3 @@
-import 'cross-fetch/polyfill'
 import DefaultPreference from 'react-native-default-preference'
 import { UserInfo, UserInfoInit, UserInfoLoaded } from '../entities'
 import * as Res from '../res'
@@ -71,7 +70,7 @@ function stopLoading() {
 }
 
 export function requestLogIn(username, password) {
-  return dispatch => {
+  return (dispatch, getState, NetworkManager) => {
     dispatch(requestAuthentication());
     let isValid = true;
     if (!username || username.length === 0) {
@@ -92,28 +91,11 @@ export function requestLogIn(username, password) {
     if (!isValid) {
       return dispatch(stopLoading());
     }
-    let params = '?country=ML'
-    return fetch(Res.Urls.LOGIN_URL + params, {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
+    return NetworkManager.doPost(Res.Urls.LOGIN_URL,
+        {
           'username': username,
           'password': password
-        })
-      })
-      .then(response => {
-        console.log(response);
-        if (response.status >= 400) {
-          let error = new Error(response.statusText);
-          error.response = response;
-          console.log(error);
-          throw error;
-        }
-        return response.json();
-      })
+        }, {})
       .then(json => {
         let userInfo = new UserInfo(json);
         console.log(userInfo);
@@ -129,7 +111,7 @@ export function requestLogIn(username, password) {
 }
 
 export function checkAuthCredentials() {
-  return (dispatch, getState) => {
+  return (dispatch, getState, NetworkManager) => {
     dispatch(requestAuthentication());
     let userInfo = getState().user.userInfo;
     if (userInfo !== undefined && userInfo !== null){
@@ -151,28 +133,11 @@ export function checkAuthCredentials() {
 }
 
 function refreshToken(refreshToken) {
-  return dispatch => {
-    let params = '?country=ML'
-    fetch(Res.Urls.LOGIN_URL + params, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
+  return (dispatch, getState, NetworkManager) => {
+    NetworkManager.doPost(Res.Urls.LOGIN_URL,
+      {
         'refreshToken': refreshToken
-      })
-    })
-    .then(response => {
-      console.log(response);
-      if (response.status >= 400) {
-        let error = new Error(response.statusText);
-        error.response = response;
-        console.log(error);
-        throw error;
-      }
-      return response.json();
-    })
+      }, {})
     .then(json => {
       let userInfo = new UserInfo(json);
       console.log(userInfo);

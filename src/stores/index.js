@@ -2,9 +2,12 @@ import { createStore, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import reducer from '../reducers'
 import { persistStore } from 'redux-persist'
+import * as NetworkManager from '../network/api.js'
+
+const store = createStore(reducer, applyMiddleware(thunkMiddleware.withExtraArgument(NetworkManager)))
+const persistor = persistStore(store)
 
 export default () => {
-  let store = createStore(reducer, applyMiddleware(thunkMiddleware))
-  let persistor = persistStore(store)
+  NetworkManager.setStore(store)
   return { store, persistor }
-}
+};

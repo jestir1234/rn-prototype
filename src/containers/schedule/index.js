@@ -42,8 +42,8 @@ class _scheduleScreen extends PureComponent {
     return (
       <View testID='CalendarTestid' style={Res.Styles.safeAreaTop}>
         <View style={styles.rootContainer}>
-          {message}
           {list}
+          {message}
           {progress}
           {skipDialog}
         </View>

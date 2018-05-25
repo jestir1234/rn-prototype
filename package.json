@@ -10,10 +10,7 @@
     "babel-preset-react-native-stage-0": "^1.0.1",
     "detox": "^7.3.5",
     "enzyme": "^3.3.0",
-    "fetch-mock": "^6.3.0",
-    "isomorphic-fetch": "^2.2.1",
     "jest": "^22.4.4",
-    "jest-fetch-mock": "^1.6.1",
     "jest-react-native": "^18.0.0",
     "mocha": "^5.1.1",
     "moxios": "^0.4.0",
@@ -36,7 +33,6 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "cross-fetch": "^2.1.0",
     "expect": "^22.4.3",
     "mock-async-storage": "^2.0.2",
     "native-base": "^2.4.4",

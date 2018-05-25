@@ -1,5 +1,5 @@
 import axios from 'axios'
-import * as Res from '../../res'
+import * as Res from '../res'
 
 export const axiosInstance = axios.create({
   baseURL: Res.Configs.BASE_URL,

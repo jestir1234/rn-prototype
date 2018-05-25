@@ -1,4 +1,3 @@
-import 'cross-fetch/polyfill'
 import DefaultPreference from 'react-native-default-preference'
 import { UserInfo, UserInfoInit, UserInfoLoaded } from '../entities'
 import * as Res from '../res'

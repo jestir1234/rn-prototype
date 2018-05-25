@@ -1,4 +1,3 @@
-import 'cross-fetch/polyfill'
 import { Delivery, DeliveryPropType, DeliveryStatus } from '../entities'
 import { Urls } from '../res'
 import XDate from 'xdate'

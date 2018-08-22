@@ -1,0 +1,634 @@
+{
+  "count": 1,
+  "total": null,
+  "take": null,
+  "skip": null,
+  "items": [
+    {
+      "id": "5b6a0d2ebf79e8785a7680f3",
+      "country": "ML",
+      "headline": "Delicious ready made meals for week 36",
+      "description": null,
+      "product": "go-box",
+      "week": "2018-W36",
+      "cutoffDate": null,
+      "courses": [
+        {
+          "recipe": {
+            "country": "ML",
+            "id": "5b6a0bdaae08b57e5b391c13",
+            "name": "Smoky Chicken Fajitas",
+            "seoName": null,
+            "slug": "smoky-chicken-fajitas",
+            "headline": "with Sour Cream, Peppers, and Onion",
+            "descriptionMarkdown":
+              "Lime crema gives these fajitas a zesty finish that will keep you coming back for more.  With the perfect blend of spices, roasted peppers and onions, melted cheese, and fluffy flour tortillas, you will need to eat them quickly before someone else does...",
+            "descriptionHTML":
+              "<p>Lime crema gives these fajitas a zesty finish that will keep you coming back for more.  With the perfect blend of spices, roasted peppers and onions, melted cheese, and fluffy flour tortillas, you will need to eat them quickly before someone else does...</p>",
+            "description":
+              "Lime crema gives these fajitas a zesty finish that will keep you coming back for more. With the perfect blend of spices, roasted peppers and onions, melted cheese, and fluffy flour tortillas, you will need to eat them quickly before someone else does...",
+            "seoDescription": null,
+            "comment": "GOUS-03-002-002-18W36",
+            "difficulty": 1,
+            "totalTime": "PT04M",
+            "prepTime": "PT15M",
+            "servingSize": 480,
+            "createdAt": "2018-08-07T17:15:06-0400",
+            "updatedAt": "2018-08-10T14:12:16-0400",
+            "link":
+              "https://api-v2-staging.hellofresh.com/recipes/5b6a0bdaae08b57e5b391c13?country=ML",
+            "imageLink":
+              "https://d3hvwccx09j84u.cloudfront.net/web/image/5b6a0bdaae08b57e5b391c13-08e1a238.jpg",
+            "cardLink":
+              "/card/smoky-chicken-fajitas-5b6a0bdaae08b57e5b391c13-b5fccc0e.pdf",
+            "videoLink": null
+          }
+        },
+        {
+          "recipe": {
+            "country": "ML",
+            "id": "5b6a0bb830006c608f1e88c2",
+            "name": "Chicken and Balsamic-Fig Sauce",
+            "seoName": null,
+            "slug": "chicken-and-balsamic-fig",
+            "headline": "with Sweet Potatoes",
+            "descriptionMarkdown":
+              "Savory fig-balsamic glaze takes this chicken to another level.  It is served with roasted sweet potatoes in a fresh lemon dressing to round out the dish.",
+            "descriptionHTML":
+              "<p>Savory fig-balsamic glaze takes this chicken to another level.  It is served with roasted sweet potatoes in a fresh lemon dressing to round out the dish.</p>",
+            "description":
+              "Savory fig-balsamic glaze takes this chicken to another level. It is served with roasted sweet potatoes in a fresh lemon dressing to round out the dish.",
+            "seoDescription": null,
+            "comment": "GOUS-03-004-002-18W36",
+            "difficulty": 1,
+            "totalTime": null,
+            "prepTime": "PT25M",
+            "servingSize": 485,
+            "createdAt": "2018-08-07T17:14:32-0400",
+            "updatedAt": "2018-08-08T17:47:47-0400",
+            "link":
+              "https://api-v2-staging.hellofresh.com/recipes/5b6a0bb830006c608f1e88c2?country=ML",
+            "imageLink":
+              "https://d3hvwccx09j84u.cloudfront.net/web/image/5b6a0bb830006c608f1e88c2-2bf14168.jpg",
+            "cardLink":
+              "/card/chicken-and-balsamic-fig-5b6a0bb830006c608f1e88c2-b5fccc0e.pdf",
+            "videoLink": null
+          }
+        },
+        {
+          "recipe": {
+            "country": "ML",
+            "id": "5b6a0bfa30006c60b1410e42",
+            "name": "Soy Glazed Steak",
+            "seoName": null,
+            "slug": "soy-glazed-steak",
+            "headline": "with Wasabi Mashed Potatoes",
+            "descriptionMarkdown":
+              "Steak and potatoes gets a twist in this delicious dish.  Just a dash of wasabi kicks up silky mashed potatoes while a teriyaki glaze takes this steak from tasty to downright mouth-watering.",
+            "descriptionHTML":
+              "<p>Steak and potatoes gets a twist in this delicious dish.  Just a dash of wasabi kicks up silky mashed potatoes while a teriyaki glaze takes this steak from tasty to downright mouth-watering.</p>",
+            "description":
+              "Steak and potatoes gets a twist in this delicious dish. Just a dash of wasabi kicks up silky mashed potatoes while a teriyaki glaze takes this steak from tasty to downright mouth-watering.",
+            "seoDescription": null,
+            "comment": "GOUS-02-005-002-18W36",
+            "difficulty": 1,
+            "totalTime": null,
+            "prepTime": "PT15M",
+            "servingSize": 509,
+            "createdAt": "2018-08-07T17:15:38-0400",
+            "updatedAt": "2018-08-07T17:45:41-0400",
+            "link":
+              "https://api-v2-staging.hellofresh.com/recipes/5b6a0bfa30006c60b1410e42?country=ML",
+            "imageLink":
+              "https://d3hvwccx09j84u.cloudfront.net/web/image/5b6a0bfa30006c60b1410e42-518cef95.jpg",
+            "cardLink":
+              "/card/soy-glazed-steak-5b6a0bfa30006c60b1410e42-b5fccc0e.pdf",
+            "videoLink": null
+          }
+        },
+        {
+          "recipe": {
+            "country": "ML",
+            "id": "5b69ef3cae08b5661001c6c2",
+            "name": "Meatloaf Balsamico",
+            "seoName": null,
+            "slug": "meatloaf-balsamico",
+            "headline": "with Green Beans and Sweet Potato Mash",
+            "descriptionMarkdown":
+              "It doesn\u2019t get more home-style than meatloaf, but we are updating this classic with a balsamic ketchup glaze and pairing it with roasted green beans and mashed sweet potatoes.",
+            "descriptionHTML":
+              "<p>It doesn\u2019t get more home-style than meatloaf, but we are updating this classic with a balsamic ketchup glaze and pairing it with roasted green beans and mashed sweet potatoes.</p>",
+            "description":
+              "It doesn\u2019t get more home-style than meatloaf, but we are updating this classic with a balsamic ketchup glaze and pairing it with roasted green beans and mashed sweet potatoes.",
+            "seoDescription": null,
+            "comment": "GOUS-02-010-002-18W36",
+            "difficulty": 2,
+            "totalTime": "PT03M",
+            "prepTime": "PT20M",
+            "servingSize": 0,
+            "createdAt": "2018-08-07T15:13:00-0400",
+            "updatedAt": "2018-08-10T14:14:55-0400",
+            "link":
+              "https://api-v2-staging.hellofresh.com/recipes/5b69ef3cae08b5661001c6c2?country=ML",
+            "imageLink":
+              "https://d3hvwccx09j84u.cloudfront.net/web/image/5b69ef3cae08b5661001c6c2-b253aa75.jpg",
+            "cardLink":
+              "/card/meatloaf-balsamico-5b69ef3cae08b5661001c6c2-b5fccc0e.pdf",
+            "videoLink": null
+          }
+        },
+        {
+          "recipe": {
+            "country": "ML",
+            "id": "5b6a0ce2ae08b57f4a4fb3b2",
+            "name": "Cherry Balsamic Pork Chop",
+            "seoName": null,
+            "slug": "cherry-balsamic-pork-chop",
+            "headline": "with Roasted Potatoes and Broccoli",
+            "descriptionMarkdown":
+              "What is sticky and tangy, and about to become your new favorite sauce? It's our cherry balsamic jam! Thick and jammy, this sauce clings to the pork while simple broccoli and potatoes make for the perfect meal.",
+            "descriptionHTML":
+              "<p>What is sticky and tangy, and about to become your new favorite sauce? It's our cherry balsamic jam! Thick and jammy, this sauce clings to the pork while simple broccoli and potatoes make for the perfect meal.</p>",
+            "description":
+              "What is sticky and tangy, and about to become your new favorite sauce? It's our cherry balsamic jam! Thick and jammy, this sauce clings to the pork while simple broccoli and potatoes make for the perfect meal.",
+            "seoDescription": null,
+            "comment": "GOUS-06-013-002-18W36",
+            "difficulty": 2,
+            "totalTime": null,
+            "prepTime": "PT25M",
+            "servingSize": 0,
+            "createdAt": "2018-08-07T17:19:30-0400",
+            "updatedAt": "2018-08-08T17:50:05-0400",
+            "link":
+              "https://api-v2-staging.hellofresh.com/recipes/5b6a0ce2ae08b57f4a4fb3b2?country=ML",
+            "imageLink":
+              "https://d3hvwccx09j84u.cloudfront.net/web/image/5b6a0ce2ae08b57f4a4fb3b2-6a53dff2.jpg",
+            "cardLink":
+              "/card/cherry-balsamic-pork-chop-5b6a0ce2ae08b57f4a4fb3b2-b5fccc0e.pdf",
+            "videoLink": null
+          }
+        },
+        {
+          "recipe": {
+            "country": "ML",
+            "id": "5b69ef90ae08b5663707e5d2",
+            "name": "Chicken and Cherry Balsamic Sauce",
+            "seoName": null,
+            "slug": "chicken-and-cherry-balsamic",
+            "headline": "with Roasted Potatoes and Broccoli",
+            "descriptionMarkdown":
+              "Our cherry balsamic sauce takes this dish to a whole new level. Tangy and sweet, this sauce perfectly complements roast chicken and partners beautifully with crisp broccoli and roasted potatoes to complete this chef favorite.",
+            "descriptionHTML":
+              "<p>Our cherry balsamic sauce takes this dish to a whole new level. Tangy and sweet, this sauce perfectly complements roast chicken and partners beautifully with crisp broccoli and roasted potatoes to complete this chef favorite.</p>",
+            "description":
+              "Our cherry balsamic sauce takes this dish to a whole new level. Tangy and sweet, this sauce perfectly complements roast chicken and partners beautifully with crisp broccoli and roasted potatoes to complete this chef favorite.",
+            "seoDescription": null,
+            "comment": "GOUS-03-029-001-18W36",
+            "difficulty": 2,
+            "totalTime": null,
+            "prepTime": "PT25M",
+            "servingSize": 0,
+            "createdAt": "2018-08-07T15:14:24-0400",
+            "updatedAt": "2018-08-08T17:50:53-0400",
+            "link":
+              "https://api-v2-staging.hellofresh.com/recipes/5b69ef90ae08b5663707e5d2?country=ML",
+            "imageLink":
+              "https://d3hvwccx09j84u.cloudfront.net/web/image/5b69ef90ae08b5663707e5d2-9855c3e2.jpg",
+            "cardLink":
+              "/card/chicken-and-cherry-balsamic-5b69ef90ae08b5663707e5d2-b5fccc0e.pdf",
+            "videoLink": null
+          }
+        },
+        {
+          "recipe": {
+            "country": "ML",
+            "id": "5b6a0b44ae08b57db0715012",
+            "name": "Teriyaki Chicken Noodles",
+            "seoName": null,
+            "slug": "teriyaki-chicken-noodles",
+            "headline": "with Green Beans",
+            "descriptionMarkdown":
+              "You can't go wrong with this tasty chicken stir fry. Tender chicken pieces, yakisoba noodles and green beans, coated in tasty teriyaki sauce.",
+            "descriptionHTML":
+              "<p>You can't go wrong with this tasty chicken stir fry. Tender chicken pieces, yakisoba noodles and green beans, coated in tasty teriyaki sauce.</p>",
+            "description":
+              "You can't go wrong with this tasty chicken stir fry. Tender chicken pieces, yakisoba noodles and green beans, coated in tasty teriyaki sauce.",
+            "seoDescription": null,
+            "comment": "GOUS-03-030-001-18W36",
+            "difficulty": 1,
+            "totalTime": null,
+            "prepTime": "PT20M",
+            "servingSize": 433,
+            "createdAt": "2018-08-07T17:12:36-0400",
+            "updatedAt": "2018-08-10T14:18:37-0400",
+            "link":
+              "https://api-v2-staging.hellofresh.com/recipes/5b6a0b44ae08b57db0715012?country=ML",
+            "imageLink":
+              "https://d3hvwccx09j84u.cloudfront.net/web/image/5b6a0b44ae08b57db0715012-78ed05a4.jpg",
+            "cardLink":
+              "/card/teriyaki-chicken-noodles-5b6a0b44ae08b57db0715012-b5fccc0e.pdf",
+            "videoLink": null
+          }
+        },
+        {
+          "recipe": {
+            "country": "ML",
+            "id": "5b6a0b69ae08b57de22484b2",
+            "name": "Orzo and Tomatoes",
+            "seoName": null,
+            "slug": "orzo-and-tomatoes",
+            "headline": "with Mozzarella and Spinach",
+            "descriptionMarkdown":
+              "An Italian classic with a twist - risotto with pasta!  Orzo and a fresh tomato sauce form the base of this dish with tomatoes, wilted spinach, and cheese scattered throughout.  Risotto with rice will never look the same.",
+            "descriptionHTML":
+              "<p>An Italian classic with a twist - risotto with pasta!  Orzo and a fresh tomato sauce form the base of this dish with tomatoes, wilted spinach, and cheese scattered throughout.  Risotto with rice will never look the same.</p>",
+            "description":
+              "An Italian classic with a twist - risotto with pasta! Orzo and a fresh tomato sauce form the base of this dish with tomatoes, wilted spinach, and cheese scattered throughout. Risotto with rice will never look the same.",
+            "seoDescription": null,
+            "comment": "GOUS-09-031-001-18W36",
+            "difficulty": 1,
+            "totalTime": "PT03M",
+            "prepTime": "PT15M",
+            "servingSize": 0,
+            "createdAt": "2018-08-07T17:13:13-0400",
+            "updatedAt": "2018-08-07T17:48:20-0400",
+            "link":
+              "https://api-v2-staging.hellofresh.com/recipes/5b6a0b69ae08b57de22484b2?country=ML",
+            "imageLink":
+              "https://d3hvwccx09j84u.cloudfront.net/web/image/5b6a0b69ae08b57de22484b2-ccf1af5d.jpg",
+            "cardLink":
+              "/card/orzo-and-tomatoes-5b6a0b69ae08b57de22484b2-b5fccc0e.pdf",
+            "videoLink": null
+          }
+        },
+        {
+          "recipe": {
+            "country": "ML",
+            "id": "5b6a0a44ae08b57ca8526f52",
+            "name": "Korean Style Beef Bowl",
+            "seoName": null,
+            "slug": "korean-style-beef-bowl",
+            "headline": "with Shredded Carrots, Zucchini and Rice",
+            "descriptionMarkdown":
+              "This dish has everything - crispy beef, crunchy and fresh vegetables, perfect rice, and a zesty sauce! Take your taste buds on a trip to Korea in no time.",
+            "descriptionHTML":
+              "<p>This dish has everything - crispy beef, crunchy and fresh vegetables, perfect rice, and a zesty sauce! Take your taste buds on a trip to Korea in no time.</p>",
+            "description":
+              "This dish has everything - crispy beef, crunchy and fresh vegetables, perfect rice, and a zesty sauce! Take your taste buds on a trip to Korea in no time.",
+            "seoDescription": null,
+            "comment": "GOUS-02-038-001-18W36",
+            "difficulty": 1,
+            "totalTime": "PT03M",
+            "prepTime": "PT15M",
+            "servingSize": 0,
+            "createdAt": "2018-08-07T17:08:20-0400",
+            "updatedAt": "2018-08-18T02:10:42-0400",
+            "link":
+              "https://api-v2-staging.hellofresh.com/recipes/5b6a0a44ae08b57ca8526f52?country=ML",
+            "imageLink":
+              "https://d3hvwccx09j84u.cloudfront.net/web/image/5b6a0a44ae08b57ca8526f52-addd8d0e.jpg",
+            "cardLink":
+              "/card/korean-style-beef-bowl-5b6a0a44ae08b57ca8526f52-ae47dbd6.pdf",
+            "videoLink": null
+          }
+        },
+        {
+          "recipe": {
+            "country": "ML",
+            "id": "5b6a091830006c5dfe3048e2",
+            "name": "Teriyaki Salmon",
+            "seoName": null,
+            "slug": "teriyaki-salmon",
+            "headline": "with Snow Peas and Rice",
+            "descriptionMarkdown":
+              "This dish is the winner of stir fry night!  Crispy salmon and snappy snow peas are tossed in a sweet and savory teriyaki glaze and served on a bed of fluffy rice.",
+            "descriptionHTML":
+              "<p>This dish is the winner of stir fry night!  Crispy salmon and snappy snow peas are tossed in a sweet and savory teriyaki glaze and served on a bed of fluffy rice.</p>",
+            "description":
+              "This dish is the winner of stir fry night! Crispy salmon and snappy snow peas are tossed in a sweet and savory teriyaki glaze and served on a bed of fluffy rice.",
+            "seoDescription": null,
+            "comment": "GOUS-04-051-001-18W36",
+            "difficulty": 1,
+            "totalTime": "PT4M",
+            "prepTime": "PT15M",
+            "servingSize": 0,
+            "createdAt": "2018-08-07T17:03:20-0400",
+            "updatedAt": "2018-08-08T17:53:02-0400",
+            "link":
+              "https://api-v2-staging.hellofresh.com/recipes/5b6a091830006c5dfe3048e2?country=ML",
+            "imageLink":
+              "https://d3hvwccx09j84u.cloudfront.net/web/image/5b6a091830006c5dfe3048e2-5e051771.jpg",
+            "cardLink":
+              "/card/teriyaki-salmon-5b6a091830006c5dfe3048e2-b5fccc0e.pdf",
+            "videoLink": null
+          }
+        },
+        {
+          "recipe": {
+            "country": "ML",
+            "id": "5b69f19f30006c4a21556762",
+            "name": "Sirloin Steak with Peppercorn Sauce",
+            "seoName": null,
+            "slug": "sirloin-steak-with-peppercorn-sauce",
+            "headline": "with Herb Roasted Potatoes",
+            "descriptionMarkdown":
+              "Juicy sirloin steak is a hit any night of the week.  Add our creamy peppercorn sauce on top and pair it with Haricot Verts, Carrots and Roasted potatoes to complete this guaranteed crowd-pleaser.\nEach meal serves 1 adult or 1-2 children",
+            "descriptionHTML":
+              "<p>Juicy sirloin steak is a hit any night of the week.  Add our creamy peppercorn sauce on top and pair it with Haricot Verts, Carrots and Roasted potatoes to complete this guaranteed crowd-pleaser.\nEach meal serves 1 adult or 1-2 children</p>",
+            "description":
+              "Juicy sirloin steak is a hit any night of the week. Add our creamy peppercorn sauce on top and pair it with Haricot Verts, Carrots and Roasted potatoes to complete this guaranteed crowd-pleaser.\nEach meal serves 1 adult or 1-2 children",
+            "seoDescription": null,
+            "comment": "GOUS-02-052-001-18W36",
+            "difficulty": 2,
+            "totalTime": null,
+            "prepTime": "PT20M",
+            "servingSize": 395,
+            "createdAt": "2018-08-07T15:23:11-0400",
+            "updatedAt": "2018-08-10T14:38:58-0400",
+            "link":
+              "https://api-v2-staging.hellofresh.com/recipes/5b69f19f30006c4a21556762?country=ML",
+            "imageLink":
+              "https://d3hvwccx09j84u.cloudfront.net/web/image/5b69f19f30006c4a21556762-6cd7618a.jpg",
+            "cardLink": "/card/5b69f19f30006c4a21556762.pdf",
+            "videoLink": null
+          }
+        },
+        {
+          "recipe": {
+            "country": "ML",
+            "id": "5b6a0f3fae08b50211764e32",
+            "name": "Veggie Buddha Bowl",
+            "seoName": null,
+            "slug": "veggie-buddha-bowl",
+            "headline": "with Sriracha Sauce",
+            "descriptionMarkdown":
+              "This dish has everything - crunchy and fresh vegetables, perfect rice, and a zesty sauce! Take your taste buds on a trip to Korea in no time.",
+            "descriptionHTML":
+              "<p>This dish has everything - crunchy and fresh vegetables, perfect rice, and a zesty sauce! Take your taste buds on a trip to Korea in no time.</p>",
+            "description":
+              "This dish has everything - crunchy and fresh vegetables, perfect rice, and a zesty sauce! Take your taste buds on a trip to Korea in no time.",
+            "seoDescription": null,
+            "comment": "GOUS-09-061-001-18W36",
+            "difficulty": 1,
+            "totalTime": "PT03M",
+            "prepTime": "PT15M",
+            "servingSize": 0,
+            "createdAt": "2018-08-07T17:29:35-0400",
+            "updatedAt": "2018-08-07T17:43:47-0400",
+            "link":
+              "https://api-v2-staging.hellofresh.com/recipes/5b6a0f3fae08b50211764e32?country=ML",
+            "imageLink":
+              "https://d3hvwccx09j84u.cloudfront.net/web/image/5b6a0f3fae08b50211764e32-ea4dce2b.jpg",
+            "cardLink": "/card/5b6a0f3fae08b50211764e32.pdf",
+            "videoLink": null
+          }
+        },
+        {
+          "recipe": {
+            "country": "ML",
+            "id": "5b69f213ae08b568440efc82",
+            "name": "Spicy Turkey Chili",
+            "seoName": null,
+            "slug": "spicy-turkey-chili",
+            "headline": "with Sour Cream and Cheese",
+            "descriptionMarkdown":
+              "Feel the heat with our smoky turkey chili, topped with a sprinkle of cheese. This dish is so packed full of flavor, you'll want to lick the bowl!",
+            "descriptionHTML":
+              "<p>Feel the heat with our smoky turkey chili, topped with a sprinkle of cheese. This dish is so packed full of flavor, you'll want to lick the bowl!</p>",
+            "description":
+              "Feel the heat with our smoky turkey chili, topped with a sprinkle of cheese. This dish is so packed full of flavor, you'll want to lick the bowl!",
+            "seoDescription": null,
+            "comment": "GOUS-10-076-009-18W36",
+            "difficulty": 1,
+            "totalTime": "PT03M",
+            "prepTime": "PT20M",
+            "servingSize": 0,
+            "createdAt": "2018-08-07T15:25:07-0400",
+            "updatedAt": "2018-08-07T18:03:23-0400",
+            "link":
+              "https://api-v2-staging.hellofresh.com/recipes/5b69f213ae08b568440efc82?country=ML",
+            "imageLink":
+              "https://d3hvwccx09j84u.cloudfront.net/web/image/5b69f213ae08b568440efc82-39fd8894.jpg",
+            "cardLink":
+              "/card/spicy-turkey-chili-5b69f213ae08b568440efc82-b5fccc0e.pdf",
+            "videoLink": null
+          }
+        },
+        {
+          "recipe": {
+            "country": "ML",
+            "id": "5b6a086bae08b57b2458dbe2",
+            "name": "Stir Fry Beef",
+            "seoName": null,
+            "slug": "stir-fry-beef",
+            "headline": "with Yakisoba Noodles",
+            "descriptionMarkdown":
+              "You can't go wrong with this tasty beef stir-fry. Tender beef pieces, yakisoba noodles and green beans, coated in tasty teriyaki sauce.",
+            "descriptionHTML":
+              "<p>You can't go wrong with this tasty beef stir-fry. Tender beef pieces, yakisoba noodles and green beans, coated in tasty teriyaki sauce.</p>",
+            "description":
+              "You can't go wrong with this tasty beef stir-fry. Tender beef pieces, yakisoba noodles and green beans, coated in tasty teriyaki sauce.",
+            "seoDescription": null,
+            "comment": "GOUS-02-064-001-18W36",
+            "difficulty": 1,
+            "totalTime": "PT3M",
+            "prepTime": "PT15M",
+            "servingSize": 433,
+            "createdAt": "2018-08-07T17:00:27-0400",
+            "updatedAt": "2018-08-08T17:54:18-0400",
+            "link":
+              "https://api-v2-staging.hellofresh.com/recipes/5b6a086bae08b57b2458dbe2?country=ML",
+            "imageLink":
+              "https://d3hvwccx09j84u.cloudfront.net/web/image/5b6a086bae08b57b2458dbe2-ecc9c158.jpg",
+            "cardLink":
+              "/card/stir-fry-beef-5b6a086bae08b57b2458dbe2-b5fccc0e.pdf",
+            "videoLink": null
+          }
+        },
+        {
+          "recipe": {
+            "country": "ML",
+            "id": "5b6a07c3ae08b57acb1d3c82",
+            "name": "Creamy Dill Cod",
+            "seoName": null,
+            "slug": "creamy-dill-cod",
+            "headline": "with Yukon Potatoes and Green Beans",
+            "descriptionMarkdown":
+              "Our creamy dill sauce perfectly complements flakey cod to take your mid-week dinner to the next level. It is served with crispy potatoes and green beans on the side.",
+            "descriptionHTML":
+              "<p>Our creamy dill sauce perfectly complements flakey cod to take your mid-week dinner to the next level. It is served with crispy potatoes and green beans on the side.</p>",
+            "description":
+              "Our creamy dill sauce perfectly complements flakey cod to take your mid-week dinner to the next level. It is served with crispy potatoes and green beans on the side.",
+            "seoDescription": null,
+            "comment": "GOUS-04-066-001-18W36",
+            "difficulty": 1,
+            "totalTime": "PT4M",
+            "prepTime": "PT25M",
+            "servingSize": 0,
+            "createdAt": "2018-08-07T16:57:39-0400",
+            "updatedAt": "2018-08-10T14:24:46-0400",
+            "link":
+              "https://api-v2-staging.hellofresh.com/recipes/5b6a07c3ae08b57acb1d3c82?country=ML",
+            "imageLink":
+              "https://d3hvwccx09j84u.cloudfront.net/web/image/5b6a07c3ae08b57acb1d3c82-d55dac05.jpg",
+            "cardLink":
+              "/card/creamy-dill-cod-5b6a07c3ae08b57acb1d3c82-b5fccc0e.pdf",
+            "videoLink": null
+          }
+        },
+        {
+          "recipe": {
+            "country": "ML",
+            "id": "5b69f72aae08b56c8c3f4b42",
+            "name": "Southwestern Chicken Bowl",
+            "seoName": null,
+            "slug": "southwestern-chicken-bowl",
+            "headline": "with Quinoa, Black Beans & Sweet Potato",
+            "descriptionMarkdown":
+              "These tasty Southwest Chicken Quinoa Bowls couldn\u2019t be much easier to make, and it's a wholesome delicious lunch.",
+            "descriptionHTML":
+              "<p>These tasty Southwest Chicken Quinoa Bowls couldn\u2019t be much easier to make, and it's a wholesome delicious lunch.</p>",
+            "description":
+              "These tasty Southwest Chicken Quinoa Bowls couldn\u2019t be much easier to make, and it's a wholesome delicious lunch.",
+            "seoDescription": null,
+            "comment": "GOUS-03-080-001-18W36",
+            "difficulty": 1,
+            "totalTime": null,
+            "prepTime": "PT25M",
+            "servingSize": 485,
+            "createdAt": "2018-08-07T15:46:50-0400",
+            "updatedAt": "2018-08-08T17:58:20-0400",
+            "link":
+              "https://api-v2-staging.hellofresh.com/recipes/5b69f72aae08b56c8c3f4b42?country=ML",
+            "imageLink":
+              "https://d3hvwccx09j84u.cloudfront.net/web/image/5b69f72aae08b56c8c3f4b42-a0ae5786.jpg",
+            "cardLink":
+              "/card/southwestern-chicken-bowl-5b69f72aae08b56c8c3f4b42-7af15e61.pdf",
+            "videoLink": null
+          }
+        },
+        {
+          "recipe": {
+            "country": "ML",
+            "id": "5b6a07e4ae08b57aca1132f2",
+            "name": "Breakfast Omelette",
+            "seoName": null,
+            "slug": "breakfast-omelette",
+            "headline": "with Feta and Tomatoes",
+            "descriptionMarkdown":
+              "You can't go wrong with this tasty veggie breakfast. Soft Omelette with crumbled Feta cheese and Grape Tomatoes is the perfect start into the day.",
+            "descriptionHTML":
+              "<p>You can't go wrong with this tasty veggie breakfast. Soft Omelette with crumbled Feta cheese and Grape Tomatoes is the perfect start into the day.</p>",
+            "description":
+              "You can't go wrong with this tasty veggie breakfast. Soft Omelette with crumbled Feta cheese and Grape Tomatoes is the perfect start into the day.",
+            "seoDescription": "GOUS-09-079-001-18W36",
+            "comment": null,
+            "difficulty": 1,
+            "totalTime": "PT2M",
+            "prepTime": "PT10M",
+            "servingSize": 0,
+            "createdAt": "2018-08-07T16:58:12-0400",
+            "updatedAt": "2018-08-11T09:57:59-0400",
+            "link":
+              "https://api-v2-staging.hellofresh.com/recipes/5b6a07e4ae08b57aca1132f2?country=ML",
+            "imageLink":
+              "https://d3hvwccx09j84u.cloudfront.net/web/image/5b6a07e4ae08b57aca1132f2-88587f93.jpg",
+            "cardLink": "/card/5b6a07e4ae08b57aca1132f2.pdf",
+            "videoLink": null
+          }
+        },
+        {
+          "recipe": {
+            "country": "ML",
+            "id": "5b6a083dae08b57b1a0edff2",
+            "name": "Homestyle Breakfast Platter",
+            "seoName": null,
+            "slug": "homestyle-breakfast-platter",
+            "headline": "with Sausage, Peppers and Yukon Potatoes",
+            "descriptionMarkdown":
+              "Sausage Potato Omelet is easy and high in protein! This baked omelet recipe has all the flavor and components of a full breakfast.",
+            "descriptionHTML":
+              "<p>Sausage Potato Omelet is easy and high in protein! This baked omelet recipe has all the flavor and components of a full breakfast.</p>",
+            "description":
+              "Sausage Potato Omelet is easy and high in protein! This baked omelet recipe has all the flavor and components of a full breakfast.",
+            "seoDescription": "GOUS-06-073-001-18W36",
+            "comment": null,
+            "difficulty": 1,
+            "totalTime": "PT2M",
+            "prepTime": "PT10M",
+            "servingSize": 110,
+            "createdAt": "2018-08-07T16:59:41-0400",
+            "updatedAt": "2018-08-08T17:59:38-0400",
+            "link":
+              "https://api-v2-staging.hellofresh.com/recipes/5b6a083dae08b57b1a0edff2?country=ML",
+            "imageLink":
+              "https://d3hvwccx09j84u.cloudfront.net/web/image/5b6a083dae08b57b1a0edff2-72c4b0d7.jpg",
+            "cardLink": "/card/5b6a083dae08b57b1a0edff2.pdf",
+            "videoLink": null
+          }
+        },
+        {
+          "recipe": {
+            "country": "ML",
+            "id": "5b6c290030006c0c485afc92",
+            "name": "Smoky Beef Fajitas",
+            "seoName": null,
+            "slug": "smoky-beef-fajitas",
+            "headline": "with Cheese, Peppers, and Onion",
+            "descriptionMarkdown":
+              "With the perfect blend of spices, roasted peppers and onions, melted cheese, and fluffy flour tortillas, you will need to eat them quickly before someone else does...",
+            "descriptionHTML":
+              "<p>With the perfect blend of spices, roasted peppers and onions, melted cheese, and fluffy flour tortillas, you will need to eat them quickly before someone else does...</p>",
+            "description":
+              "With the perfect blend of spices, roasted peppers and onions, melted cheese, and fluffy flour tortillas, you will need to eat them quickly before someone else does...",
+            "seoDescription": null,
+            "comment": "GOUS-02-062-001-18W36",
+            "difficulty": 1,
+            "totalTime": "PT04M",
+            "prepTime": "PT15M",
+            "servingSize": 480,
+            "createdAt": "2018-08-09T07:44:00-0400",
+            "updatedAt": "2018-08-09T07:47:52-0400",
+            "link":
+              "https://api-v2-staging.hellofresh.com/recipes/5b6c290030006c0c485afc92?country=ML",
+            "imageLink":
+              "https://d3hvwccx09j84u.cloudfront.net/web/image/5b6c290030006c0c485afc92-e82efd53.jpg",
+            "cardLink":
+              "/card/smoky-beef-fajitas-5b6c290030006c0c485afc92-b5fccc0e.pdf",
+            "videoLink": null
+          }
+        },
+        {
+          "recipe": {
+            "country": "ML",
+            "id": "5b69eb4d30006c44515ecfe2",
+            "name": "Cheesy Tortellini Bolognese",
+            "seoName": null,
+            "slug": "cheesy-tortellini-bolognese",
+            "headline": "with Hearty Tomato & Beef Sauce",
+            "descriptionMarkdown":
+              "Cheesy tortellini smothered in tomato and beef sauce is as delicious as it is comforting, and ready in minutes!\nEach meal serves 1 adult or 1-2 children",
+            "descriptionHTML":
+              "<p>Cheesy tortellini smothered in tomato and beef sauce is as delicious as it is comforting, and ready in minutes!\nEach meal serves 1 adult or 1-2 children</p>",
+            "description":
+              "Cheesy tortellini smothered in tomato and beef sauce is as delicious as it is comforting, and ready in minutes!\nEach meal serves 1 adult or 1-2 children",
+            "seoDescription": null,
+            "comment": "GOUS-02-047-001-18W36",
+            "difficulty": 1,
+            "totalTime": "PT15M",
+            "prepTime": "PT03M",
+            "servingSize": 0,
+            "createdAt": "2018-08-07T14:56:13-0400",
+            "updatedAt": "2018-08-07T18:07:51-0400",
+            "link":
+              "https://api-v2-staging.hellofresh.com/recipes/5b69eb4d30006c44515ecfe2?country=ML",
+            "imageLink":
+              "https://d3hvwccx09j84u.cloudfront.net/web/image/5b69eb4d30006c44515ecfe2-12d26023.jpg",
+            "cardLink": "/card/5b69eb4d30006c44515ecfe2.pdf",
+            "videoLink": null
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,12 +1,17 @@
-import React, { PureComponent } from 'react'
-import { StyleSheet, View, Text, ActivityIndicator, TouchableHighlight } from 'react-native'
-import * as Res from '../../res'
-import styles from './style.js'
-import { connect } from 'react-redux'
-import { UserAction } from '../../actions'
+import React, { PureComponent } from "react";
+import {
+  StyleSheet,
+  View,
+  Text,
+  ActivityIndicator,
+  TouchableHighlight
+} from "react-native";
+import * as Res from "../../res";
+import styles from "./style.js";
+import { connect } from "react-redux";
+import { UserAction } from "../../actions";
 
 class _profileScreen extends PureComponent {
-
   constructor(props) {
     super(props);
   }
@@ -27,8 +32,11 @@ class _profileScreen extends PureComponent {
               accessibilityLabel="LogoutAccessibilityLabel"
               style={styles.logoutButton}
               onPress={() => this._onLogoutRequested()}
-              color={Res.Colors.primary}>
-              <Text style={styles.logoutText}>{Res.Strings.profile_Logout}</Text>
+              color={Res.Colors.primary}
+            >
+              <Text style={styles.logoutText}>
+                {Res.Strings.profile_Logout}
+              </Text>
             </TouchableHighlight>
           </View>
 
@@ -39,36 +47,36 @@ class _profileScreen extends PureComponent {
   }
 
   _loadingView() {
-    if(this.props.loading) {
+    if (this.props.loading) {
       return (
         <View style={styles.loadingContainer}>
-          <ActivityIndicator color='black' style={styles.loading} />
+          <ActivityIndicator color="black" style={styles.loading} />
         </View>
       );
     }
   }
 }
 
-const mapStateToProp = (state) => {
+const mapStateToProp = state => {
   return {
     loading: state.user.isLoading,
     isLoggedIn: state.user.isLoggedIn,
     userInfo: state.user.userInfo,
     errorMessage: state.user.authErrorMessage
-  }
+  };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     onLogoutRequested: () => {
-      dispatch(UserAction.requestLogOut())
+      dispatch(UserAction.requestLogOut());
     }
-  }
+  };
 };
 
 const ProfileScreen = connect(
   mapStateToProp,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(_profileScreen);
 
 export default ProfileScreen;

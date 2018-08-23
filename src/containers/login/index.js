@@ -1,15 +1,24 @@
-import React, { PureComponent } from 'react'
-import { StyleSheet, View, Image, Text, Keyboard, TextInput, ActivityIndicator, TouchableOpacity, Animated } from 'react-native'
-import { Toast } from 'native-base'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import * as Res from '../../res'
-import styles from './style.js'
-import { connect } from 'react-redux'
-import { UserAction } from '../../actions'
-import backgroundImage from '../../res/image/login_background.png'
+import React, { PureComponent } from "react";
+import {
+  StyleSheet,
+  View,
+  Image,
+  Text,
+  Keyboard,
+  TextInput,
+  ActivityIndicator,
+  TouchableOpacity,
+  Animated
+} from "react-native";
+import { Toast } from "native-base";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import * as Res from "../../res";
+import styles from "./style.js";
+import { connect } from "react-redux";
+import { UserAction } from "../../actions";
+import backgroundImage from "../../res/image/load.jpg";
 
 class _loginScreen extends PureComponent {
-
   constructor(props) {
     super(props);
 
@@ -17,8 +26,8 @@ class _loginScreen extends PureComponent {
     this.inputs = {};
 
     this.state = {
-      username: '',
-      password: '',
+      username: "",
+      password: "",
       fadeAnim: new Animated.Value(0),
       backgroundLoading: false
     };
@@ -32,11 +41,12 @@ class _loginScreen extends PureComponent {
       this._onShowHomeScreen();
     }
     if (this.state.backgroundLoading) {
-      Animated.timing(                  // Animate over time
-        this.state.fadeAnim,            // The animated value to drive
+      Animated.timing(
+        // Animate over time
+        this.state.fadeAnim, // The animated value to drive
         {
-          toValue: 1,                   // Animate to opacity: 1 (opaque)
-          duration: 300,                // Make it take a while
+          toValue: 1, // Animate to opacity: 1 (opaque)
+          duration: 300 // Make it take a while
         }
       ).start();
     }
@@ -47,7 +57,7 @@ class _loginScreen extends PureComponent {
   }
 
   _onShowHomeScreen() {
-    this.props.navigation.navigate('Home');
+    this.props.navigation.navigate("Home");
   }
 
   focusNextField(key) {
@@ -59,87 +69,133 @@ class _loginScreen extends PureComponent {
     return (
       <View style={Res.Styles.safeAreaTop}>
         <View style={styles.rootContainer}>
-
           <View style={styles.backgroundView}>
-
             <Image
               source={backgroundImage}
-              onLoadStart={() => this.setState({backgroundLoading: true})}
-              style={styles.backgroundImageView} />
-
+              onLoadStart={() => this.setState({ backgroundLoading: true })}
+              style={styles.backgroundImageView}
+            />
           </View>
 
           <KeyboardAwareScrollView
             resetScrollToCoords={{ x: 0, y: 0 }}
             scrollEnabled={true}
-            contentContainerStyle={{ flex: 1, justifyContent: 'center' }}
-            keyboardShouldPersistTaps='handled'
+            contentContainerStyle={{ flex: 1, justifyContent: "center" }}
+            keyboardShouldPersistTaps="handled"
             enableAutoAutomaticScroll={true}
-            enableOnAndroid={true} >
+            enableOnAndroid={true}
+          >
             <Animated.View
-              style={[styles.fieldsContainer, {opacity: fadeAnim}]}
-              >
-              <Text
-                style={styles.titleText}>{Res.Strings.login_login_title}</Text>
+              style={[styles.fieldsContainer, { opacity: fadeAnim }]}
+            >
+              <Text style={styles.titleText}>
+                {Res.Strings.login_login_title}
+              </Text>
 
-              <View >
+              <View>
                 <TouchableOpacity
                   id="LoginWithFacebookId"
                   testID="LoginWithFacebookTestId"
                   accessibilityLabel="LoginWithFacebookAccessibilityLabel"
                   onPress={() => {}}
-                  style={[styles.button, {backgroundColor: Res.Colors.facebookBlue}]} >
+                  style={[
+                    styles.button,
+                    { backgroundColor: Res.Colors.facebookBlue }
+                  ]}
+                >
                   <Image
-                    source={require('../../res/image/facebook_icon.png')}
-                    style={{width: 18, height: 18, marginRight: 12, marginTop: 9, marginBottom: 13}} />
-                  <Text
-                    style={styles.buttonText} >{Res.Strings.login_login_facebook_button}</Text>
+                    source={require("../../res/image/facebook_icon.png")}
+                    style={{
+                      width: 18,
+                      height: 18,
+                      marginRight: 12,
+                      marginTop: 9,
+                      marginBottom: 13
+                    }}
+                  />
+                  <Text style={styles.buttonText}>
+                    {Res.Strings.login_login_facebook_button}
+                  </Text>
                 </TouchableOpacity>
               </View>
 
               <Text
-                style={[styles.generalText, styles.centerText, styles.orTextView]}>{Res.Strings.login_or}</Text>
+                style={[
+                  styles.generalText,
+                  styles.centerText,
+                  styles.orTextView
+                ]}
+              >
+                {Res.Strings.login_or}
+              </Text>
 
-              <View >
-                <Text
-                  style={[styles.generalText, styles.hintText]}>{Res.Strings.login_email}</Text>
+              <View>
+                <Text style={[styles.generalText, styles.hintText]}>
+                  {Res.Strings.login_email}
+                </Text>
                 <TextInput
                   id="UsernameId"
                   testID="UsernameTestId"
                   accessibilityLabel="UsernameAccessibilityLabel"
-                  onChangeText={(text) => this.setState({ username: text })}
-                  onSubmitEditing={() => {this.focusNextField('password')}}
-                  keyboardType='email-address'
-                  returnKeyType={ "next" }
-                  blurOnSubmit={ false }
+                  onChangeText={text => this.setState({ username: text })}
+                  onSubmitEditing={() => {
+                    this.focusNextField("password");
+                  }}
+                  keyboardType="email-address"
+                  returnKeyType={"next"}
+                  blurOnSubmit={false}
                   underlineColorAndroid="transparent"
-                  ref={ input => { this.inputs['email'] = input }}
-                  style={[styles.generalText, styles.textInput]}>{this.state.username}</TextInput>
-                  {this._textInputErrorMessage(this.props.emailErrorMessage, "EmailErrorTestId")}
+                  ref={input => {
+                    this.inputs["email"] = input;
+                  }}
+                  style={[styles.generalText, styles.textInput]}
+                >
+                  {this.state.username}
+                </TextInput>
+                {this._textInputErrorMessage(
+                  this.props.emailErrorMessage,
+                  "EmailErrorTestId"
+                )}
               </View>
 
-              <View
-                style={{ marginTop: 7 }}>
-                <Text
-                style={[styles.generalText, styles.hintText]}>{Res.Strings.login_password}</Text>
+              <View style={{ marginTop: 7 }}>
+                <Text style={[styles.generalText, styles.hintText]}>
+                  {Res.Strings.login_password}
+                </Text>
                 <TextInput
                   id="PasswordId"
                   testID="PasswordTestId"
                   accessibilityLabel="PasswordAccessibilityLabel"
-                  onChangeText={(text) => this.setState({ password: text })}
+                  onChangeText={text => this.setState({ password: text })}
                   secureTextEntry={true}
-                  returnKeyType={ "done" }
-                  blurOnSubmit={ true }
+                  returnKeyType={"done"}
+                  blurOnSubmit={true}
                   underlineColorAndroid="transparent"
-                  ref={ input => { this.inputs['password'] = input }}
-                  style={[styles.generalText, styles.textInput]}>{this.state.password}</TextInput>
-                  {this._textInputErrorMessage(this.props.passwordErrorMessage, "PasswordErrorTestId")}
+                  ref={input => {
+                    this.inputs["password"] = input;
+                  }}
+                  style={[styles.generalText, styles.textInput]}
+                >
+                  {this.state.password}
+                </TextInput>
+                {this._textInputErrorMessage(
+                  this.props.passwordErrorMessage,
+                  "PasswordErrorTestId"
+                )}
               </View>
 
               <Text
-                style={[styles.generalText, styles.orangeText, styles.rightAlignText, {marginBottom: 16}]}>{Res.Strings.login_forgot_password}</Text>
+                style={[
+                  styles.generalText,
+                  styles.orangeText,
+                  styles.rightAlignText,
+                  { marginBottom: 16 }
+                ]}
+              >
+                {Res.Strings.login_forgot_password}
+              </Text>
 
-              <View >
+              <View>
                 <TouchableOpacity
                   id="LoginId"
                   testID="LoginTestId"
@@ -147,19 +203,27 @@ class _loginScreen extends PureComponent {
                   onPress={() => {
                     Keyboard.dismiss();
                     this._onLoginRequested();
-                    }}
-                  style={[styles.button, {backgroundColor: Res.Colors.primary}]} >
-                  <Text
-                    style={styles.buttonText} >{Res.Strings.login_login_button}</Text>
+                  }}
+                  style={[
+                    styles.button,
+                    { backgroundColor: Res.Colors.primary }
+                  ]}
+                >
+                  <Text style={styles.buttonText}>
+                    {Res.Strings.login_login_button}
+                  </Text>
                 </TouchableOpacity>
               </View>
 
               <Text
-                style={[styles.centerText, {marginTop: 16, marginBottom: 16 }]}>
-                <Text
-                  style={styles.generalText}>{Res.Strings.login_register_question}</Text>
-                <Text
-                  style={[styles.generalText, styles.orangeText]}>{Res.Strings.login_register_action}</Text>
+                style={[styles.centerText, { marginTop: 16, marginBottom: 16 }]}
+              >
+                <Text style={styles.generalText}>
+                  {Res.Strings.login_register_question}
+                </Text>
+                <Text style={[styles.generalText, styles.orangeText]}>
+                  {Res.Strings.login_register_action}
+                </Text>
               </Text>
             </Animated.View>
           </KeyboardAwareScrollView>
@@ -182,26 +246,26 @@ class _loginScreen extends PureComponent {
 
   _message() {
     if (this.props.isLoggedIn) {
-      Toast.show({ text: Res.Strings.login_success })
+      Toast.show({ text: Res.Strings.login_success });
     } else if (this.props.authErrorMessage) {
-      Toast.show({ text: this.props.authErrorMessage })
+      Toast.show({ text: this.props.authErrorMessage });
     }
   }
 
   _textInputErrorMessage(text, testId) {
     if (text) {
       return (
-        <Text testID={testId} style={styles.errorMessage}>{text}</Text>
+        <Text testID={testId} style={styles.errorMessage}>
+          {text}
+        </Text>
       );
     } else {
-      return (
-        <Text style={styles.errorMessage}> </Text>
-      );
+      return <Text style={styles.errorMessage}> </Text>;
     }
   }
 }
 
-const mapStateToProp = (state) => {
+const mapStateToProp = state => {
   return {
     loading: state.user.isLoading,
     isLoggedIn: state.user.isLoggedIn,
@@ -209,20 +273,20 @@ const mapStateToProp = (state) => {
     emailErrorMessage: state.user.emailErrorMessage,
     passwordErrorMessage: state.user.passwordErrorMessage,
     authErrorMessage: state.user.authErrorMessage
-  }
+  };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     onLoginRequested: (username, password) => {
-      dispatch(UserAction.requestLogIn(username, password))
+      dispatch(UserAction.requestLogIn(username, password));
     }
-  }
+  };
 };
 
 const LoginScreen = connect(
   mapStateToProp,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(_loginScreen);
 
 export default LoginScreen;

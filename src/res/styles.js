@@ -1,6 +1,6 @@
-import { StyleSheet } from 'react-native'
-import * as Colors from './colors.js'
-import DevicePlatform from '../utils/DevicePlatform.js'
+import { StyleSheet } from "react-native";
+import * as Colors from "./colors.js";
+import DevicePlatform from "../utils/DevicePlatform.js";
 
 const styles = StyleSheet.create({
   safeAreaTop: {
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
         paddingTop: 44
       },
       ios: {
-        paddingTop: 20
+        paddingTop: 0
       }
     })
   }

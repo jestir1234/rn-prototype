@@ -1,15 +1,27 @@
-import { combineReducers } from 'redux'
-import { MealAction } from '../actions'
-import { Meal } from '../entities/Meal.js'
-import { MealTag } from '../entities/MealTag.js'
-import { Price } from '../entities/Price.js'
+import { combineReducers } from "redux";
+import { MealAction } from "../actions";
+import { Meal } from "../entities/Meal.js";
+import { MealTag } from "../entities/MealTag.js";
+import { Price } from "../entities/Price.js";
 
 let initState = { data: [], loading: false };
 
-const dataReducer = (state = initState, action) => {
+const mealsReducer = (state = initState, action) => {
+  console.log("The action is...", action);
+  let newState;
   switch (action.type) {
     case MealAction.LOAD_MEALS:
-      let newState = Object.assign({}, state, { data: [newMeal(), newMeal(), newMeal(), newMeal()], loading: false });
+      console.log("LOADING MENUS....");
+      newState = Object.assign({}, state, {
+        loading: true
+      });
+      return newState;
+    case MealAction.RECEIVE_MENU:
+      console.log("RECEIVING MENUS....");
+      newState = Object.assign({}, state, {
+        data: action.payload,
+        loading: false
+      });
       return newState;
     default:
       return state;
@@ -17,10 +29,7 @@ const dataReducer = (state = initState, action) => {
 };
 
 let newMeal = () => {
-  var tags = [
-    new MealTag("Spicy", "#996633"),
-    new MealTag("Vegan", "#3fb2a0")
-  ];
+  var tags = [new MealTag("Spicy", "#996633"), new MealTag("Vegan", "#3fb2a0")];
   return new Meal(
     "123",
     "King Prawn Miso Ramen",
@@ -35,4 +44,4 @@ let newMeal = () => {
   dataReducer
 })*/
 
-export default dataReducer;
+export default mealsReducer;

@@ -20,9 +20,10 @@ export const MealPropType = PropTypes.shape({
   tags: PropTypes.arrayOf(MealTagPropType)
 });
 
-export function Recipe(id, name, imageLink, headline) {
+export function Recipe(id, name, imageLink, headline, steps) {
   this.id = id;
   this.name = name;
   this.imageLink = imageLink;
   this.headline = headline;
+  this.steps = steps;
 }

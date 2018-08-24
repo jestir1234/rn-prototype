@@ -38,9 +38,9 @@ export function fetchMenus(week) {
     return NetworkManager.doGet(Urls.MENU_URL, params)
       .then(json => {
         let menu = json.items[0].courses.map(item => {
-          const { id, name, imageLink, headline } = item.recipe;
+          const { id, name, imageLink, headline, steps } = item.recipe;
           console.log(Recipe);
-          return new Recipe(id, name, imageLink, headline);
+          return new Recipe(id, name, imageLink, headline, steps);
         });
 
         dispatch(createReceiveMenu(menu));

@@ -1,60 +1,25 @@
 import React, { PureComponent } from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  FlatList,
-  Image,
-  TouchableOpacity
-} from "react-native";
+import { StyleSheet, View, Text, FlatList, Image } from "react-native";
 import * as Res from "../../res";
 import MealView from "../../components/MealView.js";
 import { connect } from "react-redux";
 import { MealAction } from "../../actions";
 import backgroundImage from "../../res/image/load.jpg";
+import CookingView from "../../components/CookingView.js";
 
 const TEST_WEEK = "2018-W35";
 
-class _mealsScreen extends PureComponent {
+class _cookingScreen extends PureComponent {
   constructor(props) {
     super(props);
   }
 
-  componentDidMount() {
-    this.props.onLoadMealsRequested(TEST_WEEK);
-  }
-
   render() {
-    if (this.props.meals.length === 0) {
-      return (
-        <View style={styles.backgroundView}>
-          <Image
-            source={backgroundImage}
-            onLoadStart={() => this.setState({ backgroundLoading: true })}
-            style={styles.backgroundImageView}
-          />
-        </View>
-      );
-    }
-    const list =
-      this.props.meals != null && this.props.meals.length > 0 ? (
-        <FlatList
-          data={this.props.meals}
-          renderItem={({ item }) => this._renderListItem(item)}
-          keyExtractor={(meal, index) => meal.id}
-        />
-      ) : (
-        <Text />
-      );
     return (
-      <View style={Res.Styles.safeAreaTop}>
-        <View style={styles.rootContainer}>{list}</View>
+      <View>
+        <CookingView />
       </View>
     );
-  }
-
-  _renderListItem(renderItem) {
-    return <MealView meal={renderItem} navigation={this.props.navigation} />;
   }
 }
 
@@ -98,9 +63,9 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-const MealsScreen = connect(
+const cookingScreen = connect(
   mapStateToProps,
   mapDispatchToProps
-)(_mealsScreen);
+)(_cookingScreen);
 
-export default MealsScreen;
+export default cookingScreen;

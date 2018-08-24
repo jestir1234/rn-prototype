@@ -2,21 +2,23 @@ import React, { Component } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
 import { Card } from "native-base";
+import { TabNavigator, TabBarBottom } from "react-navigation";
 import { Recipe, MealPropType } from "../entities/Meal.js";
 import MealTagView from "./MealTagView.js";
 
-export default class MealView extends Component {
+class MealView extends Component {
   render() {
-    console.log(this.props);
     if (this.props.meal == null || !(this.props.meal instanceof Recipe)) {
       throw "No 'meal' property provided for MealView.";
     }
-
-    console.log("MealView:");
-    console.log(this.props.meal);
-
+    console.log("PROPS IN MEALVIEW", this.props.navigation);
     return (
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          console.log("NAVIGATING TO COOKING!");
+          this.props.navigation.push("Login");
+        }}
+      >
         <Card style={styles.container}>
           <Image
             style={styles.image}
@@ -90,3 +92,5 @@ const styles = StyleSheet.create({
     marginTop: 8
   }
 });
+
+export default MealView;

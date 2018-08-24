@@ -7,6 +7,8 @@ import SplashScreen from "react-native-splash-screen";
 import MySplashScreen from "./src/containers/splash";
 import LoginScreen from "./src/containers/login";
 import HomeScreen from "./src/containers/home";
+import MealScreen from "./src/containers/meals";
+import CookingScreen from "./src/containers/cooking";
 
 import provideStoreManager from "./src/stores";
 import { YellowBox } from "react-native";
@@ -28,7 +30,9 @@ YellowBox.ignoreWarnings([
 const RootStack = SwitchNavigator({
   Splash: { screen: MySplashScreen },
   Login: { screen: LoginScreen },
-  Home: { screen: HomeScreen }
+  Home: { screen: HomeScreen },
+  Meals: { screen: MealScreen },
+  Cooking: { screen: CookingScreen }
 });
 
 export default class App extends Component {

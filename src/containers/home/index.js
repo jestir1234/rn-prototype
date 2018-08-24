@@ -41,7 +41,7 @@ const HomeTabNavigator = TabNavigator(
         } else if (routeName === "Contact") {
           iconName = "md-mail";
         } else if (routeName === "Menu") {
-          iconName = "md-time";
+          iconName = "md-pizza";
         }
 
         return (
